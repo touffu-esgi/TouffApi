@@ -8,7 +8,7 @@ export class AnimalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
-    console.log(exception.name);
+
     response
       .status(status)
       .json({
