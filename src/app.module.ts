@@ -7,6 +7,7 @@ import { AnimalExceptionFilter } from './Animals/exposition/filters/animal-excep
 import { ConfigModule } from '@nestjs/config';
 import { ProviderModule } from './Providers/provider.module';
 import { AddressModule } from './Address/address.module';
+import { RecipientsModule } from './recipients/recipient.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AddressModule } from './Address/address.module';
     AnimalsModule,
     ProviderModule,
     AddressModule,
+    RecipientsModule,
   ],
   controllers: [AppController],
   providers: [
