@@ -12,13 +12,8 @@ import { AddAnimalDto } from '../../dto/add-animal.dto';
 import { AnimalsService } from '../../application/animals.service';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AnimalExceptionFilter } from '../filters/animal-exception.filter';
-
-class AnimalResponse {
-  constructor(name) {
-    this.name = name;
-  }
-  name: string;
-}
+import { AnimalResponse } from '../../domain/animal.response';
+import { AnimalAdapter } from '../../adapters/animal.adapter';
 
 @Controller('animals')
 export class AnimalsController {
@@ -40,6 +35,6 @@ export class AnimalsController {
   @Get()
   async getAll(@Req() request: Request): Promise<AnimalResponse[]> {
     const animals = await this.animalsService.getAll();
-    return animals.map((animal) => new AnimalResponse(animal.name));
+    return animals.map((animal) => AnimalAdapter.fromDto(animal));
   }
 }

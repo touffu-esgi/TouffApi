@@ -1,11 +1,12 @@
 import { AnimalRepository } from '../domain/animal.repository';
 import { Animal } from '../domain/animal';
+import { AnimalTypes } from '../domain/animal.types';
 
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [
-    new Animal('roucky'),
-    new Animal('sirius'),
-    new Animal('lili'),
+    new Animal('roucky', AnimalTypes.chien),
+    new Animal('sirius', AnimalTypes.chat),
+    new Animal('lili', AnimalTypes.chat),
   ];
   save(animal: Animal): Animal {
     this.animals.push(animal);
