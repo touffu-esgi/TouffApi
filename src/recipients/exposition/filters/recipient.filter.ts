@@ -1,13 +1,7 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-} from '@nestjs/common';
+import { ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Catch(HttpException)
-export class AnimalExceptionFilter implements ExceptionFilter {
+export class RecipientExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
