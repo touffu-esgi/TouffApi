@@ -12,6 +12,8 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { RecipientExceptionFilter } from '../filters/recipient.filter';
 import { AddRecipientDto } from '../../dto/add-recipient';
 import { RecipientsService } from '../../application/recipient.service';
+import { RecipientResponse } from '../../domain/recipient.response';
+import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
 
 @Controller('recipient')
 export class RecipientsController {
@@ -24,10 +26,15 @@ export class RecipientsController {
     @Body() addRecipientDto: AddRecipientDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    console.log(addRecipientDto);
     await this.recipientsService.add(addRecipientDto);
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + addRecipientDto.name,
     };
+  }
+
+  @Get()
+  async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
+    const recipients = await this.recipientsService.getAll();
+    return recipients.map((recipient) => RecipientAdapter.fromDto(recipient));
   }
 }

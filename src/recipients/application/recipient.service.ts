@@ -18,4 +18,8 @@ export class RecipientsService {
     );
     this.recipientRepository.save(recipient);
   }
+
+  getAll(): Promise<Recipient[]> {
+    return this.recipientRepository.getAll();
+  }
 }
