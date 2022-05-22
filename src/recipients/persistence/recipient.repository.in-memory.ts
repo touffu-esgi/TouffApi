@@ -15,7 +15,10 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
 
   save(recipient: Recipient): Recipient {
     this.recipients.push(recipient);
-    console.log(this.recipients);
     return recipient;
+  }
+
+  async getAll(): Promise<Recipient[]> {
+    return this.recipients;
   }
 }
