@@ -1,12 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsPhoneNumber,
-  IsPositive,
-  IsPostalCode,
-  Min,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsPositive, MinLength } from 'class-validator';
 
 export class AddProviderDto {
   @IsNotEmpty()
@@ -26,21 +18,9 @@ export class AddProviderDto {
   phone: string;
 
   @IsNotEmpty()
-  addr1: string;
+  address: string;
 
-  addr2: string;
-
-  @IsNotEmpty()
-  //@IsPostalCode()
-  cp: string;
-
-  @IsNotEmpty()
-  city: string;
-
-  @IsNotEmpty()
-  country: string;
-
-  services: string[];
+  base_tariff: number;
 
   @IsPositive()
   radius: number;

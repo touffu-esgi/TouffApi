@@ -35,6 +35,8 @@ export class ProvidersController {
   @Get()
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
-    return providers.map((provider) => ProviderAdapter.fromDto(provider));
+    return providers.map((provider) =>
+      ProviderAdapter.fromDto(provider, request),
+    );
   }
 }

@@ -6,12 +6,8 @@ export class Provider implements ProviderProps {
   private readonly _email: string;
   private readonly _password: string;
   private readonly _phone?: string;
-  private readonly _addr1: string;
-  private readonly _addr2?: string;
-  private readonly _cp: string;
-  private readonly _city: string;
-  private readonly _country: string;
-  private readonly _services: string[];
+  private readonly _address: string;
+  private readonly _base_tariff: number;
   private readonly _radius: number;
 
   constructor(providerProps: ProviderProps) {
@@ -19,13 +15,9 @@ export class Provider implements ProviderProps {
     this._surname = providerProps.surname;
     this._email = providerProps.email;
     this._password = providerProps.password;
-    this._phone = providerProps.phone;
-    this._addr1 = providerProps.addr1;
-    this._addr2 = providerProps.addr2;
-    this._cp = providerProps.cp;
-    this._city = providerProps.city;
-    this._country = providerProps.country;
-    this._services = providerProps.services;
+    this._phone = providerProps.phone ? providerProps.phone : '';
+    this._address = providerProps.address;
+    this._base_tariff = providerProps.base_tariff;
     this._radius = providerProps.radius;
   }
 
@@ -46,31 +38,15 @@ export class Provider implements ProviderProps {
     return this._phone;
   }
 
-  get addr1(): string {
-    return this._addr1;
-  }
-
-  get addr2(): string {
-    return this._addr2;
-  }
-
-  get cp(): string {
-    return this._cp;
-  }
-
-  get city(): string {
-    return this._city;
-  }
-
-  get country(): string {
-    return this._country;
-  }
-
-  get services(): string[] {
-    return this._services;
+  get base_tariff(): number {
+    return this._base_tariff;
   }
 
   get radius(): number {
     return this._radius;
+  }
+
+  get address(): string {
+    return this._address;
   }
 }
