@@ -1,5 +1,3 @@
-import { AddressProps } from './address.props';
-
 export interface ProviderProps {
   readonly name: string;
   readonly surname: string;

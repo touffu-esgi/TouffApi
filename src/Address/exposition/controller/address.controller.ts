@@ -11,7 +11,12 @@ export class AddressController {
   @Get()
   @HttpCode(200)
   async getAll(@Req() req: Request): Promise<AddressResponse[]> {
-    const addresses = await this.addressService.getAll();
+    const filters = [];
+    if (req.query.filter) {
+      const tmp = req.query.filter.toString().split(':', 2);
+      filters[tmp[0]] = tmp[1];
+    }
+    const addresses = await this.addressService.getAll(filters);
     return addresses.map((address) => AddressAdapter.fromDto(address));
   }
 }

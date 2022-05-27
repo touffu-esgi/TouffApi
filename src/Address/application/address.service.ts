@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AddressRepositoryInMemory } from '../persistance/address.repository.in-memory';
 import { GetAddressDto } from '../dto/get-address';
 import { Address } from '../domain/address';
+import { AddressProps } from '../../Providers/domain/address.props';
 
 @Injectable()
 export class AddressService {
@@ -9,8 +10,8 @@ export class AddressService {
 
   async add(dto: GetAddressDto) {}
 
-  getAll(): Promise<Address[]> {
-    return this.addressRepository.getAll();
+  getAll(filters: Partial<AddressProps>[] = []): Promise<Address[]> {
+    return this.addressRepository.getAll(filters);
   }
 
   getOne(index): Promise<Address> {
