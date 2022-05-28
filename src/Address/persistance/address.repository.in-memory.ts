@@ -12,7 +12,7 @@ export class AddressRepositoryInMemory {
     }),
     new Address({
       id: '2',
-      addr1: '1 Chemin des châtaigners',
+      addr1: '3 Chemin des châtaigners',
       cp: '21900',
       city: 'City-town',
       country: 'Earth',
@@ -26,38 +26,44 @@ export class AddressRepositoryInMemory {
     }),
   ];
 
-  async getAll(filters: Partial<AddressProps>[] = []): Promise<Address[]> {
+  async getAll(filters: unknown = {}): Promise<Address[]> {
     if (filters) {
-      const addresses = this.addresses;
-      const addr = addresses.filter((addr) =>
-        this.filterAndUtil(filters, addr),
-      );
+      let addr = this.addresses;
+      if (filters['and']) {
+        addr = this.addresses.filter((addr) =>
+          this.filterAndUtil(filters['and'], addr),
+        );
+      } else if (filters['or']) {
+        addr = this.addresses.filter((addr) =>
+          this.filterOrUtil(filters['or'], addr),
+        );
+      }
+      console.log(addr);
       return addr;
     }
     return this.addresses;
   }
 
-  filterAndUtil(
-    filters: Partial<AddressProps>[],
-    addrItem: AddressProps,
-  ): boolean {
+  filterAndUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
     let fitsFilter = true;
     Object.keys(filters).forEach((propName) => {
       fitsFilter =
         fitsFilter &&
-        addrItem['_' + propName].indexOf(filters[propName]) !== -1;
+        addrItem['_' + propName]
+          .toLowerCase()
+          .indexOf(filters[propName].toLowerCase()) !== -1;
     });
     return fitsFilter;
   }
 
-  filterOrUtil(
-    filters: Partial<AddressProps>[],
-    addrItem: AddressProps,
-  ): boolean {
+  filterOrUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
     let fitsFilter = true;
     Object.keys(filters).forEach((propName) => {
       fitsFilter =
-        fitsFilter || addrItem[propName].indexOf(filters[propName]) !== -1;
+        fitsFilter ||
+        addrItem['_' + propName]
+          .toLowerCase()
+          .indexOf(filters[propName].toLowerCase()) !== -1;
     });
     return fitsFilter;
   }

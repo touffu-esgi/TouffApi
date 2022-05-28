@@ -8,9 +8,7 @@ import { AddressProps } from '../../Providers/domain/address.props';
 export class AddressService {
   constructor(private addressRepository: AddressRepositoryInMemory) {}
 
-  async add(dto: GetAddressDto) {}
-
-  getAll(filters: Partial<AddressProps>[] = []): Promise<Address[]> {
+  getAll(filters: unknown = {}): Promise<Address[]> {
     return this.addressRepository.getAll(filters);
   }
 
