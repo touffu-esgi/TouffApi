@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -40,9 +41,12 @@ export class ProvidersController {
     );
   }
 
-  @Get(`:providerId`)
-  async getOne(@Req() request: Request): Promise<ProviderResponse> {
-    const provider = {};
+  @Get(':providerId')
+  async getOne(
+    @Param('providerId') providerId: string,
+    @Req() request: Request,
+  ): Promise<ProviderResponse> {
+    const provider = await this.providersService.getOne(providerId);
     return ProviderAdapter.fromProviderToProviderResponse(provider, request);
   }
 }

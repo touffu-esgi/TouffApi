@@ -1,5 +1,4 @@
 import { ProviderProps } from './provider.props';
-import { AddressProps } from './address.props';
 
 export class ProviderResponse {
   id: string;

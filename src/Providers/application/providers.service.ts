@@ -24,7 +24,11 @@ export class ProvidersService {
     return newId;
   }
 
-  getAll(): Promise<Provider[]> {
-    return this.providerRepository.getAll();
+  async getAll(): Promise<Provider[]> {
+    return await this.providerRepository.getAll();
+  }
+
+  async getOne(id: string): Promise<Provider> {
+    return await this.providerRepository.getOne(id);
   }
 }
