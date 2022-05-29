@@ -35,6 +35,8 @@ export class RecipientsController {
   @Get()
   async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
     const recipients = await this.recipientsService.getAll();
-    return recipients.map((recipient) => RecipientAdapter.fromDto(recipient));
+    return recipients.map((recipient) =>
+      RecipientAdapter.fromAnimalToAnimalResponse(recipient),
+    );
   }
 }
