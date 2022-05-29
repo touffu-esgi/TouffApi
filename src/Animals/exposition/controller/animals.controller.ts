@@ -26,9 +26,9 @@ export class AnimalsController {
     @Body() addAnimalDto: AddAnimalDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.animalsService.add(addAnimalDto);
+    const newAnimal = await this.animalsService.add(addAnimalDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + addAnimalDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + newAnimal.id,
     };
   }
 

@@ -8,11 +8,12 @@ import { AnimalTypeFactory } from './exceptions/animal-type.factory';
 export class AnimalsService {
   constructor(private animalRepository: AnimalRepositoryInMemory) {}
 
-  async add(dto: AddAnimalDto): Promise<void> {
+  async add(dto: AddAnimalDto): Promise<Animal> {
     const animalType = AnimalTypeFactory.fromString(dto.type);
 
     const animal = new Animal(dto.name, animalType);
     await this.animalRepository.save(animal);
+    return animal;
   }
 
   getAll(): Promise<Animal[]> {
