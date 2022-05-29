@@ -1,11 +1,15 @@
-import { AddProviderDto } from '../dto/add-provider.dto';
 import { ProviderResponse } from '../domain/provider.response';
 import { HttpUtils } from '../../shared/http/http.utils';
 import { Request } from 'express';
+import { GetProviderDto } from '../dto/get-provider.dto';
 
 export class ProviderAdapter {
-  public static fromDto(dto: AddProviderDto, request: Request) {
+  public static fromProviderToProviderResponse(
+    dto: GetProviderDto,
+    request: Request,
+  ) {
     const props = {
+      id: dto.id,
       name: dto.name,
       surname: dto.surname,
       email: dto.email,

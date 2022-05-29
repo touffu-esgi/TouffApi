@@ -4,6 +4,7 @@ import { Provider } from '../domain/provider';
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
     new Provider({
+      id: '1',
       name: 'Nathan',
       surname: 'Letourneau',
       email: 'nletourneau@mail.mail',
@@ -21,5 +22,9 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   async getAll(): Promise<Provider[]> {
     return this.providers;
+  }
+
+  getNextId(): string {
+    return (this.providers.length + 1).toString();
   }
 }

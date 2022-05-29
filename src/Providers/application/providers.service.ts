@@ -8,7 +8,9 @@ export class ProvidersService {
   constructor(private providerRepository: ProviderRepositoryInMemory) {}
 
   async add(dto: AddProviderDto) {
+    const newId = this.providerRepository.getNextId();
     const provider = new Provider({
+      id: newId,
       name: dto.name,
       surname: dto.surname,
       email: dto.email,
@@ -19,6 +21,7 @@ export class ProvidersService {
       radius: dto.radius,
     });
     this.providerRepository.save(provider);
+    return newId;
   }
 
   getAll(): Promise<Provider[]> {

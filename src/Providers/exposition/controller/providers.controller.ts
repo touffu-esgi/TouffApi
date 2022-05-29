@@ -26,9 +26,9 @@ export class ProvidersController {
     @Body() providerDto: AddProviderDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.providersService.add(providerDto);
+    const providerId = await this.providersService.add(providerDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + providerDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + providerId,
     };
   }
 
@@ -36,7 +36,13 @@ export class ProvidersController {
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
     return providers.map((provider) =>
-      ProviderAdapter.fromDto(provider, request),
+      ProviderAdapter.fromProviderToProviderResponse(provider, request),
     );
+  }
+
+  @Get(`:providerId`)
+  async getOne(@Req() request: Request): Promise<ProviderResponse> {
+    const provider = {};
+    return ProviderAdapter.fromProviderToProviderResponse(provider, request);
   }
 }

@@ -1,6 +1,9 @@
 import { IsEmail, IsNotEmpty, IsPositive, MinLength } from 'class-validator';
 
-export class AddProviderDto {
+export class GetProviderDto {
+  @IsNotEmpty()
+  id: string;
+
   @IsNotEmpty()
   name: string;
 
