@@ -12,7 +12,7 @@ export class AnimalsService {
     const animalType = AnimalTypeFactory.fromString(dto.type);
 
     const animal = new Animal(dto.name, animalType);
-    this.animalRepository.save(animal);
+    await this.animalRepository.save(animal);
   }
 
   getAll(): Promise<Animal[]> {

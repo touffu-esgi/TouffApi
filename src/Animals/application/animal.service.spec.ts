@@ -9,13 +9,17 @@ import { AnimalTypes } from '../domain/animal.types';
 describe('AnimalsService', () => {
   let animalsService: AnimalsService;
   let animals: Animal[] = [
-    new Animal('roucky', AnimalTypes.dog),
-    new Animal('sirius', AnimalTypes.cat),
-    new Animal('lili', AnimalTypes.cat),
+    new Animal('roucky', AnimalTypes.dog, '1'),
+    new Animal('sirius', AnimalTypes.cat, '2'),
+    new Animal('lili', AnimalTypes.cat, '3'),
   ];
 
   const mockAnimalsRepository = {
     save: jest.fn().mockImplementation((animal) => {
+      const animals = mockAnimalsRepository.getAll();
+      const constLastAnimal = +animals.at(-1).id;
+      animal.id = (constLastAnimal + 1).toString();
+
       animals.push(animal);
     }),
     getAll: jest.fn().mockReturnValue(animals),
@@ -44,6 +48,7 @@ describe('AnimalsService', () => {
     expect(animals.at(-1)).toEqual({
       _name: 'jean',
       _type: AnimalTypes.dog,
+      _id: '4',
     });
   });
 
