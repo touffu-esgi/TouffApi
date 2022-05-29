@@ -2,7 +2,7 @@ import { AddRecipientDto } from '../dto/add-recipient';
 import { RecipientResponse } from '../domain/recipient.response';
 
 export class RecipientAdapter {
-  public static fromDto(dto: AddRecipientDto) {
+  public static fromAnimalToAnimalResponse(dto: AddRecipientDto) {
     return new RecipientResponse(
       dto.name,
       dto.surname,
