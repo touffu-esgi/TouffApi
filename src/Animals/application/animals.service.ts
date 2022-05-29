@@ -3,6 +3,7 @@ import { AddAnimalDto } from '../dto/add-animal.dto';
 import { Animal } from '../domain/animal';
 import { AnimalRepositoryInMemory } from '../persistence/animal.repository.in-memory';
 import { AnimalTypes } from '../domain/animal.types';
+import { AnimalTypeNotAllowedException } from './exceptions/animal-type-not-allowed.exception';
 
 @Injectable()
 export class AnimalsService {
@@ -10,7 +11,9 @@ export class AnimalsService {
 
   async add(dto: AddAnimalDto): Promise<void> {
     if (AnimalTypes[dto.type] == undefined)
-      throw new HttpException('this type of animal is not allowed', 400);
+      throw new AnimalTypeNotAllowedException(
+        `animal type : '${dto.type}' is not allowed`,
+      );
 
     const animal = new Animal(dto.name, AnimalTypes[dto.type]);
     this.animalRepository.save(animal);
