@@ -10,8 +10,10 @@ export class AnimalsService {
 
   async add(dto: AddAnimalDto): Promise<Animal> {
     const animalType = AnimalTypeFactory.fromString(dto.type);
+    const nextId = await this.animalRepository.getNextId();
 
-    const animal = new Animal(dto.name, animalType);
+    const animal = new Animal(dto.name, animalType, nextId);
+
     await this.animalRepository.save(animal);
     return animal;
   }
