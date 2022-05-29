@@ -16,13 +16,14 @@ describe('AnimalsService', () => {
 
   const mockAnimalsRepository = {
     save: jest.fn().mockImplementation((animal) => {
-      const animals = mockAnimalsRepository.getAll();
-      const constLastAnimal = +animals.at(-1).id;
-      animal.id = (constLastAnimal + 1).toString();
-
       animals.push(animal);
     }),
     getAll: jest.fn().mockReturnValue(animals),
+    getNextId: jest.fn().mockImplementation(() => {
+      const constLastAnimal = mockAnimalsRepository.getAll();
+      const nextId = +constLastAnimal.at(-1).id;
+      return (nextId + 1).toString();
+    }),
   };
 
   beforeEach(async () => {
@@ -36,16 +37,15 @@ describe('AnimalsService', () => {
     animalsService = module.get<AnimalsService>(AnimalsService);
   });
 
-  it('should create one animal', function () {
+  it('should create one animal', async function () {
     const addAnimalDto: AddAnimalDto = {
       name: 'jean',
       type: AnimalTypes.dog,
     };
 
-    animalsService.add(addAnimalDto);
-    animals = mockAnimalsRepository.getAll();
+    const newAnimal = await animalsService.add(addAnimalDto);
 
-    expect(animals.at(-1)).toEqual({
+    expect(newAnimal).toEqual({
       _name: 'jean',
       _type: AnimalTypes.dog,
       _id: '4',

@@ -9,11 +9,13 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
     new Animal('lili', AnimalTypes.cat, '3'),
   ];
   async save(animal: Animal): Promise<Animal> {
-    const animals = await this.getAll();
-    const constLastAnimal = +animals.at(-1).id;
-    animal.id = (constLastAnimal + 1).toString();
     this.animals.push(animal);
     return animal;
+  }
+
+  async getNextId(): Promise<string> {
+    const constLastAnimal = +this.animals.at(-1).id;
+    return (constLastAnimal + 1).toString();
   }
 
   async getAll(): Promise<Animal[]> {
