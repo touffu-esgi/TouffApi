@@ -35,6 +35,6 @@ export class AnimalsController {
   @Get()
   async getAll(@Req() request: Request): Promise<AnimalResponse[]> {
     const animals = await this.animalsService.getAll();
-    return animals.map((animal) => AnimalAdapter.fromDto(animal));
+    return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
   }
 }
