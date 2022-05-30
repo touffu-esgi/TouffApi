@@ -1,6 +1,7 @@
 import { ProviderProps } from './provider.props';
 
 export class Provider implements ProviderProps {
+  private readonly _id: string;
   private readonly _name: string;
   private readonly _surname: string;
   private readonly _email: string;
@@ -11,6 +12,7 @@ export class Provider implements ProviderProps {
   private readonly _radius: number;
 
   constructor(providerProps: ProviderProps) {
+    this._id = providerProps.id;
     this._name = providerProps.name;
     this._surname = providerProps.surname;
     this._email = providerProps.email;
@@ -19,6 +21,10 @@ export class Provider implements ProviderProps {
     this._address = providerProps.address;
     this._base_tariff = providerProps.base_tariff;
     this._radius = providerProps.radius;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get name(): string {

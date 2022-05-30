@@ -12,7 +12,7 @@ export class AddressService {
     return this.addressRepository.getAll(filters);
   }
 
-  getOne(index): Promise<Address> {
-    return this.addressRepository.getOne(index);
+  async getOne(addressId): Promise<Address> {
+    return await this.addressRepository.getOne(addressId);
   }
 }

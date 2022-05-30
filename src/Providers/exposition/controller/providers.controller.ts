@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -26,9 +27,9 @@ export class ProvidersController {
     @Body() providerDto: AddProviderDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.providersService.add(providerDto);
+    const providerId = await this.providersService.add(providerDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + providerDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + providerId,
     };
   }
 
@@ -36,7 +37,22 @@ export class ProvidersController {
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
     return providers.map((provider) =>
-      ProviderAdapter.fromDto(provider, request),
+      ProviderAdapter.fromProviderToProviderResponse(
+        provider,
+        HttpUtils.getBaseUrlOf(request),
+      ),
+    );
+  }
+
+  @Get(':providerId')
+  async getOne(
+    @Param('providerId') providerId: string,
+    @Req() request: Request,
+  ): Promise<ProviderResponse> {
+    const provider = await this.providersService.getOne(providerId);
+    return ProviderAdapter.fromProviderToProviderResponse(
+      provider,
+      HttpUtils.getBaseUrlOf(request),
     );
   }
 }
