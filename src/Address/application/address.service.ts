@@ -9,11 +9,11 @@ export class AddressService {
 
   async add(dto: GetAddressDto) {}
 
-  getAll(): Promise<Address[]> {
-    return this.addressRepository.getAll();
+  async getAll(): Promise<Address[]> {
+    return await this.addressRepository.getAll();
   }
 
-  getOne(index): Promise<Address> {
-    return this.addressRepository.getOne(index);
+  async getOne(index): Promise<Address> {
+    return await this.addressRepository.getOne(index);
   }
 }
