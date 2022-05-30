@@ -6,7 +6,7 @@ export class AddressRepositoryInMemory {
     new Address({
       id: '1',
       addr1: '1 Chemin des roses',
-      cp: '31290',
+      zipcode: '31290',
       city: 'Rosaphir',
       country: 'Earth',
     }),
@@ -66,9 +66,8 @@ export class AddressRepositoryInMemory {
     });
     return fitsFilter;
   }
-
-  async getOne(index: number): Promise<Address | null> {
-    if (index < this.addresses.length) return this.addresses[index];
+  async getOne(addressId: number): Promise<Address | null> {
+    if (addressId < this.addresses.length) return this.addresses[addressId];
     return null;
   }
 }

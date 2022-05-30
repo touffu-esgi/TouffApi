@@ -16,6 +16,8 @@ export class AddressController {
       filters = req.body.filter;
     }
     const addresses = await this.addressService.getAll(filters);
-    return addresses.map((address) => AddressAdapter.fromDto(address));
+    return addresses.map((address) =>
+      AddressAdapter.fromAddressToAddressResponse(address),
+    );
   }
 }

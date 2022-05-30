@@ -4,7 +4,7 @@ export class Address implements AddressProps {
   private readonly _id: string;
   private readonly _addr1: string;
   private readonly _addr2?: string;
-  private readonly _cp: string;
+  private readonly _zipcode: string;
   private readonly _city: string;
   private readonly _country: string;
 
@@ -12,7 +12,7 @@ export class Address implements AddressProps {
     this._id = addressProps.id;
     this._addr1 = addressProps.addr1;
     this._addr2 = addressProps.addr2;
-    this._cp = addressProps.cp;
+    this._zipcode = addressProps.zipcode;
     this._city = addressProps.city;
     this._country = addressProps.country;
   }
@@ -29,8 +29,8 @@ export class Address implements AddressProps {
     return this._addr2;
   }
 
-  get cp(): string {
-    return this._cp;
+  get zipcode(): string {
+    return this._zipcode;
   }
 
   get city(): string {
@@ -43,7 +43,7 @@ export class Address implements AddressProps {
 
   public toString(): string {
     return `${this.addr1}, ${this._addr2 ? this._addr2 + ', ' : ''}, ${
-      this._cp
+      this._zipcode
     } ${this._country}, ${this._country}`;
   }
 }
