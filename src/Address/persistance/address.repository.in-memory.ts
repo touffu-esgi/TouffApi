@@ -38,7 +38,6 @@ export class AddressRepositoryInMemory {
           this.filterOrUtil(filters['or'], addr),
         );
       }
-      console.log(addr);
       return addr;
     }
     return this.addresses;
