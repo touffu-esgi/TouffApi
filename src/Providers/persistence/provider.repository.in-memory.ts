@@ -27,7 +27,6 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   async getOne(id: string): Promise<Provider> {
     const provider = this.providers.filter((p) => p.id === id);
-    console.log(provider);
 
     if (!!provider) return this.providers[0];
     throw new ProviderNotFoundException(`Provider ${id} not found`);

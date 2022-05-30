@@ -17,7 +17,6 @@ export class GetProviderDto {
   @MinLength(8)
   password: string;
 
-  //@IsPhoneNumber()
   phone: string;
 
   @IsNotEmpty()

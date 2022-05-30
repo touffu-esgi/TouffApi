@@ -14,7 +14,6 @@ export class AddProviderDto {
   @MinLength(8)
   password: string;
 
-  //@IsPhoneNumber()
   phone: string;
 
   @IsNotEmpty()
