@@ -4,11 +4,7 @@ export interface ProviderProps {
   readonly email: string;
   readonly password: string;
   readonly phone?: string;
-  readonly addr1: string;
-  readonly addr2?: string;
-  readonly cp: string;
-  readonly city: string;
-  readonly country: string;
-  readonly services: string[];
+  readonly address: string;
+  readonly base_tariff: number;
   readonly radius: number;
 }

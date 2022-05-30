@@ -14,12 +14,8 @@ export class ProvidersService {
       email: dto.email,
       password: dto.password,
       phone: dto.phone,
-      addr1: dto.addr1,
-      addr2: dto.addr2,
-      cp: dto.cp,
-      city: dto.city,
-      country: dto.country,
-      services: dto.services,
+      address: dto.address,
+      base_tariff: dto.base_tariff,
       radius: dto.radius,
     });
     this.providerRepository.save(provider);

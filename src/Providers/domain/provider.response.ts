@@ -6,12 +6,8 @@ export class ProviderResponse {
   email: string;
   password: string;
   phone?: string;
-  addr1: string;
-  addr2?: string;
-  cp: string;
-  city: string;
-  country: string;
-  services: string[];
+  address: string;
+  base_tariff: number;
   radius: number;
 
   constructor(providerProps: ProviderProps) {
@@ -20,12 +16,8 @@ export class ProviderResponse {
     this.email = providerProps.email;
     this.password = providerProps.password;
     this.phone = providerProps.phone;
-    this.addr1 = providerProps.addr1;
-    this.addr2 = providerProps.addr2;
-    this.cp = providerProps.cp;
-    this.city = providerProps.city;
-    this.country = providerProps.country;
-    this.services = providerProps.services;
+    this.address = providerProps.address;
+    this.base_tariff = providerProps.base_tariff;
     this.radius = providerProps.radius;
   }
 }

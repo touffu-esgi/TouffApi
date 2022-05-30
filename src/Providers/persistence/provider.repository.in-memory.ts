@@ -8,12 +8,9 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       surname: 'Letourneau',
       email: 'nletourneau@mail.mail',
       password: 'nletourneau',
-      addr1: 'adresse',
-      city: 'ville',
-      country: 'France',
-      cp: '83192',
+      address: '1',
       radius: 3,
-      services: [],
+      base_tariff: 30.2,
     }),
   ];
 
