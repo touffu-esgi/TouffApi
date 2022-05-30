@@ -1,19 +1,18 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
+import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
     new Provider({
+      id: '1',
       name: 'Nathan',
       surname: 'Letourneau',
       email: 'nletourneau@mail.mail',
       password: 'nletourneau',
-      addr1: 'adresse',
-      city: 'ville',
-      country: 'France',
-      cp: '83192',
+      address: '1',
       radius: 3,
-      services: [],
+      base_tariff: 30.2,
     }),
   ];
 
@@ -24,5 +23,16 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   async getAll(): Promise<Provider[]> {
     return this.providers;
+  }
+
+  async getOne(id: string): Promise<Provider> {
+    const provider = this.providers.filter((p) => p.id === id);
+
+    if (provider.length > 0) return provider[0];
+    throw new ProviderNotFoundException(`Provider ${id} not found`);
+  }
+
+  getNextId(): string {
+    return (this.providers.length + 1).toString();
   }
 }

@@ -9,7 +9,6 @@ export class AnimalsService {
   constructor(private animalRepository: AnimalRepositoryInMemory) {}
 
   async add(dto: AddAnimalDto): Promise<void> {
-    console.log(AnimalTypes[dto.type]);
     if (AnimalTypes[dto.type] == undefined)
       throw new HttpException('this type of animal is not allowed', 400);
 

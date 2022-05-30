@@ -1,21 +1,21 @@
-import { AddProviderDto } from '../dto/add-provider.dto';
 import { ProviderResponse } from '../domain/provider.response';
+import { GetProviderDto } from '../dto/get-provider.dto';
 
 export class ProviderAdapter {
-  public static fromDto(dto: AddProviderDto) {
+  public static fromProviderToProviderResponse(
+    provider: GetProviderDto,
+    baseUrl: string,
+  ) {
     const props = {
-      name: dto.name,
-      surname: dto.surname,
-      email: dto.email,
-      password: dto.password,
-      phone: dto.phone,
-      addr1: dto.addr1,
-      addr2: dto.addr2,
-      cp: dto.cp,
-      city: dto.city,
-      country: dto.country,
-      services: dto.services,
-      radius: dto.radius,
+      id: provider.id,
+      name: provider.name,
+      surname: provider.surname,
+      email: provider.email,
+      password: provider.password,
+      phone: provider.phone,
+      address: baseUrl + '/address/' + provider.address,
+      base_tariff: provider.base_tariff,
+      radius: provider.radius,
     };
     return new ProviderResponse(props);
   }
