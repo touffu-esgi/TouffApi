@@ -15,8 +15,8 @@ export class AddressRepositoryInMemory {
     return this.addresses;
   }
 
-  async getOne(index: number): Promise<Address | null> {
-    if (index < this.addresses.length) return this.addresses[index];
+  async getOne(addressId: number): Promise<Address | null> {
+    if (addressId < this.addresses.length) return this.addresses[addressId];
     return null;
   }
 }
