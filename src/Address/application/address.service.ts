@@ -13,7 +13,7 @@ export class AddressService {
     return await this.addressRepository.getAll();
   }
 
-  async getOne(index): Promise<Address> {
-    return await this.addressRepository.getOne(index);
+  async getOne(addressId): Promise<Address> {
+    return await this.addressRepository.getOne(addressId);
   }
 }
