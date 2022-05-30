@@ -1,23 +1,21 @@
 import { ProviderResponse } from '../domain/provider.response';
-import { HttpUtils } from '../../shared/http/http.utils';
-import { Request } from 'express';
 import { GetProviderDto } from '../dto/get-provider.dto';
 
 export class ProviderAdapter {
   public static fromProviderToProviderResponse(
-    dto: GetProviderDto,
-    request: Request,
+    provider: GetProviderDto,
+    baseUrl: string,
   ) {
     const props = {
-      id: dto.id,
-      name: dto.name,
-      surname: dto.surname,
-      email: dto.email,
-      password: dto.password,
-      phone: dto.phone,
-      address: HttpUtils.getBaseUrlOf(request) + '/address/' + dto.address,
-      base_tariff: dto.base_tariff,
-      radius: dto.radius,
+      id: provider.id,
+      name: provider.name,
+      surname: provider.surname,
+      email: provider.email,
+      password: provider.password,
+      phone: provider.phone,
+      address: baseUrl + '/address/' + provider.address,
+      base_tariff: provider.base_tariff,
+      radius: provider.radius,
     };
     return new ProviderResponse(props);
   }

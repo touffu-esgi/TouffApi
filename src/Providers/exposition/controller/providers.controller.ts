@@ -37,7 +37,10 @@ export class ProvidersController {
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
     return providers.map((provider) =>
-      ProviderAdapter.fromProviderToProviderResponse(provider, request),
+      ProviderAdapter.fromProviderToProviderResponse(
+        provider,
+        HttpUtils.getBaseUrlOf(request),
+      ),
     );
   }
 
@@ -47,6 +50,9 @@ export class ProvidersController {
     @Req() request: Request,
   ): Promise<ProviderResponse> {
     const provider = await this.providersService.getOne(providerId);
-    return ProviderAdapter.fromProviderToProviderResponse(provider, request);
+    return ProviderAdapter.fromProviderToProviderResponse(
+      provider,
+      HttpUtils.getBaseUrlOf(request),
+    );
   }
 }

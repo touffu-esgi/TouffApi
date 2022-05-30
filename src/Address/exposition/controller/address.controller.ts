@@ -12,6 +12,8 @@ export class AddressController {
   @HttpCode(200)
   async getAll(@Req() req: Request): Promise<AddressResponse[]> {
     const addresses = await this.addressService.getAll();
-    return addresses.map((address) => AddressAdapter.fromDto(address));
+    return addresses.map((address) =>
+      AddressAdapter.fromAddressToAddressResponse(address),
+    );
   }
 }
