@@ -5,7 +5,7 @@ export class AddressRepositoryInMemory {
     new Address({
       id: '1',
       addr1: '1 Chemin des roses',
-      cp: '31290',
+      zipcode: '31290',
       city: 'Rosaphir',
       country: 'Earth',
     }),

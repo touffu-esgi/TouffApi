@@ -7,7 +7,7 @@ export class AddressAdapter {
       address.id,
       address.addr1,
       address.addr2 ? address.addr2 : null,
-      address.cp,
+      address.zipcode,
       address.city,
       address.country,
     );

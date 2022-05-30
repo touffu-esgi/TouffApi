@@ -11,7 +11,7 @@ export class GetAddressDto {
 
   @IsNotEmpty()
   @MinLength(4)
-  cp: string;
+  zipcode: string;
 
   @IsNotEmpty()
   city: string;
