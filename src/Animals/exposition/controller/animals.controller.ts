@@ -26,15 +26,15 @@ export class AnimalsController {
     @Body() addAnimalDto: AddAnimalDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.animalsService.add(addAnimalDto);
+    const newAnimal = await this.animalsService.add(addAnimalDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + addAnimalDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + newAnimal.id,
     };
   }
 
   @Get()
   async getAll(@Req() request: Request): Promise<AnimalResponse[]> {
     const animals = await this.animalsService.getAll();
-    return animals.map((animal) => AnimalAdapter.fromDto(animal));
+    return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
   }
 }

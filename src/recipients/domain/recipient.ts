@@ -1,4 +1,5 @@
 export class Recipient {
+  private readonly _id: string;
   private readonly _name: string;
   private readonly _surname: string;
   private readonly _email: string;
@@ -7,6 +8,7 @@ export class Recipient {
   private readonly _address: string;
 
   constructor(
+    id: string,
     name: string,
     surname: string,
     email: string,
@@ -14,6 +16,7 @@ export class Recipient {
     password: string,
     address: string,
   ) {
+    this._id = id;
     this._name = name;
     this._surname = surname;
     this._email = email;
@@ -44,5 +47,9 @@ export class Recipient {
 
   get address(): string {
     return this._address;
+  }
+
+  get id(): string {
+    return this._id;
   }
 }

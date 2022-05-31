@@ -4,13 +4,18 @@ import { AnimalTypes } from '../domain/animal.types';
 
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [
-    new Animal('roucky', AnimalTypes.chien),
-    new Animal('sirius', AnimalTypes.chat),
-    new Animal('lili', AnimalTypes.chat),
+    new Animal('roucky', AnimalTypes.dog, '1'),
+    new Animal('sirius', AnimalTypes.cat, '2'),
+    new Animal('lili', AnimalTypes.cat, '3'),
   ];
-  save(animal: Animal): Animal {
+  async save(animal: Animal): Promise<Animal> {
     this.animals.push(animal);
     return animal;
+  }
+
+  async getNextId(): Promise<string> {
+    const constLastAnimal = +this.animals.at(-1).id;
+    return (constLastAnimal + 1).toString();
   }
 
   async getAll(): Promise<Animal[]> {

@@ -1,20 +1,21 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AddAnimalDto } from '../dto/add-animal.dto';
 import { Animal } from '../domain/animal';
 import { AnimalRepositoryInMemory } from '../persistence/animal.repository.in-memory';
-import { AnimalTypes } from '../domain/animal.types';
+import { AnimalTypeFactory } from './exceptions/animal-type.factory';
 
 @Injectable()
 export class AnimalsService {
   constructor(private animalRepository: AnimalRepositoryInMemory) {}
 
-  async add(dto: AddAnimalDto): Promise<void> {
-    console.log(AnimalTypes[dto.type]);
-    if (AnimalTypes[dto.type] == undefined)
-      throw new HttpException('this type of animal is not allowed', 400);
+  async add(dto: AddAnimalDto): Promise<Animal> {
+    const animalType = AnimalTypeFactory.fromString(dto.type);
+    const nextId = await this.animalRepository.getNextId();
 
-    const animal = new Animal(dto.name, AnimalTypes[dto.type]);
-    this.animalRepository.save(animal);
+    const animal = new Animal(dto.name, animalType, nextId);
+
+    await this.animalRepository.save(animal);
+    return animal;
   }
 
   getAll(): Promise<Animal[]> {

@@ -14,6 +14,7 @@ import { AddRecipientDto } from '../../dto/add-recipient';
 import { RecipientsService } from '../../application/recipient.service';
 import { RecipientResponse } from '../../domain/recipient.response';
 import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
+import { Recipient } from '../../domain/recipient';
 
 @Controller('recipient')
 export class RecipientsController {
@@ -26,17 +27,17 @@ export class RecipientsController {
     @Body() addRecipientDto: AddRecipientDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.recipientsService.add(addRecipientDto);
+    const newRecipient = await this.recipientsService.add(addRecipientDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + addRecipientDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + newRecipient.id,
     };
   }
 
   @Get()
   async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
-    const recipients = await this.recipientsService.getAll();
+    const recipients: Recipient[] = await this.recipientsService.getAll();
     return recipients.map((recipient) =>
-      RecipientAdapter.fromAnimalToAnimalResponse(recipient),
+      RecipientAdapter.fromRecipientToRecipientResponse(recipient),
     );
   }
 }
