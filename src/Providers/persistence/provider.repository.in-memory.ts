@@ -1,6 +1,7 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
 import { HttpException } from '@nestjs/common';
+import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
@@ -28,7 +29,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
   async getOne(id: string): Promise<Provider> {
     const provider = this.providers.filter((p) => p.id === id);
     if (provider.length > 0) return provider[0];
-    throw new HttpException(`Provider ${id} not found`, 404);
+    throw new ProviderNotFoundException(`Provider ${id} not found`);
   }
 
   getNextId(): string {

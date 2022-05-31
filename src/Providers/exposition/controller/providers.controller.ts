@@ -35,6 +35,7 @@ export class ProvidersController {
   }
 
   @Get()
+  @UseFilters(new ProviderExceptionFilter())
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
     return providers.map((provider) =>
@@ -46,6 +47,7 @@ export class ProvidersController {
   }
 
   @Get(':providerId')
+  @UseFilters(new ProviderExceptionFilter())
   async getOne(
     @Param('providerId') providerId: string,
     @Req() request: Request,
