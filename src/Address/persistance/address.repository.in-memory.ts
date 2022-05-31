@@ -1,8 +1,10 @@
 import { Address } from '../domain/address';
-import { AddressProps } from '../../Providers/domain/address.props';
+import { AddressProps } from '../domain/address.props';
+import { HttpException } from '@nestjs/common';
+import { AddressRepository } from '../domain/address.repository';
 
-export class AddressRepositoryInMemory {
-  public readonly addresses: Address[] = [
+export class AddressRepositoryInMemory implements AddressRepository {
+  private readonly addresses: Address[] = [
     new Address({
       id: '1',
       addr1: '1 Chemin des roses',
@@ -13,14 +15,14 @@ export class AddressRepositoryInMemory {
     new Address({
       id: '2',
       addr1: '3 Chemin des châtaigners',
-      cp: '21900',
+      zipcode: '21900',
       city: 'City-town',
       country: 'Earth',
     }),
     new Address({
       id: '3',
       addr1: '1 Rue de France',
-      cp: '92300',
+      zipcode: '92300',
       city: 'Village',
       country: 'Earth',
     }),
@@ -46,11 +48,11 @@ export class AddressRepositoryInMemory {
   filterAndUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
     let fitsFilter = true;
     Object.keys(filters).forEach((propName) => {
+      const addrProp = addrItem['_' + propName];
+      if (!addrProp) return false;
       fitsFilter =
         fitsFilter &&
-        addrItem['_' + propName]
-          .toLowerCase()
-          .indexOf(filters[propName].toLowerCase()) !== -1;
+        addrProp.toLowerCase().indexOf(filters[propName].toLowerCase()) !== -1;
     });
     return fitsFilter;
   }
@@ -58,16 +60,30 @@ export class AddressRepositoryInMemory {
   filterOrUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
     let fitsFilter = true;
     Object.keys(filters).forEach((propName) => {
+      const addrProp = addrItem['_' + propName];
+      if (!addrProp) return false;
       fitsFilter =
         fitsFilter ||
-        addrItem['_' + propName]
-          .toLowerCase()
-          .indexOf(filters[propName].toLowerCase()) !== -1;
+        addrProp.toLowerCase().indexOf(filters[propName].toLowerCase()) !== -1;
     });
     return fitsFilter;
   }
-  async getOne(addressId: number): Promise<Address | null> {
-    if (addressId < this.addresses.length) return this.addresses[addressId];
-    return null;
+
+  async getOne(addressId: string): Promise<Address> {
+    const address = this.addresses.filter(
+      (address) => address.id === addressId,
+    );
+    if (address.length > 0) return address[0];
+    throw new HttpException(`Address ${addressId} not found`, 404);
+  }
+
+  async add(address: Address): Promise<Address> {
+    this.addresses.push(address);
+    console.log(this.addresses);
+    return address;
+  }
+
+  getNextId(): string {
+    return (this.addresses.length + 1).toString();
   }
 }

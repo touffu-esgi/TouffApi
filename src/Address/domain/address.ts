@@ -1,4 +1,4 @@
-import { AddressProps } from '../../Providers/domain/address.props';
+import { AddressProps } from './address.props';
 
 export class Address implements AddressProps {
   private readonly _id: string;

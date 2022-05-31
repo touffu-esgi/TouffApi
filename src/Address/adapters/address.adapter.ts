@@ -1,4 +1,4 @@
-import { GetAddressDto } from '../dto/get-address';
+import { GetAddressDto } from '../dto/get-address.dto';
 import { AddressResponse } from '../domain/address.response';
 
 export class AddressAdapter {
