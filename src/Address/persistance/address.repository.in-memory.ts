@@ -79,7 +79,6 @@ export class AddressRepositoryInMemory implements AddressRepository {
 
   async add(address: Address): Promise<Address> {
     this.addresses.push(address);
-    console.log(this.addresses);
     return address;
   }
 

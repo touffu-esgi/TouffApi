@@ -7,18 +7,18 @@ import { Provider } from '../domain/provider';
 export class ProvidersService {
   constructor(private providerRepository: ProviderRepositoryInMemory) {}
 
-  async add(dto: AddProviderDto) {
+  async add(providerEmptyId: Provider) {
     const newId = this.providerRepository.getNextId();
     const provider = new Provider({
       id: newId,
-      name: dto.name,
-      surname: dto.surname,
-      email: dto.email,
-      password: dto.password,
-      phone: dto.phone,
-      address: dto.address,
-      base_tariff: dto.base_tariff,
-      radius: dto.radius,
+      name: providerEmptyId.name,
+      surname: providerEmptyId.surname,
+      email: providerEmptyId.email,
+      password: providerEmptyId.password,
+      phone: providerEmptyId.phone,
+      address: providerEmptyId.address,
+      base_tariff: providerEmptyId.base_tariff,
+      radius: providerEmptyId.radius,
     });
     await this.providerRepository.save(provider);
     return newId;

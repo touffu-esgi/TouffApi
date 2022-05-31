@@ -40,10 +40,8 @@ export class AddressController {
   @UseFilters(new AddressExceptionFilter())
   async getOne(
     @Param('addressId') addressId: string,
-    @Req() req: Request,
   ): Promise<AddressResponse> {
     const address = await this.addressService.getOne(addressId);
-    console.log(address);
     return AddressAdapter.fromAddressToAddressResponse(address);
   }
 
@@ -54,7 +52,8 @@ export class AddressController {
     @Body() addAddressDto: AddAddressDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    const address = await this.addressService.add(addAddressDto);
+    const addressClass = AddressAdapter.fromDtoToAddress(addAddressDto);
+    const address = await this.addressService.add(addressClass);
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + address.id,
     };
