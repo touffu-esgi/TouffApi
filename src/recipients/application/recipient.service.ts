@@ -1,7 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AddRecipientDto } from '../dto/add-recipient';
 import { Recipient } from '../domain/recipient';
 import { RecipientRepositoryInMemory } from '../persistence/recipient.repository.in-memory';
+import { SecurityUtils } from '../../shared/utils/security.utils';
 
 @Injectable()
 export class RecipientsService {
@@ -13,7 +14,7 @@ export class RecipientsService {
       dto.surname,
       dto.email,
       dto.phoneNumber,
-      dto.password,
+      SecurityUtils.sha512(dto.password),
       dto.address,
     );
     this.recipientRepository.save(recipient);
