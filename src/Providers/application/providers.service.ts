@@ -20,7 +20,7 @@ export class ProvidersService {
       base_tariff: dto.base_tariff,
       radius: dto.radius,
     });
-    this.providerRepository.save(provider);
+    await this.providerRepository.save(provider);
     return newId;
   }
 
