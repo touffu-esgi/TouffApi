@@ -10,7 +10,6 @@ export class RecipientAdapter {
       dto.surname,
       dto.email,
       dto.phoneNumber,
-      dto.password,
       dto.address,
     );
   }
