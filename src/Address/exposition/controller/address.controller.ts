@@ -3,6 +3,7 @@ import { AddressService } from '../../application/address.service';
 import { Request } from 'express';
 import { AddressResponse } from '../../domain/address.response';
 import { AddressAdapter } from '../../adapters/address.adapter';
+import { AddressExceptionFilter } from '../filters/address-exception.filter';
 
 @Controller('address')
 export class AddressController {
@@ -10,6 +11,7 @@ export class AddressController {
 
   @Get()
   @HttpCode(200)
+  @UseFilters(new AddressExceptionFilter())
   async getAll(@Req() req: Request): Promise<AddressResponse[]> {
     let filters = {};
     if (req.body.filter) {
