@@ -10,7 +10,6 @@ export class UserRepositoryInMemory implements UserRepository {
 
   async add(user: User): Promise<User> {
     this.usersMockRepositoryImplement.push(user);
-    console.log(this.usersMockRepositoryImplement);
     return user;
   }
 
@@ -24,7 +23,6 @@ export class UserRepositoryInMemory implements UserRepository {
 
   async getNextId(): Promise<string> {
     const lastId = +this.usersMockRepositoryImplement.at(-1).id;
-    console.log(this.usersMockRepositoryImplement.at(-1));
     return (lastId + 1).toString();
   }
 }

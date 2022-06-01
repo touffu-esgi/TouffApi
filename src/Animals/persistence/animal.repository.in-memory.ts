@@ -8,6 +8,7 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
     new Animal('sirius', AnimalTypes.cat, '2'),
     new Animal('lili', AnimalTypes.cat, '3'),
   ];
+
   async save(animal: Animal): Promise<Animal> {
     this.animals.push(animal);
     return animal;
