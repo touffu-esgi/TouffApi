@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
@@ -10,6 +11,9 @@ import { Request } from 'express';
 import { UserService } from '../../application/user.service';
 import { AddUserDto } from '../../dto/add-user.dto';
 import { HttpUtils } from '../../../shared/http/http.utils';
+import { RecipientAdapter } from '../../../Recipients/adaptaters/recipient.adapter';
+import { UserAdapter } from '../../adapter/user.adapter';
+import { UserResponse } from '../../domain/user.response';
 
 @Controller('user')
 @UseFilters()
@@ -26,5 +30,12 @@ export class UserController {
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + user.id,
     };
+  }
+
+  @Get()
+  @HttpCode(201)
+  async getAll(@Req() request: Request): Promise<UserResponse[]> {
+    const users = await this.userService.getAll();
+    return users.map((user) => UserAdapter.fromUserToUserResponse(user));
   }
 }

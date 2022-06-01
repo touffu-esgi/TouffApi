@@ -20,4 +20,8 @@ export class UserService {
     await this.userRepositoryInMemory.add(newUser);
     return newUser;
   }
+
+  async getAll(): Promise<User[]> {
+    return await this.userRepositoryInMemory.getAll();
+  }
 }
