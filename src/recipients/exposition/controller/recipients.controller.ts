@@ -17,12 +17,12 @@ import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
 import { Recipient } from '../../domain/recipient';
 
 @Controller('recipient')
+@UseFilters(new RecipientExceptionFilter())
 export class RecipientsController {
   constructor(private readonly recipientsService: RecipientsService) {}
 
   @Post()
   @HttpCode(201)
-  @UseFilters(new RecipientExceptionFilter())
   async add(
     @Body() addRecipientDto: AddRecipientDto,
     @Req() request: Request,
