@@ -18,12 +18,12 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAddressDto } from '../../dto/add-address.dto';
 
 @Controller('address')
+@UseFilters(new AddressExceptionFilter())
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Get()
   @HttpCode(200)
-  @UseFilters(new AddressExceptionFilter())
   async getAll(@Req() req: Request): Promise<AddressResponse[]> {
     let filters = {};
     if (req.body.filter) {
@@ -37,7 +37,6 @@ export class AddressController {
 
   @Get(':addressId')
   @HttpCode(200)
-  @UseFilters(new AddressExceptionFilter())
   async getOne(
     @Param('addressId') addressId: string,
   ): Promise<AddressResponse> {
@@ -47,7 +46,6 @@ export class AddressController {
 
   @Post()
   @HttpCode(201)
-  @UseFilters(new AddressExceptionFilter())
   async add(
     @Body() addAddressDto: AddAddressDto,
     @Req() request: Request,

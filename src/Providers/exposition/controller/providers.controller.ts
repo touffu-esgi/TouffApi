@@ -17,12 +17,12 @@ import { ProviderResponse } from '../../domain/provider.response';
 import { ProviderExceptionFilter } from '../filters/provider.exception.filter';
 
 @Controller('providers')
+@UseFilters(new ProviderExceptionFilter())
 export class ProvidersController {
   constructor(private readonly providersService: ProvidersService) {}
 
   @Post()
   @HttpCode(201)
-  @UseFilters(new ProviderExceptionFilter())
   async add(
     @Body() providerDto: AddProviderDto,
     @Req() request: Request,
@@ -35,7 +35,6 @@ export class ProvidersController {
   }
 
   @Get()
-  @UseFilters(new ProviderExceptionFilter())
   async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
     const providers = await this.providersService.getAll();
     return providers.map((provider) =>
@@ -47,7 +46,6 @@ export class ProvidersController {
   }
 
   @Get(':providerId')
-  @UseFilters(new ProviderExceptionFilter())
   async getOne(
     @Param('providerId') providerId: string,
     @Req() request: Request,
