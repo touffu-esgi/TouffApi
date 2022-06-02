@@ -26,7 +26,7 @@ export class UserExceptionFilter {
 
     switch (exception.name) {
       case UserNotFoundException.name:
-        body.statusCode = 400;
+        body.statusCode = 404;
         break;
       default:
         body.statusCode = 500;

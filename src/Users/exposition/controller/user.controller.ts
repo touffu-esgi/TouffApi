@@ -35,19 +35,19 @@ export class UserController {
   }
 
   @Get()
-  @HttpCode(201)
+  @HttpCode(200)
   async getAll(@Req() request: Request): Promise<UserResponse[]> {
     const users = await this.userService.getAll();
     return users.map((user) => UserAdapter.fromUserToUserResponse(user));
   }
 
   @Get(':userId')
-  @HttpCode(201)
+  @HttpCode(200)
   async getOne(
     @Param('userId') userId: string,
     @Req() request: Request,
   ): Promise<UserResponse> {
     const user = await this.userService.getOne(userId);
-    return UserAdapter.fromUserToUserResponse(user);
+    return UserAdapter.fromUserToUserResponseWithPassword(user);
   }
 }
