@@ -8,8 +8,10 @@ import { SecurityUtils } from '../../shared/utils/security.utils';
 export class RecipientsService {
   constructor(private recipientRepository: RecipientRepositoryInMemory) {}
 
-  async add(dto: AddRecipientDto): Promise<void> {
+  async add(dto: AddRecipientDto): Promise<Recipient> {
+    const nextId = this.recipientRepository.getNextId();
     const recipient = new Recipient(
+      nextId,
       dto.name,
       dto.surname,
       dto.email,
@@ -17,7 +19,7 @@ export class RecipientsService {
       SecurityUtils.sha512(dto.password),
       dto.address,
     );
-    this.recipientRepository.save(recipient);
+    return await this.recipientRepository.save(recipient);
   }
 
   getAll(): Promise<Recipient[]> {

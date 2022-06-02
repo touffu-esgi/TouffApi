@@ -4,6 +4,7 @@ import { Recipient } from '../domain/recipient';
 export class RecipientRepositoryInMemory implements RecipientRepository {
   private readonly recipients: Recipient[] = [
     new Recipient(
+      '1',
       'nathan',
       'letourneau',
       'nathan@nathan.fr',
@@ -13,12 +14,17 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
     ),
   ];
 
-  save(recipient: Recipient): Recipient {
+  async save(recipient: Recipient): Promise<Recipient> {
     this.recipients.push(recipient);
     return recipient;
   }
 
   async getAll(): Promise<Recipient[]> {
     return this.recipients;
+  }
+
+  getNextId(): string {
+    const currentId = +this.recipients.at(-1).id;
+    return (currentId + 1).toString();
   }
 }

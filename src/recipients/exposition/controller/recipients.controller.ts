@@ -26,9 +26,9 @@ export class RecipientsController {
     @Body() addRecipientDto: AddRecipientDto,
     @Req() request: Request,
   ): Promise<{ url: string }> {
-    await this.recipientsService.add(addRecipientDto);
+    const newRecipient = await this.recipientsService.add(addRecipientDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + addRecipientDto.name,
+      url: HttpUtils.getFullUrlOf(request) + '/' + newRecipient.id,
     };
   }
 
