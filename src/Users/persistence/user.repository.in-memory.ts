@@ -13,8 +13,8 @@ export class UserRepositoryInMemory implements UserRepository {
     return user;
   }
 
-  getAll(): Promise<User[]> {
-    return Promise.resolve([]);
+  async getAll(): Promise<User[]> {
+    return this.usersMockRepositoryImplement;
   }
 
   getOne(userId: string): Promise<User> {
