@@ -1,10 +1,21 @@
-import { Controller, Get, Param, Req, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Req,
+  UseFilters,
+} from '@nestjs/common';
 import { AgreementExceptionFilter } from '../filters/agreement-exception.filter';
 import { AgreementService } from '../../application/agreement.service';
 import { Request } from 'express';
 import { AgreementResponse } from '../../domain/agreement.response';
 import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
+import { AddAgreementDto } from '../../dto/add-agreement.dto';
+import { Agreement } from '../../domain/agreement';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())
@@ -27,11 +38,26 @@ export class AgreementController {
   }
 
   @Get(':agreementId')
-  async getOne(@Param('agreementId') agreementId: string, @Req() req: Request) {
+  async getOne(
+    @Param('agreementId') agreementId: string,
+    @Req() req: Request,
+  ): Promise<AgreementResponse> {
     const agreement = await this.agreementService.getOne(agreementId);
     return AgreementAdapter.toAgreementResponse(
       agreement,
       HttpUtils.getBaseUrlOf(req),
     );
+  }
+
+  @Post()
+  @HttpCode(201)
+  async add(
+    @Body() addAgreementDto: AddAgreementDto,
+    @Req() req: Request,
+  ): Promise<{ url: string }> {
+    const agreement = await this.agreementService.add(addAgreementDto);
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + agreement.id,
+    };
   }
 }

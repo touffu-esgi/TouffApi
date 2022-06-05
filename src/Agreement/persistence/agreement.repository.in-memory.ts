@@ -52,10 +52,11 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
   }
 
   async add(agreement: Agreement): Promise<Agreement> {
-    throw new Error('To implement');
+    this.agreements.push(agreement);
+    return agreement;
   }
 
   getNextId(): string {
-    return (this.agreements[-1].id + 1).toString();
+    return (+this.agreements.at(-1).id + 1).toString();
   }
 }
