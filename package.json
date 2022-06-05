@@ -1,7 +1,7 @@
 {
   "name": "touffapi",
   "version": "0.0.1",
-  "description": "",
+  "description": "*Projet annuel de 3e année, École Supérieure de Génie Informatique, section Architecture Logicielle.*",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -72,5 +72,14 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/touffu-esgi/TouffApi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/touffu-esgi/TouffApi/issues"
+  },
+  "homepage": "https://github.com/touffu-esgi/TouffApi#readme"
 }
