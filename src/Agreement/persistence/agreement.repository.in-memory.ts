@@ -31,7 +31,16 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
   ];
 
   async getAll(filters: unknown): Promise<Agreement[]> {
-    return this.agreements;
+    let agreements = this.agreements;
+    if (filters) {
+      Object.keys(filters).forEach((propName) => {
+        agreements = agreements.filter(
+          (agreement) =>
+            !agreement[propName] || agreement[propName] === filters[propName],
+        );
+      });
+    }
+    return agreements;
   }
 
   async getOne(agreementId: string): Promise<Agreement> {

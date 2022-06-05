@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 export class AgreementService {
   constructor(private agreementRepository: AgreementRepositoryInMemory) {}
 
-  async getAll(filters: unknown = {}): Promise<Agreement[]> {
+  async getAll(filters: unknown): Promise<Agreement[]> {
     return await this.agreementRepository.getAll(filters);
   }
 
