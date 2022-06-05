@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  Param,
-  Req,
-  UseFilters,
-} from '@nestjs/common';
+import { Controller, Get, Param, Req, UseFilters } from '@nestjs/common';
 import { AgreementExceptionFilter } from '../filters/agreement-exception.filter';
 import { AgreementService } from '../../application/agreement.service';
 import { Request } from 'express';
