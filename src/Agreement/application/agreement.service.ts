@@ -9,4 +9,8 @@ export class AgreementService {
   async getAll(filters: unknown = {}): Promise<Agreement[]> {
     return await this.agreementRepository.getAll(filters);
   }
+
+  async getOne(agreementId: string): Promise<Agreement> {
+    return await this.agreementRepository.getOne(agreementId);
+  }
 }

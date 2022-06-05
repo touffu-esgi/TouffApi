@@ -1,6 +1,7 @@
 import { AgreementRepository } from '../domain/agreement.repository';
 import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
+import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   private readonly agreements = [
@@ -30,12 +31,15 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
   ];
 
   async getAll(filters: unknown): Promise<Agreement[]> {
-    console.log(this.agreements);
     return this.agreements;
   }
 
   async getOne(agreementId: string): Promise<Agreement> {
-    return this.agreements[parseInt(agreementId)];
+    const agreements = this.agreements.filter(
+      (agreement) => agreement.id === agreementId,
+    );
+    if (agreements.length > 0) return agreements[0];
+    throw new AgreementNotFoundException(`Agreement ${agreementId} not found`);
   }
 
   async add(agreement: Agreement): Promise<Agreement> {

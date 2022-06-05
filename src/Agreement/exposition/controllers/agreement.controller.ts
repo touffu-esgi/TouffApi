@@ -1,5 +1,12 @@
-import { Controller, Get, HttpCode, Req, UseFilters } from '@nestjs/common';
-import { AgreementExceptionFilter } from '../../filters/agreement-exception.filter';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Req,
+  UseFilters,
+} from '@nestjs/common';
+import { AgreementExceptionFilter } from '../filters/agreement-exception.filter';
 import { AgreementService } from '../../application/agreement.service';
 import { Request } from 'express';
 import { AgreementResponse } from '../../domain/agreement.response';
@@ -12,7 +19,6 @@ export class AgreementController {
   constructor(private readonly agreementService: AgreementService) {}
 
   @Get()
-  @HttpCode(200)
   async getAll(@Req() req: Request): Promise<AgreementResponse[]> {
     let filters = {};
     if (req.body.filter) {
@@ -24,6 +30,15 @@ export class AgreementController {
         agreement,
         HttpUtils.getBaseUrlOf(req),
       ),
+    );
+  }
+
+  @Get(':agreementId')
+  async getOne(@Param('agreementId') agreementId: string, @Req() req: Request) {
+    const agreement = await this.agreementService.getOne(agreementId);
+    return AgreementAdapter.toAgreementResponse(
+      agreement,
+      HttpUtils.getBaseUrlOf(req),
     );
   }
 }
