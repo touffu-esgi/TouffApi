@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ProviderModule } from './Providers/provider.module';
 import { AddressModule } from './Address/address.module';
 import { RecipientsModule } from './recipients/recipient.module';
+import { AgreementModule } from './Agreement/agreement.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RecipientsModule } from './recipients/recipient.module';
     ProviderModule,
     AddressModule,
     RecipientsModule,
+    AgreementModule,
   ],
   controllers: [AppController],
   providers: [

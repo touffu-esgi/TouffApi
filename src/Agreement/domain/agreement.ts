@@ -9,8 +9,9 @@ export class Agreement implements AgreementProps {
   private readonly _animalsRefs: string[];
   private readonly _beginningDate: Date;
   private readonly _endDate: Date;
-  private readonly _calendarRef: string;
   private readonly _recurrence?: AgreementRecurrenceEnum;
+  private readonly _duration?: number;
+  private readonly _remuneration?: number;
 
   constructor(agreementProps: AgreementProps) {
     this._id = agreementProps.id;
@@ -18,10 +19,11 @@ export class Agreement implements AgreementProps {
     this._providerRef = agreementProps.providerRef;
     this._recipientRef = agreementProps.recipientRef;
     this._animalsRefs = agreementProps.animalsRefs;
-    this._calendarRef = agreementProps.calendarRef;
     this._beginningDate = agreementProps.beginningDate;
     this._endDate = agreementProps.endDate;
     this._recurrence = agreementProps.recurrence;
+    this._duration = agreementProps.duration;
+    this._remuneration = agreementProps.remuneration;
   }
 
   get id(): string {
@@ -52,11 +54,15 @@ export class Agreement implements AgreementProps {
     return this._endDate;
   }
 
-  get calendarRef(): string {
-    return this._calendarRef;
-  }
-
   get recurrence(): AgreementRecurrenceEnum {
     return this._recurrence;
+  }
+
+  get duration(): number {
+    return this._duration;
+  }
+
+  get remuneration(): number {
+    return this._remuneration;
   }
 }

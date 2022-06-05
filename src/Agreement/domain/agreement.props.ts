@@ -7,7 +7,8 @@ export interface AgreementProps {
   readonly providerRef: string;
   readonly recipientRef: string;
   readonly animalsRefs: string[];
-  readonly calendarRef: string;
   readonly beginningDate: Date;
   readonly endDate: Date;
+  readonly duration: number;
+  readonly remuneration: number;
 }

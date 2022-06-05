@@ -1,6 +1,6 @@
 export enum AgreementRecurrenceEnum {
-  None,
-  Daily,
-  Weekly,
-  Monthly,
+  None = 'None',
+  Daily = 'Daily',
+  Weekly = 'Weekly',
+  Monthly = 'Monthly',
 }
