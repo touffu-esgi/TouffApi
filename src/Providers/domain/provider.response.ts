@@ -10,6 +10,8 @@ export class ProviderResponse {
   address: string;
   base_tariff: number;
   radius: number;
+  profile_title: string;
+  profile_desc: string;
 
   constructor(providerProps: ProviderProps) {
     this.id = providerProps.id;
@@ -21,5 +23,7 @@ export class ProviderResponse {
     this.address = providerProps.address;
     this.base_tariff = providerProps.base_tariff;
     this.radius = providerProps.radius;
+    this.profile_title = providerProps.profile_title;
+    this.profile_desc = providerProps.profile_desc;
   }
 }
