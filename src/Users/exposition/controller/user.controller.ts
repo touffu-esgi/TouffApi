@@ -48,6 +48,6 @@ export class UserController {
     @Req() request: Request,
   ): Promise<UserResponse> {
     const user = await this.userService.getOne(userId);
-    return UserAdapter.fromUserToUserResponseWithPassword(user);
+    return UserAdapter.fromUserToUserResponse(user);
   }
 }
