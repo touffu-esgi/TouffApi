@@ -2,7 +2,10 @@ import { AgreementRepositoryInMemory } from '../persistence/agreement.repository
 import { Agreement } from '../domain/agreement';
 import { Injectable } from '@nestjs/common';
 import { AddAgreementDto } from '../dto/add-agreement.dto';
-import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
+import {
+  AgreementRecurrenceEnum,
+  getAgreementRecurrenceEnumFromString,
+} from '../domain/agreement.recurrence.enum';
 
 @Injectable()
 export class AgreementService {
@@ -19,7 +22,7 @@ export class AgreementService {
   async add(dto: AddAgreementDto): Promise<Agreement> {
     const newId = this.agreementRepository.getNextId();
     const recurrence = dto.recurring
-      ? AgreementRecurrenceEnum[dto.recurrence]
+      ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
     const agreement = new Agreement({
       id: newId,

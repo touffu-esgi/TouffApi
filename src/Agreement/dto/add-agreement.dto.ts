@@ -1,5 +1,4 @@
-import { IsDate, IsNotEmpty, IsPositive } from 'class-validator';
-import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
+import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class AddAgreementDto {
   @IsNotEmpty()
@@ -17,11 +16,9 @@ export class AddAgreementDto {
   animalsRefs: string[];
 
   @IsNotEmpty()
-  // @IsDate()
   beginningDate: string;
 
   @IsNotEmpty()
-  //@IsDate()
   endDate: string;
 
   @IsNotEmpty()

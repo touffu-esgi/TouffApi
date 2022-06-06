@@ -4,3 +4,9 @@ export enum AgreementRecurrenceEnum {
   Weekly = 'Weekly',
   Monthly = 'Monthly',
 }
+
+export function getAgreementRecurrenceEnumFromString(
+  str: string,
+): AgreementRecurrenceEnum {
+  return AgreementRecurrenceEnum[str];
+}
