@@ -14,6 +14,10 @@ export class MessageService {
     return await this.msgRepository.getConversation(userOneId, userTwoId);
   }
 
+  async getUserConversations(userId: string): Promise<any> {
+    return await this.msgRepository.getUserConversations(userId);
+  }
+  w;
   async sendMessage(dto: AddMessageDto): Promise<Message> {
     const nextId = this.msgRepository.getNextId();
     const newMsg = new Message({
