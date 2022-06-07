@@ -38,7 +38,9 @@ export class UserController {
   @HttpCode(200)
   async getAll(@Req() request: Request): Promise<UserResponse[]> {
     const users = await this.userService.getAll();
-    return users.map((user) => UserAdapter.fromUserToUserResponse(user));
+    return users.map((user) =>
+      UserAdapter.fromUserToUserResponse(user, HttpUtils.getBaseUrlOf(request)),
+    );
   }
 
   @Get(':userId')
@@ -48,6 +50,9 @@ export class UserController {
     @Req() request: Request,
   ): Promise<UserResponse> {
     const user = await this.userService.getOne(userId);
-    return UserAdapter.fromUserToUserResponse(user);
+    return UserAdapter.fromUserToUserResponse(
+      user,
+      HttpUtils.getBaseUrlOf(request),
+    );
   }
 }
