@@ -1,10 +1,10 @@
 export class RecipientResponse {
-  id: string;
   name: string;
   surname: string;
   email: string;
   phoneNumber: string;
   address: string;
+  id: string;
 
   constructor(
     id: string,

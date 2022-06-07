@@ -14,12 +14,12 @@ import { AddRecipientDto } from '../../dto/add-recipient';
 import { RecipientsService } from '../../application/recipient.service';
 import { RecipientResponse } from '../../domain/recipient.response';
 import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
-import { Recipient } from '../../domain/recipient';
 
 @Controller('recipient')
 @UseFilters(new RecipientExceptionFilter())
 export class RecipientsController {
   constructor(private readonly recipientsService: RecipientsService) {}
+
   @Post()
   @HttpCode(201)
   async add(
@@ -34,9 +34,9 @@ export class RecipientsController {
 
   @Get()
   async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
-    const recipients: Recipient[] = await this.recipientsService.getAll();
+    const recipients = await this.recipientsService.getAll();
     return recipients.map((recipient) =>
-      RecipientAdapter.fromRecipientToRecipientResponse(recipient),
+      RecipientAdapter.fromAnimalToAnimalResponse(recipient),
     );
   }
 }

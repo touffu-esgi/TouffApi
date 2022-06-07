@@ -9,7 +9,7 @@ export class RecipientsService {
   constructor(private recipientRepository: RecipientRepositoryInMemory) {}
 
   async add(dto: AddRecipientDto): Promise<Recipient> {
-    const nextId = await this.recipientRepository.getNextId();
+    const nextId = this.recipientRepository.getNextId();
     const recipient = new Recipient(
       nextId,
       dto.name,

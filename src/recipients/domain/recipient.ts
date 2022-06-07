@@ -25,6 +25,10 @@ export class Recipient {
     this._address = address;
   }
 
+  get id(): string {
+    return this._id;
+  }
+
   get name(): string {
     return this._name;
   }
@@ -47,9 +51,5 @@ export class Recipient {
 
   get address(): string {
     return this._address;
-  }
-
-  get id(): string {
-    return this._id;
   }
 }

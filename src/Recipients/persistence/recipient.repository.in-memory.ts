@@ -23,8 +23,8 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
     return this.recipients;
   }
 
-  async getNextId() {
-    const constLastAnimal = +this.recipients.at(-1).id;
-    return (constLastAnimal + 1).toString();
+  getNextId(): string {
+    const currentId = +this.recipients.at(-1).id;
+    return (currentId + 1).toString();
   }
 }
