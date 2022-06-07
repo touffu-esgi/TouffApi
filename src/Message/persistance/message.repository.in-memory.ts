@@ -12,7 +12,7 @@ export class MessageRepositoryInMemory implements MessageRepository {
     }),
     new Message({
       id: '2',
-      content: 'Bonjour touriste',
+      content: 'Bonjour cher touriste',
       dateSent: new Date(),
       senderId: '2',
       recipientId: '1',
@@ -30,5 +30,14 @@ export class MessageRepositoryInMemory implements MessageRepository {
     );
     if (conversationMsgs) return conversationMsgs;
     throw new Error('Conversation not found');
+  }
+
+  async save(msg: Message): Promise<Message> {
+    this.messages.push(msg);
+    return msg;
+  }
+
+  getNextId(): string {
+    return (+this.messages.at(-1).id + 1).toString();
   }
 }

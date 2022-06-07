@@ -83,6 +83,6 @@ export class AddressRepositoryInMemory implements AddressRepository {
   }
 
   getNextId(): string {
-    return (this.addresses.length + 1).toString();
+    return (+this.addresses.at(-1).id + 1).toString();
   }
 }
