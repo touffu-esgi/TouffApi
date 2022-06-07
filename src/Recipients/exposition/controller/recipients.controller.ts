@@ -20,7 +20,6 @@ import { Recipient } from '../../domain/recipient';
 @UseFilters(new RecipientExceptionFilter())
 export class RecipientsController {
   constructor(private readonly recipientsService: RecipientsService) {}
-
   @Post()
   @HttpCode(201)
   async add(

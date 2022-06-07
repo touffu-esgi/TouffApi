@@ -1,5 +1,7 @@
 import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
+import { ProviderNotFoundException } from '../../Providers/application/exceptions/provider-not-found-exception';
+import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
@@ -17,8 +19,12 @@ export class UserRepositoryInMemory implements UserRepository {
     return this.usersMockRepositoryImplement;
   }
 
-  getOne(userId: string): Promise<User> {
-    return Promise.resolve(undefined);
+  async getOne(userId: string): Promise<User> {
+    const user = this.usersMockRepositoryImplement.filter(
+      (u) => u.id === userId,
+    );
+    if (user.length > 0) return user[0];
+    throw new UserNotFoundException(`User ${userId} not found`);
   }
 
   async getNextId(): Promise<string> {

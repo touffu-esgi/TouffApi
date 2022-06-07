@@ -24,4 +24,8 @@ export class UserService {
   async getAll(): Promise<User[]> {
     return await this.userRepositoryInMemory.getAll();
   }
+
+  async getOne(userId: string): Promise<User> {
+    return await this.userRepositoryInMemory.getOne(userId);
+  }
 }

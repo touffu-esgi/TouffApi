@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -14,9 +15,10 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { RecipientAdapter } from '../../../Recipients/adaptaters/recipient.adapter';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
+import { UserExceptionFilter } from '../filter/user.filter';
 
 @Controller('user')
-@UseFilters()
+@UseFilters(UserExceptionFilter)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -33,9 +35,19 @@ export class UserController {
   }
 
   @Get()
-  @HttpCode(201)
+  @HttpCode(200)
   async getAll(@Req() request: Request): Promise<UserResponse[]> {
     const users = await this.userService.getAll();
     return users.map((user) => UserAdapter.fromUserToUserResponse(user));
+  }
+
+  @Get(':userId')
+  @HttpCode(200)
+  async getOne(
+    @Param('userId') userId: string,
+    @Req() request: Request,
+  ): Promise<UserResponse> {
+    const user = await this.userService.getOne(userId);
+    return UserAdapter.fromUserToUserResponse(user);
   }
 }
