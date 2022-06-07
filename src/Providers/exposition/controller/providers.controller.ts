@@ -16,7 +16,7 @@ import { ProviderAdapter } from '../../adapters/provider.adapter';
 import { ProviderResponse } from '../../domain/provider.response';
 import { ProviderExceptionFilter } from '../filters/provider.exception.filter';
 
-@Controller('providers')
+@Controller('provider')
 @UseFilters(new ProviderExceptionFilter())
 export class ProvidersController {
   constructor(private readonly providersService: ProvidersService) {}
