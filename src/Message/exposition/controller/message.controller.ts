@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Req,
+  UseFilters,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { MessageService } from '../../application/message.service';
@@ -14,8 +15,10 @@ import { MessageAdapter } from '../../adapters/message.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { Message } from '../../domain/message';
 import { AddMessageDto } from '../../dto/add-message.dto';
+import { MessageExceptionFilter } from '../filter/message.exception.filter';
 
 @Controller('message')
+@UseFilters(new MessageExceptionFilter())
 export class MessageController {
   constructor(private readonly msgService: MessageService) {}
 

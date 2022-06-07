@@ -1,5 +1,6 @@
 import { MessageRepository } from '../domain/message.repository';
 import { Message } from '../domain/message';
+import { ConversationNotFoundException } from '../application/exceptions/conversation-not-found.exception';
 
 export class MessageRepositoryInMemory implements MessageRepository {
   private readonly messages: Message[] = [
@@ -28,8 +29,8 @@ export class MessageRepositoryInMemory implements MessageRepository {
         (msg.senderId === userOneId || msg.recipientId === userOneId) &&
         (msg.recipientId === userTwoId || msg.senderId === userTwoId),
     );
-    if (conversationMsgs) return conversationMsgs;
-    throw new Error('Conversation not found');
+    if (conversationMsgs.length > 0) return conversationMsgs;
+    throw new ConversationNotFoundException(`Conversation not found`);
   }
 
   async save(msg: Message): Promise<Message> {
