@@ -16,7 +16,7 @@ export class GetRecommendationDto {
   @IsNotEmpty()
   @IsPositive()
   @Max(5.0)
-  grade: number;
+  score: number;
 
   @IsNotEmpty()
   dateReview: Date;

@@ -16,7 +16,7 @@ export class RecommendationAdapter {
         'recipients',
       )}/${recommendation.recipientId}`,
       review: recommendation.review,
-      grade: recommendation.grade,
+      score: recommendation.score,
       dateReview: recommendation.dateReview,
     };
     return new RecommendationResponse(props);

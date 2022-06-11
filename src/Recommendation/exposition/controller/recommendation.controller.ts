@@ -25,4 +25,16 @@ export class RecommendationController {
       ),
     );
   }
+
+  @Get('average/:providerId')
+  async getProviderAverageGrade(
+    @Param('providerId') providerId: string,
+  ): Promise<{
+    average: number;
+  }> {
+    const average = await this.recommendationService.getAverageForProvider(
+      providerId,
+    );
+    return { average: average };
+  }
 }

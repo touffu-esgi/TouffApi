@@ -5,7 +5,7 @@ export class RecommendationResponse {
   provider: string;
   recipient: string;
   review: string;
-  grade: number;
+  score: number;
   dateReview: Date;
 
   constructor(recommendationProps: RecommendationProps) {
@@ -13,7 +13,7 @@ export class RecommendationResponse {
     this.provider = recommendationProps.providerId;
     this.recipient = recommendationProps.recipientId;
     this.review = recommendationProps.review;
-    this.grade = recommendationProps.grade;
+    this.score = recommendationProps.score;
     this.dateReview = recommendationProps.dateReview;
   }
 }

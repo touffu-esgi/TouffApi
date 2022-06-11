@@ -3,6 +3,6 @@ export interface RecommendationProps {
   readonly providerId: string;
   readonly recipientId: string;
   readonly review: string;
-  readonly grade: number;
+  readonly score: number;
   readonly dateReview: Date;
 }

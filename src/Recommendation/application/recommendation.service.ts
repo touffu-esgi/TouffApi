@@ -7,7 +7,14 @@ export class RecommendationService {
   constructor(
     private recommendationRepository: RecommendationRepositoryInMemory,
   ) {}
+
   async getAllByProvider(providerId: string): Promise<Recommendation[]> {
     return await this.recommendationRepository.getAllByProvider(providerId);
+  }
+
+  async getAverageForProvider(providerId: string): Promise<number> {
+    return await this.recommendationRepository.getAverageForProvider(
+      providerId,
+    );
   }
 }

@@ -5,7 +5,7 @@ export class Recommendation implements RecommendationProps {
   private readonly _providerId: string;
   private readonly _recipientId: string;
   private readonly _review: string;
-  private readonly _grade: number;
+  private readonly _score: number;
   private readonly _dateReview: Date;
 
   constructor(recommendationProps: RecommendationProps) {
@@ -13,7 +13,7 @@ export class Recommendation implements RecommendationProps {
     this._providerId = recommendationProps.providerId;
     this._recipientId = recommendationProps.recipientId;
     this._review = recommendationProps.review;
-    this._grade = recommendationProps.grade;
+    this._score = recommendationProps.score;
     this._dateReview = recommendationProps.dateReview;
   }
 
@@ -32,8 +32,8 @@ export class Recommendation implements RecommendationProps {
     return this._review;
   }
 
-  get grade(): number {
-    return this._grade;
+  get score(): number {
+    return this._score;
   }
 
   get dateReview(): Date {

@@ -11,7 +11,7 @@ export class RecommendationRepositoryInMemory
       providerId: '2',
       recipientId: '1',
       review: 'Très bonne expérience',
-      grade: 3.3,
+      score: 3.3,
       dateReview: new Date(2022, 3, 14, 20, 32, 37),
     }),
     new Recommendation({
@@ -19,7 +19,7 @@ export class RecommendationRepositoryInMemory
       providerId: '1',
       recipientId: '1',
       review: 'ca-tas-tro-phi-que',
-      grade: 3.3,
+      score: 3.3,
       dateReview: new Date(2021, 12, 10, 20, 32, 37),
     }),
   ];
@@ -30,5 +30,16 @@ export class RecommendationRepositoryInMemory
     );
     if (recommendations.length > 0) return recommendations;
     throw new NoRecommendationsException();
+  }
+
+  async getAverageForProvider(providerId: string): Promise<number> {
+    const recommendations = this.recommendations.filter(
+      (recommendation) => recommendation.providerId === providerId,
+    );
+    if (recommendations.length === 0) return 0.0;
+    const scores = recommendations.map(
+      (recommendation) => recommendation.score,
+    );
+    return scores.reduce((sum, score) => sum + score) / scores.length;
   }
 }
