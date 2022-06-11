@@ -48,7 +48,6 @@ export class MessageRepositoryInMemory implements MessageRepository {
       msgCombinations[recipient] = msg;
     });
     return msgCombinations;
-    //throw error no content
   }
 
   async save(msg: Message): Promise<Message> {
