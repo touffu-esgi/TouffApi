@@ -1,6 +1,5 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
-import { HttpException } from '@nestjs/common';
 import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
@@ -12,6 +11,16 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'nletourneau@mail.mail',
       password: 'nletourneau',
       address: '1',
+      radius: 3,
+      base_tariff: 30.2,
+    }),
+    new Provider({
+      id: '2',
+      name: 'Schlegel',
+      surname: 'Sarah',
+      email: 'sschlegel@wp.pl',
+      password: 'sschlegel',
+      address: '2',
       radius: 3,
       base_tariff: 30.2,
     }),

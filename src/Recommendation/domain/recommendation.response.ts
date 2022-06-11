@@ -1,0 +1,19 @@
+import { RecommendationProps } from './recommendation.props';
+
+export class RecommendationResponse {
+  id: string;
+  provider: string;
+  recipient: string;
+  review: string;
+  grade: number;
+  dateReview: Date;
+
+  constructor(recommendationProps: RecommendationProps) {
+    this.id = recommendationProps.id;
+    this.provider = recommendationProps.providerId;
+    this.recipient = recommendationProps.recipientId;
+    this.review = recommendationProps.review;
+    this.grade = recommendationProps.grade;
+    this.dateReview = recommendationProps.dateReview;
+  }
+}

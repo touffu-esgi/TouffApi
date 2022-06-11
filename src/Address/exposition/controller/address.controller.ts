@@ -13,7 +13,6 @@ import { Request } from 'express';
 import { AddressResponse } from '../../domain/address.response';
 import { AddressAdapter } from '../../adapters/address.adapter';
 import { AddressExceptionFilter } from '../filters/address-exception.filter';
-import { AddProviderDto } from '../../../Providers/dto/add-provider.dto';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAddressDto } from '../../dto/add-address.dto';
 
