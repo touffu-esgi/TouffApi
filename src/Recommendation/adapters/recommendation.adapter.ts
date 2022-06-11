@@ -1,5 +1,6 @@
 import { RecommendationResponse } from '../domain/recommendation.response';
 import { GetRecommendationDto } from '../dto/get-recommendation.dto';
+import { ControllerEndpointsUtils } from '../../shared/utils/controller.endpoints.utils';
 
 export class RecommendationAdapter {
   public static toRecommendationResponse(
@@ -8,8 +9,12 @@ export class RecommendationAdapter {
   ): RecommendationResponse {
     const props = {
       id: recommendation.id,
-      providerId: `${baseUrl}/provider/${recommendation.providerId}`,
-      recipientId: `${baseUrl}/recipient/${recommendation.recipientId}`,
+      providerId: `${baseUrl}/${ControllerEndpointsUtils.getEndpoint(
+        'providers',
+      )}/${recommendation.providerId}`,
+      recipientId: `${baseUrl}/${ControllerEndpointsUtils.getEndpoint(
+        'recipients',
+      )}/${recommendation.recipientId}`,
       review: recommendation.review,
       grade: recommendation.grade,
       dateReview: recommendation.dateReview,
