@@ -1,9 +1,20 @@
-import { Controller, Get, Param, Req, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseFilters,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { RecommendationService } from '../../application/recommendation.service';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { RecommendationAdapter } from '../../adapters/recommendation.adapter';
 import { RecommendationExceptionFilter } from '../filters/recommendation.exception.filter';
+import { AddRecommendationDto } from '../../dto/add-recommendation.dto';
+import { Recommendation } from '../../domain/recommendation';
+import { RecommendationResponse } from '../../domain/recommendation.response';
 
 @Controller('recommendation')
 @UseFilters(new RecommendationExceptionFilter())
@@ -36,5 +47,18 @@ export class RecommendationController {
       providerId,
     );
     return { average: average };
+  }
+
+  @Post()
+  async addRecommendation(
+    @Req() req: Request,
+    @Body() dto: AddRecommendationDto,
+  ): Promise<{ url: string }> {
+    const recommendation = await this.recommendationService.addRecommendation(
+      dto,
+    );
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + recommendation.id,
+    };
   }
 }

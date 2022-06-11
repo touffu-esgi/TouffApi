@@ -42,4 +42,14 @@ export class RecommendationRepositoryInMemory
     );
     return scores.reduce((sum, score) => sum + score) / scores.length;
   }
+
+  async add(recommendation: Recommendation): Promise<Recommendation> {
+    this.recommendations.push(recommendation);
+    return recommendation;
+  }
+
+  async getNextId(): Promise<string> {
+    const currentId = +this.recommendations.at(-1).id;
+    return (currentId + 1).toString();
+  }
 }
