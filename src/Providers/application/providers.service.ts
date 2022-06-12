@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ProviderRepositoryInMemory } from '../persistence/provider.repository.in-memory';
-import { AddProviderDto } from '../dto/add-provider.dto';
 import { Provider } from '../domain/provider';
 
 @Injectable()

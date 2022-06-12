@@ -1,4 +1,3 @@
-import { AddRecipientDto } from '../dto/add-recipient';
 import { RecipientResponse } from '../domain/recipient.response';
 import { Recipient } from '../domain/recipient';
 

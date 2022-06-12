@@ -1,6 +1,5 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
-import { HttpException } from '@nestjs/common';
 import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {

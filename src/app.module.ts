@@ -9,6 +9,7 @@ import { ProviderModule } from './Providers/provider.module';
 import { AddressModule } from './Address/address.module';
 import { RecipientsModule } from './Recipients/recipient.module';
 import { UserModule } from './Users/user.module';
+import { AgreementModule } from './Agreement/agreement.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './Users/user.module';
     AddressModule,
     RecipientsModule,
     UserModule,
+    AgreementModule,
   ],
   controllers: [AppController],
   providers: [

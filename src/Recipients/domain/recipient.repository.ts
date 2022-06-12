@@ -1,4 +1,4 @@
-import { Recipient } from './recipient';
+import { Recipient } from './Recipient';
 
 export interface RecipientRepository {
   save(recipient: Recipient): Promise<Recipient>;
