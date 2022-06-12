@@ -13,6 +13,8 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       address: '1',
       radius: 3,
       base_tariff: 30.2,
+      profile_title: 'Touriste de service',
+      profile_desc: 'Bla-bla-bla',
     }),
   ];
 

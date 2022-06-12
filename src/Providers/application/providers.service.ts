@@ -18,6 +18,8 @@ export class ProvidersService {
       address: providerEmptyId.address,
       base_tariff: providerEmptyId.base_tariff,
       radius: providerEmptyId.radius,
+      profile_title: "Bonjour, je m'appelle " + providerEmptyId.name,
+      profile_desc: 'Ce profil est personalisable',
     });
     await this.providerRepository.save(provider);
     return newId;
