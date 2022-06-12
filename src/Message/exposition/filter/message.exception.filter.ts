@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ConversationNotFoundException } from '../../application/exceptions/conversation-not-found.exception';
+import { NoConversationsException } from '../../application/exceptions/no-conversations.exception';
 
 @Catch()
 export class MessageExceptionFilter implements ExceptionFilter {
@@ -29,6 +30,8 @@ export class MessageExceptionFilter implements ExceptionFilter {
       case ConversationNotFoundException.name:
         body.statusCode = 404;
         break;
+      case NoConversationsException.name:
+        body.statusCode = 204;
       default:
         break;
     }

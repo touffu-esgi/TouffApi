@@ -1,6 +1,8 @@
 import { MessageRepository } from '../domain/message.repository';
 import { Message } from '../domain/message';
 import { ConversationNotFoundException } from '../application/exceptions/conversation-not-found.exception';
+import { MessageResponse } from '../domain/message.response';
+import { NoConversationsException } from '../application/exceptions/no-conversations.exception';
 
 export class MessageRepositoryInMemory implements MessageRepository {
   private readonly messages: Message[] = [
@@ -31,6 +33,21 @@ export class MessageRepositoryInMemory implements MessageRepository {
     );
     if (conversationMsgs.length > 0) return conversationMsgs;
     throw new ConversationNotFoundException(`Conversation not found`);
+  }
+
+  async getUserConversations(userId: string): Promise<any> {
+    const conversationMsgs = this.messages.filter(
+      (msg) => msg.senderId === userId || msg.recipientId === userId,
+    );
+    if (conversationMsgs.length === 0) throw new NoConversationsException();
+
+    const msgCombinations = {};
+    conversationMsgs.forEach(function (msg) {
+      const recipient =
+        msg.recipientId === userId ? msg.senderId : msg.recipientId;
+      msgCombinations[recipient] = msg;
+    });
+    return msgCombinations;
   }
 
   async save(msg: Message): Promise<Message> {

@@ -37,6 +37,19 @@ export class MessageController {
     );
   }
 
+  @Get(':userId')
+  async getUserConversations(
+    @Req() req: Request,
+    @Param('userId') userId: string,
+  ): Promise<any> {
+    const conversations = await this.msgService.getUserConversations(userId);
+    return MessageAdapter.toConversationList(
+      conversations,
+      userId,
+      HttpUtils.getBaseUrlOf(req),
+    );
+  }
+
   @Post()
   @HttpCode(201)
   async sendMessage(
