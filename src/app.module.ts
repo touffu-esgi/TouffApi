@@ -7,7 +7,8 @@ import { AnimalExceptionFilter } from './Animals/exposition/filters/animal-excep
 import { ConfigModule } from '@nestjs/config';
 import { ProviderModule } from './Providers/provider.module';
 import { AddressModule } from './Address/address.module';
-import { RecipientsModule } from './recipients/recipient.module';
+import { RecipientsModule } from './Recipients/recipient.module';
+import { UserModule } from './Users/user.module';
 import { AgreementModule } from './Agreement/agreement.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { AgreementModule } from './Agreement/agreement.module';
     ProviderModule,
     AddressModule,
     RecipientsModule,
+    UserModule,
     AgreementModule,
   ],
   controllers: [AppController],
