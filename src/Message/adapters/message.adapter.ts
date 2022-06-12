@@ -11,4 +11,15 @@ export class MessageAdapter {
       recipientId: `${baseUrl}/user/${dto.recipientId}`,
     });
   }
+
+  public static toConversationList(dto: any, userId: string, baseUrl: string) {
+    const conversationList = [];
+    Object.keys(dto).forEach((recipientId) => {
+      conversationList.push({
+        conversation: `${baseUrl}/message/${userId}/${recipientId}`,
+        lastMessage: dto[recipientId].content,
+      });
+    });
+    return conversationList;
+  }
 }
