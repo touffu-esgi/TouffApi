@@ -27,4 +27,8 @@ export class GetProviderDto {
 
   @IsPositive()
   radius: number;
+
+  profile_title: string;
+
+  profile_desc: string;
 }

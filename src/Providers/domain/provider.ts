@@ -10,6 +10,8 @@ export class Provider implements ProviderProps {
   private readonly _address: string;
   private readonly _base_tariff: number;
   private readonly _radius: number;
+  private readonly _profile_title: string;
+  private readonly _profile_desc: string;
 
   constructor(providerProps: ProviderProps) {
     this._id = providerProps.id;
@@ -21,6 +23,8 @@ export class Provider implements ProviderProps {
     this._address = providerProps.address;
     this._base_tariff = providerProps.base_tariff;
     this._radius = providerProps.radius;
+    this._profile_title = providerProps.profile_title;
+    this._profile_desc = providerProps.profile_desc;
   }
 
   get id(): string {
@@ -54,5 +58,13 @@ export class Provider implements ProviderProps {
 
   get address(): string {
     return this._address;
+  }
+
+  get profile_title() {
+    return this._profile_title;
+  }
+
+  get profile_desc() {
+    return this._profile_desc;
   }
 }
