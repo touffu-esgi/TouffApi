@@ -18,6 +18,8 @@ export class ProviderAdapter {
       address: baseUrl + '/address/' + provider.address,
       base_tariff: provider.base_tariff,
       radius: provider.radius,
+      profile_title: provider.profile_title,
+      profile_desc: provider.profile_desc,
     };
     return new ProviderResponse(props);
   }
@@ -35,6 +37,8 @@ export class ProviderAdapter {
       address: dto.address,
       base_tariff: dto.base_tariff,
       radius: dto.radius,
+      profile_title: dto.profile_title,
+      profile_desc: dto.profile_desc,
     });
   }
 }

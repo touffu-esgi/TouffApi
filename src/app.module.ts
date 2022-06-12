@@ -9,6 +9,8 @@ import { ProviderModule } from './Providers/provider.module';
 import { AddressModule } from './Address/address.module';
 import { RecipientsModule } from './Recipients/recipient.module';
 import { UserModule } from './Users/user.module';
+import { MessageModule } from './Message/message.module';
+import { AgreementModule } from './Agreement/agreement.module';
 import { RecommendationModule } from './Recommendation/recommendation.module';
 
 @Module({
@@ -19,6 +21,8 @@ import { RecommendationModule } from './Recommendation/recommendation.module';
     AddressModule,
     RecipientsModule,
     UserModule,
+    AgreementModule,
+    MessageModule,
     RecommendationModule,
   ],
   controllers: [AppController],

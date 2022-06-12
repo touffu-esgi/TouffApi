@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ProviderRepositoryInMemory } from '../persistence/provider.repository.in-memory';
-import { AddProviderDto } from '../dto/add-provider.dto';
 import { Provider } from '../domain/provider';
 
 @Injectable()
@@ -19,6 +18,8 @@ export class ProvidersService {
       address: providerEmptyId.address,
       base_tariff: providerEmptyId.base_tariff,
       radius: providerEmptyId.radius,
+      profile_title: "Bonjour, je m'appelle " + providerEmptyId.name,
+      profile_desc: 'Ce profil est personalisable',
     });
     await this.providerRepository.save(provider);
     return newId;

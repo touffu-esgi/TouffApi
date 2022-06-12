@@ -2,7 +2,6 @@ import { AnimalsService } from './animals.service';
 import { AnimalRepositoryInMemory } from '../persistence/animal.repository.in-memory';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AddAnimalDto } from '../dto/add-animal.dto';
-import { AnimalRepository } from '../domain/animal.repository';
 import { Animal } from '../domain/animal';
 import { AnimalTypes } from '../domain/animal.types';
 
