@@ -16,6 +16,16 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       profile_title: 'Touriste de service',
       profile_desc: 'Bla-bla-bla',
     }),
+    new Provider({
+      id: '2',
+      name: 'Schlegel',
+      surname: 'Sarah',
+      email: 'sschlegel@wp.pl',
+      password: 'sschlegel',
+      address: '2',
+      radius: 3,
+      base_tariff: 30.2,
+    }),
   ];
 
   async save(provider: Provider): Promise<Provider> {

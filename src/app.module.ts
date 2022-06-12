@@ -11,6 +11,7 @@ import { RecipientsModule } from './Recipients/recipient.module';
 import { UserModule } from './Users/user.module';
 import { MessageModule } from './Message/message.module';
 import { AgreementModule } from './Agreement/agreement.module';
+import { RecommendationModule } from './Recommendation/recommendation.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AgreementModule } from './Agreement/agreement.module';
     UserModule,
     AgreementModule,
     MessageModule,
+    RecommendationModule,
   ],
   controllers: [AppController],
   providers: [
