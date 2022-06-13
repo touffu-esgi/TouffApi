@@ -4,7 +4,9 @@ export class ControllerEndpointsUtils {
       addresses: 'address',
       animals: 'animals',
       providers: 'provider',
+      provider: 'provider',
       recipients: 'recipient',
+      recipient: 'recipient',
       recommendations: 'recommendation',
     };
 
