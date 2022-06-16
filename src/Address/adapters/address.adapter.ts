@@ -1,7 +1,7 @@
 import { GetAddressDto } from '../dto/get-address.dto';
 import { AddressResponse } from '../domain/address.response';
 import { AddAddressDto } from '../dto/add-address.dto';
-import { Address } from '../domain/address';
+import { Address } from '../domain/addressProps';
 
 export class AddressAdapter {
   public static fromAddressToAddressResponse(address: GetAddressDto) {

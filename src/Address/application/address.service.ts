@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AddressRepositoryInMemory } from '../persistance/address.repository.in-memory';
-import { Address } from '../domain/address';
+import { Address } from '../domain/addressProps';
 
 @Injectable()
 export class AddressService {

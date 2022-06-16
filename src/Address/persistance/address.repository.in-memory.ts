@@ -1,7 +1,7 @@
-import { Address } from '../domain/address';
 import { AddressProps } from '../domain/address.props';
 import { HttpException } from '@nestjs/common';
 import { AddressRepository } from '../domain/address.repository';
+import { Address } from '../domain/addressProps';
 
 export class AddressRepositoryInMemory implements AddressRepository {
   private readonly addresses: Address[] = [

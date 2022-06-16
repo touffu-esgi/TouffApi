@@ -8,7 +8,7 @@ import { SecurityUtils } from '../../shared/utils/security.utils';
 export class RecipientsService {
   constructor(private recipientRepository: RecipientRepositoryInMemory) {}
 
-  async add(dto: AddRecipientDto): Promise<Recipient> {
+  async add(dto: Recipient): Promise<Recipient> {
     const nextId = this.recipientRepository.getNextId();
     const recipient = new Recipient(
       nextId,

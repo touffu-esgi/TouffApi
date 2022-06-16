@@ -1,4 +1,4 @@
-import { Address } from './address';
+import { Address } from './addressProps';
 
 export interface AddressRepository {
   getAll(): Promise<Address[]>;

@@ -1,3 +1,6 @@
+import { Address } from '../../Address/domain/addressProps';
+import { AddressProps } from '../../Address/domain/address.props';
+
 export class Recipient {
   private readonly _id: string;
   private readonly _name: string;
@@ -5,7 +8,7 @@ export class Recipient {
   private readonly _email: string;
   private readonly _phoneNumber: string;
   private readonly _password: string;
-  private readonly _address: string;
+  private readonly _address: string | AddressProps;
 
   constructor(
     id: string,
@@ -14,7 +17,7 @@ export class Recipient {
     email: string,
     phoneNumber: string,
     password: string,
-    address: string,
+    address: string | AddressProps,
   ) {
     this._id = id;
     this._name = name;
@@ -49,7 +52,7 @@ export class Recipient {
     return this._password;
   }
 
-  get address(): string {
+  get address(): string | AddressProps {
     return this._address;
   }
 }

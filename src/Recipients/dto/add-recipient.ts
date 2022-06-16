@@ -1,4 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { Address } from '../../Address/domain/addressProps';
+import { AddressProps } from '../../Address/domain/address.props';
 
 export class AddRecipientDto {
   @IsNotEmpty()
@@ -19,5 +21,5 @@ export class AddRecipientDto {
   password: string;
 
   @IsNotEmpty()
-  address: string;
+  address: AddressProps;
 }
