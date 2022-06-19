@@ -19,7 +19,7 @@ export class AvailabilityService {
     private agreementRepository: AgreementRepositoryInMemory,
   ) {}
 
-  async getDailyAvailability(
+  async getDefaultDailyAvailability(
     providerId: string,
     weekday: string,
   ): Promise<Availability> {

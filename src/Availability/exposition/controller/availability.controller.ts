@@ -16,7 +16,10 @@ export class AvailabilityController {
     @Req() req: Request,
   ) {
     const dailyAvailability =
-      await this.availabilityService.getDailyAvailability(providerId, weekday);
+      await this.availabilityService.getDefaultDailyAvailability(
+        providerId,
+        weekday,
+      );
     return AvailabilityAdapter.toAvailabilityResponse(
       dailyAvailability,
       HttpUtils.getBaseUrlOf(req),
