@@ -18,7 +18,7 @@ export class AgreementAdapter {
       animalsRefs: animals,
       beginningDate: agreement.beginningDate,
       endDate: agreement.endDate,
-      duration: agreement.duration,
+      duration: agreement.duration * 60,
       remuneration: agreement.remuneration,
     });
   }

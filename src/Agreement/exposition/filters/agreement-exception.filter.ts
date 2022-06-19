@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AgreementNotFoundException } from '../../application/exceptions/agreement-not-found.exception';
+import { ProviderBusyException } from '../../application/exceptions/provider-busy.exception';
 
 export class AgreementExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
@@ -26,6 +27,9 @@ export class AgreementExceptionFilter implements ExceptionFilter {
     switch (exception.name) {
       case AgreementNotFoundException.name:
         body.statusCode = 404;
+        break;
+      case ProviderBusyException.name:
+        body.statusCode = 412;
         break;
       default:
         body.statusCode = 500;
