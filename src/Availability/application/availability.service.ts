@@ -1,8 +1,16 @@
 import { AvailabilityRepositoryInMemory } from '../persistence/availability.repository.in-memory';
 import { Availability } from '../domain/availability';
-import { getWeekDayAsString } from '../domain/weekdays';
+import {
+  getWeekDayAsString,
+  getWeekdayFromInt,
+  IntWeekDays,
+} from '../domain/weekdays';
 import { Injectable } from '@nestjs/common';
 import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreement.repository.in-memory';
+import {
+  getNextWeekday,
+  timeToDouble,
+} from '../../shared/utils/date-time.utils';
 
 @Injectable()
 export class AvailabilityService {
@@ -56,14 +64,18 @@ export class AvailabilityService {
     const userAgreements = await this.agreementRepository.getAll({
       providerRef: providerId,
     });
-    const i = 0;
-    const curDate = dateFrom;
+    let nextWeekday = dateFrom;
     let dailyAvailability: { beginAt: number; endAt: number }[] = [];
-    userAgreements.forEach((agreement) => {
-      curDate.setDate(dateFrom.getDate() + i);
-      const beginTime = this.timeToDouble(agreement.beginningDate);
+    for (const agreement of userAgreements) {
+      nextWeekday = getNextWeekday(dateFrom, agreement.beginningDate.getDay());
+      const beginTime = timeToDouble(agreement.beginningDate);
       const endTime = beginTime + agreement.duration;
-      if (this.agreementRepository.dayMatchesAgreement(agreement.id, curDate)) {
+      if (
+        await this.agreementRepository.dayMatchesAgreement(
+          agreement.id,
+          nextWeekday,
+        )
+      ) {
         availabilities.forEach((timeframe) => {
           dailyAvailability =
             this.availabilityRepository.updateTimeframeIfOccupied(
@@ -73,12 +85,10 @@ export class AvailabilityService {
               dailyAvailability,
             );
         });
+      } else {
+        dailyAvailability = availabilities;
       }
-    });
+    }
     return dailyAvailability;
-  }
-
-  private timeToDouble(date: Date): number {
-    return date.getHours() + date.getMinutes() / 60;
   }
 }

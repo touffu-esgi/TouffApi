@@ -71,20 +71,14 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     dailyAvailabilities: { beginAt: number; endAt: number }[],
   ): { beginAt: number; endAt: number }[] {
     let isSplit = false;
-    if (
-      occupiedBeginTime > timeframe.beginAt &&
-      occupiedBeginTime < timeframe.endAt
-    ) {
+    if (this.timeOverlapsTimeframe(occupiedBeginTime, timeframe)) {
       isSplit = true;
       dailyAvailabilities.push({
         beginAt: timeframe.beginAt,
         endAt: occupiedBeginTime,
       });
     }
-    if (
-      occupiedEndTime > timeframe.beginAt &&
-      occupiedEndTime < timeframe.endAt
-    ) {
+    if (this.timeOverlapsTimeframe(occupiedEndTime, timeframe)) {
       isSplit = true;
       dailyAvailabilities.push({
         beginAt: occupiedEndTime,
@@ -93,5 +87,12 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     }
     if (!isSplit) dailyAvailabilities.push(timeframe);
     return dailyAvailabilities;
+  }
+
+  public timeOverlapsTimeframe(
+    time: number,
+    timeframe: { beginAt: number; endAt: number },
+  ): boolean {
+    return time > timeframe.beginAt && time < timeframe.endAt;
   }
 }

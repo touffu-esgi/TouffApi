@@ -2,7 +2,10 @@ import { AgreementRepository } from '../domain/agreement.repository';
 import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
-import { getWeekdayFromInt } from '../../Availability/domain/weekdays';
+import {
+  getWeekdayFromInt,
+  IntWeekDays,
+} from '../../Availability/domain/weekdays';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   private readonly agreements = [
@@ -13,7 +16,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       providerRef: '1',
       recipientRef: '1',
       animalsRefs: ['1', '2'],
-      beginningDate: new Date(2022, 6, 6, 12, 30),
+      beginningDate: new Date(2022, 5, 6, 12, 30),
       endDate: new Date(2022, 12, 6, 14, 30),
       duration: 1,
       remuneration: 25.5,
@@ -68,11 +71,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       case AgreementRecurrenceEnum.Daily:
         return true;
       case AgreementRecurrenceEnum.Weekly:
-        if (
-          getWeekdayFromInt(agreement.beginningDate.getDay()) ===
-          getWeekdayFromInt(day.getDay())
-        )
+        if (agreement.beginningDate.getDay() === day.getDay()) {
           return true;
+        }
         break;
       case AgreementRecurrenceEnum.Monthly:
         if (day.getDate() === agreement.beginningDate.getDate()) return true;
