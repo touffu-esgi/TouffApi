@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Req } from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
 import { Availability } from '../../domain/availability';
@@ -7,7 +7,6 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 
 @Controller('availability')
 export class AvailabilityController {
-  private baseUrl;
   constructor(private availabilityService: AvailabilityService) {}
 
   @Get(':weekday/:providerId')
@@ -28,10 +27,14 @@ export class AvailabilityController {
   async getWeeklyAvailability(
     @Param('providerId') providerId: string,
     @Req() req: Request,
+    @Body() filter: { dateFrom: string },
   ) {
     const baseUrl = HttpUtils.getBaseUrlOf(req);
     const weeklyAvailability: Availability[] =
-      await this.availabilityService.getWeeklyAvailability(providerId);
+      await this.availabilityService.getWeeklyAvailability(
+        providerId,
+        filter.dateFrom,
+      );
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),
     );

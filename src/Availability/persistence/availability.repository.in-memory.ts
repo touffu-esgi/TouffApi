@@ -10,15 +10,19 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
       day: getWeekDayAsString('MONDAY'),
       dailyAvailability: [
         {
+          beginAt: 9.0,
+          endAt: 13.0,
+        },
+        {
           beginAt: 17.5,
-          endAt: 20.25,
+          endAt: 20.0,
         },
       ],
       providerId: '1',
     }),
     new Availability({
       id: '2',
-      day: getWeekDayAsString('MONDAY'),
+      day: getWeekDayAsString('TUESDAY'),
       dailyAvailability: [
         {
           beginAt: 9,
@@ -58,5 +62,36 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
   async getNextId(): Promise<string> {
     const currentId = +this.availabilities.at(-1).id;
     return (currentId + 1).toString();
+  }
+
+  public updateTimeframeIfOccupied(
+    occupiedBeginTime: number,
+    occupiedEndTime: number,
+    timeframe: { beginAt: number; endAt: number },
+    dailyAvailabilities: { beginAt: number; endAt: number }[],
+  ): { beginAt: number; endAt: number }[] {
+    let isSplit = false;
+    if (
+      occupiedBeginTime > timeframe.beginAt &&
+      occupiedBeginTime < timeframe.endAt
+    ) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: timeframe.beginAt,
+        endAt: occupiedBeginTime,
+      });
+    }
+    if (
+      occupiedEndTime > timeframe.beginAt &&
+      occupiedEndTime < timeframe.endAt
+    ) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: occupiedEndTime,
+        endAt: timeframe.endAt,
+      });
+    }
+    if (!isSplit) dailyAvailabilities.push(timeframe);
+    return dailyAvailabilities;
   }
 }

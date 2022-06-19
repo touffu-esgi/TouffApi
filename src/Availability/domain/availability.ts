@@ -4,7 +4,7 @@ import { getWeekDayAsString } from './weekdays';
 export class Availability implements AvailabilityProps {
   private readonly _id: string;
   private readonly _day: string;
-  private readonly _dailyAvailability: {
+  private _dailyAvailability: {
     beginAt: number;
     endAt: number;
   }[];
@@ -51,6 +51,10 @@ export class Availability implements AvailabilityProps {
 
   get providerId(): string {
     return this._providerId;
+  }
+
+  set setDailyAvailability(value: { beginAt: number; endAt: number }[]) {
+    this._dailyAvailability = value;
   }
 
   public computeTimeAvailable(index: number): number {
