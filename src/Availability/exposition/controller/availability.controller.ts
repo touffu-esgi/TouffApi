@@ -5,6 +5,7 @@ import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
+import { formatInDateToStandardJS } from '../../../shared/utils/date-time.utils';
 
 @Controller('availability')
 export class AvailabilityController {
@@ -34,10 +35,11 @@ export class AvailabilityController {
     @Query() query,
   ): Promise<AvailabilityResponse[]> {
     const baseUrl = HttpUtils.getBaseUrlOf(req);
+    console.log(formatInDateToStandardJS(query.dateFrom));
     const weeklyAvailability: Availability[] =
       await this.availabilityService.getWeeklyAvailability(
         providerId,
-        query.dateFrom ? query.dateFrom : null,
+        query.dateFrom ? formatInDateToStandardJS(query.dateFrom) : null,
       );
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),
