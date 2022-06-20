@@ -28,6 +28,18 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       profile_title: 'Touriste de service',
       profile_desc: 'Bla-bla-bla',
     }),
+    new Provider({
+      id: '3',
+      name: 'Omnes',
+      surname: 'Théo',
+      email: 'Omnes@Théo.pl',
+      password: 'Théo',
+      address: '2',
+      radius: 3,
+      base_tariff: 18,
+      profile_title: 'Touriste de service',
+      profile_desc: 'Bla-bla-bla',
+    }),
   ];
 
   async save(provider: Provider): Promise<Provider> {
