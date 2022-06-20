@@ -15,7 +15,6 @@ import { AgreementResponse } from '../../domain/agreement.response';
 import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAgreementDto } from '../../dto/add-agreement.dto';
-import { Agreement } from '../../domain/agreement';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())

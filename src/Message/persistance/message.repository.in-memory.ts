@@ -1,7 +1,6 @@
 import { MessageRepository } from '../domain/message.repository';
 import { Message } from '../domain/message';
 import { ConversationNotFoundException } from '../application/exceptions/conversation-not-found.exception';
-import { MessageResponse } from '../domain/message.response';
 import { NoConversationsException } from '../application/exceptions/no-conversations.exception';
 
 export class MessageRepositoryInMemory implements MessageRepository {

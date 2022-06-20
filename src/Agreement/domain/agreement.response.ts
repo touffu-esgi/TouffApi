@@ -11,6 +11,7 @@ export class AgreementResponse {
   recurrence?: string;
   duration: number;
   remuneration: number;
+  status: string;
 
   constructor(agreementProps: AgreementProps) {
     this.id = agreementProps.id;
@@ -23,5 +24,6 @@ export class AgreementResponse {
     this.recurrence = agreementProps.recurrence.toString();
     this.duration = agreementProps.duration;
     this.remuneration = agreementProps.remuneration;
+    this.status = agreementProps.status;
   }
 }

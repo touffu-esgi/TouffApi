@@ -4,6 +4,7 @@ import { Request } from 'express';
 import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
+import { AvailabilityResponse } from '../../domain/availability.response';
 
 @Controller('availability')
 export class AvailabilityController {
@@ -14,7 +15,7 @@ export class AvailabilityController {
     @Param('providerId') providerId: string,
     @Param('weekday') weekday: string,
     @Req() req: Request,
-  ) {
+  ): Promise<AvailabilityResponse> {
     const dailyAvailability =
       await this.availabilityService.getDefaultDailyAvailability(
         providerId,
@@ -31,7 +32,7 @@ export class AvailabilityController {
     @Param('providerId') providerId: string,
     @Req() req: Request,
     @Body() filter: { dateFrom: string },
-  ) {
+  ): Promise<AvailabilityResponse[]> {
     const baseUrl = HttpUtils.getBaseUrlOf(req);
     const weeklyAvailability: Availability[] =
       await this.availabilityService.getWeeklyAvailability(
