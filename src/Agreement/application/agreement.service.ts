@@ -6,10 +6,16 @@ import {
   AgreementRecurrenceEnum,
   getAgreementRecurrenceEnumFromString,
 } from '../domain/agreement.recurrence.enum';
+import { AvailabilityRepositoryInMemory } from '../../Availability/persistence/availability.repository.in-memory';
+import { timeToDouble } from '../../shared/utils/date-time.utils';
+import { ProviderBusyException } from './exceptions/provider-busy.exception';
 
 @Injectable()
 export class AgreementService {
-  constructor(private agreementRepository: AgreementRepositoryInMemory) {}
+  constructor(
+    private agreementRepository: AgreementRepositoryInMemory,
+    private availabilityRepository: AvailabilityRepositoryInMemory,
+  ) {}
 
   async getAll(filters: unknown): Promise<Agreement[]> {
     return await this.agreementRepository.getAll(filters);
@@ -24,6 +30,27 @@ export class AgreementService {
     const recurrence = dto.recurring
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
+    const beginDate = new Date(dto.beginningDate);
+    const endDate = new Date(dto.endDate);
+    const providerBusyAvailability =
+      await this.availabilityRepository.getWeeklyDefaultAvailability(
+        dto.providerRef,
+      );
+    let noOverlaps = true;
+    providerBusyAvailability.forEach((weekday) => {
+      noOverlaps =
+        noOverlaps &&
+        this.findIfNoOverlaps(
+          beginDate,
+          dto.duration,
+          weekday.dailyAvailability,
+        );
+      if (!noOverlaps)
+        throw new ProviderBusyException(
+          `Provider is already busy on ${weekday.day}`,
+        );
+    });
+
     const agreement = new Agreement({
       id: newId,
       recurring: dto.recurring,
@@ -31,11 +58,29 @@ export class AgreementService {
       providerRef: dto.providerRef,
       recipientRef: dto.recipientRef,
       animalsRefs: dto.animalsRefs,
-      beginningDate: new Date(dto.beginningDate),
-      endDate: new Date(dto.endDate),
+      beginningDate: beginDate,
+      endDate: endDate,
       duration: dto.duration,
       remuneration: dto.remuneration,
     });
     return await this.agreementRepository.add(agreement);
+  }
+
+  private findIfNoOverlaps(
+    beginDate: Date,
+    duration: number,
+    occupiedTimeframes: { beginAt: number; endAt: number }[],
+  ): boolean {
+    const beginTime = timeToDouble(beginDate);
+    const endTime = beginTime + duration;
+    occupiedTimeframes.filter(
+      (timeframe) =>
+        this.availabilityRepository.timeOverlapsTimeframe(
+          beginTime,
+          timeframe,
+        ) &&
+        this.availabilityRepository.timeOverlapsTimeframe(endTime, timeframe),
+    );
+    return occupiedTimeframes.length > 0;
   }
 }

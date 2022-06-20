@@ -12,6 +12,15 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       '123456789',
       '78 rue de paris à paris',
     ),
+    new Recipient(
+      '2',
+      'Lucille',
+      'letourneau',
+      'lucille@moineau.fr',
+      '0000000000',
+      '123456789',
+      '3',
+    ),
   ];
 
   async save(recipient: Recipient): Promise<Recipient> {
@@ -21,6 +30,12 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
 
   async getAll(): Promise<Recipient[]> {
     return this.recipients;
+  }
+
+  async getOne(id: string): Promise<Recipient> {
+    const recipients = this.recipients.filter((p) => p.id === id);
+    if (recipients.length > 0) return recipients[0];
+    throw new Error(`Recipient ${id} not found`);
   }
 
   getNextId(): string {

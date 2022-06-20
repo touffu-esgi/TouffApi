@@ -40,12 +40,14 @@ export class MessageRepositoryInMemory implements MessageRepository {
       (msg) => msg.senderId === userId || msg.recipientId === userId,
     );
     if (conversationMsgs.length === 0) throw new NoConversationsException();
-
     const msgCombinations = {};
     conversationMsgs.forEach(function (msg) {
+      const maxLength = msg.content.length > 60 ? 60 : msg.content.length;
       const recipient =
         msg.recipientId === userId ? msg.senderId : msg.recipientId;
-      msgCombinations[recipient] = msg;
+      msgCombinations[recipient] = {
+        content: msg.content.substring(0, maxLength),
+      };
     });
     return msgCombinations;
   }

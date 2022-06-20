@@ -1,6 +1,5 @@
 import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
-import { ProviderNotFoundException } from '../../Providers/application/exceptions/provider-not-found-exception';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 
 export class UserRepositoryInMemory implements UserRepository {
