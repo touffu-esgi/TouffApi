@@ -9,3 +9,10 @@ export function getNextWeekday(date: Date, weekday: number): Date {
   date.setDate(date.getDate() + diffDays);
   return date;
 }
+
+export function formatInDateToStandardJS(dateIn: string): string {
+  if (dateIn.indexOf('-') !== -1) return dateIn;
+  const dateSplit = dateIn.split('/');
+  if (dateSplit.length !== 3) throw new Error('Wrong date format');
+  return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
+}
