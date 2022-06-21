@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -23,11 +24,10 @@ export class AgreementController {
   constructor(private readonly agreementService: AgreementService) {}
 
   @Get()
-  async getAll(@Req() req: Request): Promise<AgreementResponse[]> {
-    let filters = {};
-    if (req.body.filter) {
-      filters = req.body.filter;
-    }
+  async getAll(
+    @Req() req: Request,
+    @Query() filters,
+  ): Promise<AgreementResponse[]> {
     const agreements = await this.agreementService.getAll(filters);
     return agreements.map((agreement) =>
       AgreementAdapter.toAgreementResponse(

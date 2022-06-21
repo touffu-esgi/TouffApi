@@ -25,7 +25,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       id: '2',
       recurring: false,
       providerRef: '2',
-      recipientRef: '1',
+      recipientRef: '2',
       animalsRefs: ['3'],
       beginningDate: new Date(2022, 6, 1, 13, 23),
       endDate: new Date(2022, 6, 1, 13, 23),
