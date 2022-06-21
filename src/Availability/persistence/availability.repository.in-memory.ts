@@ -53,6 +53,7 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     const availabilities: Availability[] = this.availabilities.filter(
       (availability) => availability.providerId === providerId,
     );
+    console.log(availabilities[0].dailyAvailability);
     if (availabilities.length > 0) return availabilities;
     throw new NotAvailableException(
       `Provider ${providerId} not available at the moment`,
