@@ -20,6 +20,7 @@ export class AgreementAdapter {
       endDate: agreement.endDate,
       duration: agreement.duration * 60,
       remuneration: agreement.remuneration,
+      status: agreement.status,
     });
   }
 }

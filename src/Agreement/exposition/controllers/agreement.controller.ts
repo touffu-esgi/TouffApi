@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -15,7 +16,6 @@ import { AgreementResponse } from '../../domain/agreement.response';
 import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAgreementDto } from '../../dto/add-agreement.dto';
-import { Agreement } from '../../domain/agreement';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())
@@ -23,11 +23,10 @@ export class AgreementController {
   constructor(private readonly agreementService: AgreementService) {}
 
   @Get()
-  async getAll(@Req() req: Request): Promise<AgreementResponse[]> {
-    let filters = {};
-    if (req.body.filter) {
-      filters = req.body.filter;
-    }
+  async getAll(
+    @Req() req: Request,
+    @Query() filters,
+  ): Promise<AgreementResponse[]> {
     const agreements = await this.agreementService.getAll(filters);
     return agreements.map((agreement) =>
       AgreementAdapter.toAgreementResponse(

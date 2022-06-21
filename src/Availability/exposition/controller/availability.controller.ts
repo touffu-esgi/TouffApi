@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
 import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
+import { AvailabilityResponse } from '../../domain/availability.response';
+import { formatInDateToStandardJS } from '../../../shared/utils/date-time.utils';
 
 @Controller('availability')
 export class AvailabilityController {
@@ -14,7 +16,7 @@ export class AvailabilityController {
     @Param('providerId') providerId: string,
     @Param('weekday') weekday: string,
     @Req() req: Request,
-  ) {
+  ): Promise<AvailabilityResponse> {
     const dailyAvailability =
       await this.availabilityService.getDefaultDailyAvailability(
         providerId,
@@ -30,13 +32,14 @@ export class AvailabilityController {
   async getWeeklyAvailability(
     @Param('providerId') providerId: string,
     @Req() req: Request,
-    @Body() filter: { dateFrom: string },
-  ) {
+    @Query() filters,
+  ): Promise<AvailabilityResponse[]> {
     const baseUrl = HttpUtils.getBaseUrlOf(req);
+    if (!filters.dateFrom) filters.dateFrom = null;
     const weeklyAvailability: Availability[] =
       await this.availabilityService.getWeeklyAvailability(
         providerId,
-        filter.dateFrom,
+        filters.dateFrom,
       );
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),

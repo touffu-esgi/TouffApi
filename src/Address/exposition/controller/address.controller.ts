@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -23,11 +24,10 @@ export class AddressController {
 
   @Get()
   @HttpCode(200)
-  async getAll(@Req() req: Request): Promise<AddressResponse[]> {
-    let filters = {};
-    if (req.body.filter) {
-      filters = req.body.filter;
-    }
+  async getAll(
+    @Req() req: Request,
+    @Query() filters,
+  ): Promise<AddressResponse[]> {
     const addresses = await this.addressService.getAll(filters);
     return addresses.map((address) =>
       AddressAdapter.fromAddressToAddressResponse(address),

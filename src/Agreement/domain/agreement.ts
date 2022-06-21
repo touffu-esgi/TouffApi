@@ -10,8 +10,9 @@ export class Agreement implements AgreementProps {
   private readonly _beginningDate: Date;
   private readonly _endDate: Date;
   private readonly _recurrence?: AgreementRecurrenceEnum;
-  private readonly _duration?: number;
+  private readonly _duration: number;
   private readonly _remuneration?: number;
+  private readonly _status: string;
 
   constructor(agreementProps: AgreementProps) {
     this._id = agreementProps.id;
@@ -24,6 +25,7 @@ export class Agreement implements AgreementProps {
     this._recurrence = agreementProps.recurrence;
     this._duration = agreementProps.duration;
     this._remuneration = agreementProps.remuneration;
+    this._status = agreementProps.status;
   }
 
   get id(): string {
@@ -60,6 +62,10 @@ export class Agreement implements AgreementProps {
 
   get duration(): number {
     return this._duration;
+  }
+
+  get status(): string {
+    return this._status;
   }
 
   get remuneration(): number {

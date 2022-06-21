@@ -2,10 +2,6 @@ import { AgreementRepository } from '../domain/agreement.repository';
 import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
-import {
-  getWeekdayFromInt,
-  IntWeekDays,
-} from '../../Availability/domain/weekdays';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   private readonly agreements = [
@@ -20,17 +16,19 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       endDate: new Date(2022, 12, 6, 14, 30),
       duration: 1,
       remuneration: 25.5,
+      status: 'Agreed',
     }),
     new Agreement({
       id: '2',
       recurring: false,
       providerRef: '2',
-      recipientRef: '1',
+      recipientRef: '2',
       animalsRefs: ['3'],
       beginningDate: new Date(2022, 6, 1, 13, 23),
       endDate: new Date(2022, 6, 1, 13, 23),
       duration: 2,
       remuneration: 130.0,
+      status: 'InDiscussion',
     }),
   ];
 
