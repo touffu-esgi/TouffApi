@@ -1,10 +1,6 @@
 import { AvailabilityRepositoryInMemory } from '../persistence/availability.repository.in-memory';
 import { Availability } from '../domain/availability';
-import {
-  getWeekDayAsString,
-  getWeekdayFromInt,
-  IntWeekDays,
-} from '../domain/weekdays';
+import { getWeekDayAsString } from '../domain/weekdays';
 import { Injectable } from '@nestjs/common';
 import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreement.repository.in-memory';
 import {

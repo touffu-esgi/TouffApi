@@ -11,4 +11,5 @@ export interface AgreementProps {
   readonly endDate: Date;
   readonly duration: number;
   readonly remuneration: number;
+  readonly status: string;
 }

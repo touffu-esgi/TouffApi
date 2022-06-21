@@ -62,6 +62,7 @@ export class AgreementService {
       endDate: endDate,
       duration: dto.duration,
       remuneration: dto.remuneration,
+      status: 'InDiscussion',
     });
     return await this.agreementRepository.add(agreement);
   }

@@ -2,12 +2,9 @@ import { MessageRepositoryInMemory } from '../persistance/message.repository.in-
 import { Message } from '../domain/message';
 import { Injectable } from '@nestjs/common';
 import { AddMessageDto } from '../dto/add-message.dto';
-import { UserService } from '../../Users/application/user.service';
 import { UserRepositoryInMemory } from '../../Users/persistence/user.repository.in-memory';
 import { ProviderRepositoryInMemory } from '../../Providers/persistence/provider.repository.in-memory';
 import { RecipientRepositoryInMemory } from '../../Recipients/persistence/recipient.repository.in-memory';
-import { Recipient } from '../../Recipients/domain/recipient';
-import { Provider } from '../../Providers/domain/provider';
 
 @Injectable()
 export class MessageService {

@@ -12,7 +12,6 @@ import { Request } from 'express';
 import { UserService } from '../../application/user.service';
 import { AddUserDto } from '../../dto/add-user.dto';
 import { HttpUtils } from '../../../shared/http/http.utils';
-import { RecipientAdapter } from '../../../Recipients/adaptaters/recipient.adapter';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
 import { UserExceptionFilter } from '../filter/user.filter';
