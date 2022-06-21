@@ -38,7 +38,6 @@ export class AvailabilityService {
       await this.availabilityRepository.getWeeklyDefaultAvailability(
         providerId,
       );
-    console.log(weeklyAvailability[0].dailyAvailability);
     const weeklyAvailabilitiesConsideringAgreements = [];
     if (dateFrom) {
       const weekBegin: Date = new Date(dateFrom);
