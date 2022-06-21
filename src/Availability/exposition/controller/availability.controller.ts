@@ -32,14 +32,14 @@ export class AvailabilityController {
   async getWeeklyAvailability(
     @Param('providerId') providerId: string,
     @Req() req: Request,
-    @Query() query,
+    @Query() filters,
   ): Promise<AvailabilityResponse[]> {
     const baseUrl = HttpUtils.getBaseUrlOf(req);
-    console.log(formatInDateToStandardJS(query.dateFrom));
+    if (!filters.dateFrom) filters.dateFrom = null;
     const weeklyAvailability: Availability[] =
       await this.availabilityService.getWeeklyAvailability(
         providerId,
-        query.dateFrom ? formatInDateToStandardJS(query.dateFrom) : null,
+        filters.dateFrom,
       );
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),

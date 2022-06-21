@@ -10,7 +10,7 @@ export class Agreement implements AgreementProps {
   private readonly _beginningDate: Date;
   private readonly _endDate: Date;
   private readonly _recurrence?: AgreementRecurrenceEnum;
-  private readonly _duration?: number;
+  private readonly _duration: number;
   private readonly _remuneration?: number;
   private readonly _status: string;
 

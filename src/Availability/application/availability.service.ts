@@ -34,17 +34,28 @@ export class AvailabilityService {
       await this.availabilityRepository.getWeeklyDefaultAvailability(
         providerId,
       );
+    const weeklyAvailabilitiesConsideringAgreements = [];
     if (dateFrom) {
       const weekBegin: Date = new Date(dateFrom);
-      for (const weekday of Object.keys(weeklyAvailability)) {
-        const dailyAvailability = weeklyAvailability[weekday].dailyAvailability;
-        weeklyAvailability[weekday].setDailyAvailability =
+
+      for (const availability of weeklyAvailability) {
+        const availabilityWithAgreement =
           await this.getDailyAvailabilityBasedOnAgreements(
             providerId,
-            dailyAvailability,
+            availability.dailyAvailability,
             weekBegin,
           );
+        if (availabilityWithAgreement.length > 0)
+          weeklyAvailabilitiesConsideringAgreements.push(
+            new Availability({
+              id: availability.id,
+              day: availability.day,
+              dailyAvailability: availabilityWithAgreement,
+              providerId: availability.providerId,
+            }),
+          );
       }
+      return weeklyAvailabilitiesConsideringAgreements;
     }
     return weeklyAvailability;
   }

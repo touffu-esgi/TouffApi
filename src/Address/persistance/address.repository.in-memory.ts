@@ -29,44 +29,17 @@ export class AddressRepositoryInMemory implements AddressRepository {
   ];
 
   async getAll(filters: unknown = {}): Promise<Address[]> {
+    let addresses = this.addresses;
     if (filters) {
-      let addr = this.addresses;
-      if (filters['and']) {
-        addr = this.addresses.filter((addr) =>
-          this.filterAndUtil(filters['and'], addr),
+      Object.keys(filters).forEach((propName) => {
+        addresses = addresses.filter(
+          (address) =>
+            !address[propName] ||
+            address[propName].indexOf(filters[propName]) !== -1,
         );
-      } else if (filters['or']) {
-        addr = this.addresses.filter((addr) =>
-          this.filterOrUtil(filters['or'], addr),
-        );
-      }
-      return addr;
+      });
     }
-    return this.addresses;
-  }
-
-  filterAndUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
-    let fitsFilter = true;
-    Object.keys(filters).forEach((propName) => {
-      const addrProp = addrItem['_' + propName];
-      if (!addrProp) return false;
-      fitsFilter =
-        fitsFilter &&
-        addrProp.toLowerCase().indexOf(filters[propName].toLowerCase()) !== -1;
-    });
-    return fitsFilter;
-  }
-
-  filterOrUtil(filters: unknown = {}, addrItem: AddressProps): boolean {
-    let fitsFilter = true;
-    Object.keys(filters).forEach((propName) => {
-      const addrProp = addrItem['_' + propName];
-      if (!addrProp) return false;
-      fitsFilter =
-        fitsFilter ||
-        addrProp.toLowerCase().indexOf(filters[propName].toLowerCase()) !== -1;
-    });
-    return fitsFilter;
+    return addresses;
   }
 
   async getOne(addressId: string): Promise<Address> {
