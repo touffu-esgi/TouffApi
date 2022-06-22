@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -14,6 +15,8 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { AnimalExceptionFilter } from '../filters/animal-exception.filter';
 import { AnimalResponse } from '../../domain/animal.response';
 import { AnimalAdapter } from '../../adapters/animal.adapter';
+import { ProviderResponse } from '../../../Providers/domain/provider.response';
+import { ProviderAdapter } from '../../../Providers/adapters/provider.adapter';
 
 @Controller('animals')
 export class AnimalsController {
@@ -35,6 +38,15 @@ export class AnimalsController {
   @Get()
   async getAll(@Req() request: Request): Promise<AnimalResponse[]> {
     const animals = await this.animalsService.getAll();
+    return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
+  }
+
+  @Get(':providerId')
+  async getAllByProviderId(
+    @Param('providerId') providerId: string,
+    @Req() request: Request,
+  ): Promise<AnimalResponse[]> {
+    const animals = await this.animalsService.getAllByRecipientId(providerId);
     return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
   }
 }

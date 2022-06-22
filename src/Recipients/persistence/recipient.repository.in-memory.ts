@@ -1,5 +1,8 @@
 import { RecipientRepository } from '../domain/recipient.repository';
 import { Recipient } from '../domain/recipient';
+import firebaseConfig from '../../utils/firebase.config';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, addDoc, collection } from 'firebase/firestore/lite';
 
 export class RecipientRepositoryInMemory implements RecipientRepository {
   private readonly recipients: Recipient[] = [
@@ -23,7 +26,15 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
     ),
   ];
 
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(this.app);
+
   async save(recipient: Recipient): Promise<Recipient> {
+    await addDoc(collection(this.db, 'cities'), {
+      name: 'Tokyo',
+      country: 'Japan',
+    });
+
     this.recipients.push(recipient);
     return recipient;
   }
