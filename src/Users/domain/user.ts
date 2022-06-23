@@ -4,6 +4,7 @@ export class User {
   private readonly _password: string;
   private readonly _userReference: string;
   private readonly _userType: string;
+  private readonly _profilePic: string;
 
   constructor(
     id: string,
@@ -11,12 +12,14 @@ export class User {
     password: string,
     userReference: string,
     userType: string,
+    profilePic = 'default.png',
   ) {
     this._email = email;
     this._password = password;
     this._userReference = userReference;
     this._id = id;
     this._userType = userType;
+    this._profilePic = profilePic;
   }
 
   get id(): string {
@@ -37,5 +40,9 @@ export class User {
 
   get password(): string {
     return this._password;
+  }
+
+  get profilePic(): string {
+    return this._profilePic;
   }
 }
