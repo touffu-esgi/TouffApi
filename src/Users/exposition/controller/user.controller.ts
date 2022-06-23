@@ -29,7 +29,7 @@ export class UserController {
   ): Promise<{ url: string }> {
     const user = await this.userService.save(addUserDto);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + user.id,
+      url: HttpUtils.getFullUrlOf(request) + '/' + user.email,
     };
   }
 

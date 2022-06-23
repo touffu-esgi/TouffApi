@@ -1,8 +1,9 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class AddUserDto {
-  @IsNotEmpty()
-  userReference: string; //id du provider ou du recipient
+  recipientReference?: string; //id du provider ou du recipient
+
+  providerReference?: string; //id du provider ou du recipient
 
   @IsNotEmpty()
   userType: string;

@@ -13,10 +13,13 @@ import { MessageModule } from './Message/message.module';
 import { AgreementModule } from './Agreement/agreement.module';
 import { RecommendationModule } from './Recommendation/recommendation.module';
 import { AvailabilityModule } from './Availability/availability.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import * as ormConfig from './mongoose.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync(ormConfig),
     AnimalsModule,
     ProviderModule,
     AddressModule,

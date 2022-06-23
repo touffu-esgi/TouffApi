@@ -2,7 +2,7 @@ import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 
-export class UserRepositoryInMemory implements UserRepository {
+export class UserRepositoryInMemory {
   usersMockRepositoryImplement: User[] = [
     new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
     new User('2', 'sarah@sarah.sarah', 'password', '2', 'provider'),
