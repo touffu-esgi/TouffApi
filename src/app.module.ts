@@ -13,6 +13,7 @@ import { MessageModule } from './Message/message.module';
 import { AgreementModule } from './Agreement/agreement.module';
 import { RecommendationModule } from './Recommendation/recommendation.module';
 import { AvailabilityModule } from './Availability/availability.module';
+import { ReportModule } from './Report/report.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AvailabilityModule } from './Availability/availability.module';
     MessageModule,
     RecommendationModule,
     AvailabilityModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [
