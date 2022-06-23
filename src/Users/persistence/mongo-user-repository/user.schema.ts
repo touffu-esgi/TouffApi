@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export interface UserProps {
+  _id?: string;
   recipientReference?: string;
   providerReference?: string;
   userType: string;
@@ -16,9 +17,6 @@ export class UserSchemaProps {
 
   @Prop()
   providerReference?: string;
-
-  @Prop()
-  _id: string;
 
   @Prop()
   userType: string;

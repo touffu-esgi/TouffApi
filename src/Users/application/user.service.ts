@@ -8,9 +8,7 @@ import { UserProps } from '../persistence/mongo-user-repository/user.schema';
 export class UserService {
   constructor(private userRepositoryMongoose: UserRepositoryMongoose) {}
 
-  async save(addUserDto: AddUserDto): Promise<UserProps> {
-    const nextId = await this.userRepositoryMongoose.getNextId();
-
+  async save(addUserDto: AddUserDto): Promise<User> {
     const newUser: UserProps = {
       email: addUserDto.email,
       password: addUserDto.password,
@@ -18,8 +16,7 @@ export class UserService {
       providerReference: addUserDto.providerReference,
       userType: addUserDto.userType,
     };
-    await this.userRepositoryMongoose.add(newUser);
-    return newUser;
+    return await this.userRepositoryMongoose.add(newUser);
   }
 
   async getAll(): Promise<User[]> {

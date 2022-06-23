@@ -7,8 +7,18 @@ import { Model } from 'mongoose';
 export class UserRepositoryMongoose implements UserRepository {
   constructor(@InjectModel('Users') private userModel: Model<UserDocument>) {}
 
-  async add(user: UserProps): Promise<any> {
-    return Promise.resolve(undefined);
+  async add(user: UserProps): Promise<User> {
+    const newUser: UserDocument = await this.userModel.create(user);
+    const userAdatp = new User(
+      newUser._id,
+      newUser.email,
+      '',
+      newUser.recipientReference
+        ? newUser.recipientReference
+        : newUser.providerReference,
+      newUser.userType,
+    );
+    return userAdatp;
   }
 
   async getAll(): Promise<User[]> {
@@ -27,11 +37,16 @@ export class UserRepositoryMongoose implements UserRepository {
     );
   }
 
-  getOne(userId: string): Promise<User> {
-    return Promise.resolve(undefined);
-  }
-
-  async getNextId(): Promise<string> {
-    return Promise.resolve(undefined);
+  async getOne(userId: string): Promise<User> {
+    const users: UserDocument = await this.userModel.findById(userId).exec();
+    return new User(
+      users._id,
+      users.email,
+      '',
+      users.recipientReference
+        ? users.recipientReference
+        : users.providerReference,
+      users.userType,
+    );
   }
 }
