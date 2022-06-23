@@ -1,5 +1,4 @@
 import { Address } from '../domain/address';
-import { AddressProps } from '../domain/address.props';
 import { HttpException } from '@nestjs/common';
 import { AddressRepository } from '../domain/address.repository';
 

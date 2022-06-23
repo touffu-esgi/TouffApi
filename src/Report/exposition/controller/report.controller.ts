@@ -6,22 +6,19 @@ import {
   Param,
   Post,
   Req,
+  UseFilters,
 } from '@nestjs/common';
 import { AddReportDto } from '../../dto/add-report.dto';
 import { ReportService } from '../../application/report.service';
 import { ReportAdapter } from '../../adapters/report.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { Request } from 'express';
+import { ReportExceptionFilter } from '../filters/report.exception.filter';
 
 @Controller('report')
+@UseFilters(new ReportExceptionFilter())
 export class ReportController {
   constructor(private reportService: ReportService) {}
-
-  @Post('')
-  @HttpCode(201)
-  async reportUser(@Body() addReportDto: AddReportDto) {
-    // const reportsFor = await this;
-  }
 
   @Get(':userId')
   async getReportsByUser(@Param('userId') userId: string, @Req() req: Request) {
@@ -34,5 +31,17 @@ export class ReportController {
   @Get()
   async getReportsCountByUser() {
     return await this.reportService.getReportsCountByUser();
+  }
+
+  @Post()
+  @HttpCode(201)
+  async add(
+    @Body() addReportDto: AddReportDto,
+    @Req() req: Request,
+  ): Promise<{ url: string }> {
+    const report = await this.reportService.addReport(addReportDto);
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + report.reportedUserId,
+    };
   }
 }

@@ -1,12 +1,13 @@
-import { IsNotEmpty, MaxLength } from 'class-validator';
+import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 
 export class AddReportDto {
   @IsNotEmpty()
   reportedUserId: string;
 
   @IsNotEmpty()
-  reportingUserId: string;
+  reporterUserId: string;
 
+  @MinLength(0)
   @MaxLength(512)
   comment: string;
 }

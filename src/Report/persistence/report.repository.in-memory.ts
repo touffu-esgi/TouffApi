@@ -1,5 +1,6 @@
 import { ReportRepository } from '../domain/report.repository';
 import { Report } from '../domain/report';
+import { HasAlreadyReportedException } from '../application/exceptions/has-already-reported.exception';
 
 export class ReportRepositoryInMemory implements ReportRepository {
   reports: Report[] = [
@@ -25,8 +26,20 @@ export class ReportRepositoryInMemory implements ReportRepository {
     return reportsCount;
   }
 
-  add(report: Report): Promise<Report> {
-    throw new Error('Not implemented');
+  async add(report: Report): Promise<Report> {
+    const hasAlreadyReported = this.reports.filter(
+      (r) =>
+        r.reportedUserId === report.reportedUserId &&
+        r.reportedByUserId === report.reportedByUserId &&
+        r.active === report.active,
+    );
+    if (hasAlreadyReported.length > 0) {
+      throw new HasAlreadyReportedException(
+        `User ${report.reportedByUserId} has already reported user ${report.reportedUserId}`,
+      );
+    }
+    this.reports.push(report);
+    return report;
   }
 
   getNextId(): string {
