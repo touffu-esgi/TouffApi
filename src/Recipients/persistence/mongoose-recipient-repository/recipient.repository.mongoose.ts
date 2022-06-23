@@ -2,7 +2,7 @@ import { RecipientRepository } from '../../domain/recipient.repository';
 import { Recipient } from '../../domain/recipient';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RecipientDocument } from './recipient.schema';
+import { RecipientDocument, RecipientProps } from './recipient.schema';
 
 export class RecipientRepositoryMongoose implements RecipientRepository {
   constructor(
@@ -28,8 +28,19 @@ export class RecipientRepositoryMongoose implements RecipientRepository {
     );
   }
 
-  save(recipient: Recipient): Promise<Recipient> {
-    return Promise.resolve(undefined);
+  async save(recipient: RecipientProps): Promise<Recipient> {
+    const newRecipient: RecipientDocument = await this.recipientModel.create(
+      recipient,
+    );
+    return new Recipient(
+      newRecipient._id,
+      newRecipient.name,
+      newRecipient.surname,
+      newRecipient.email,
+      newRecipient.phoneNumber,
+      newRecipient.password,
+      newRecipient.address,
+    );
   }
 
   getOne(id: string): Promise<Recipient> {

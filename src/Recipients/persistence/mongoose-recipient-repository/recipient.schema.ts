@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export interface RecipientProps {
   _id?: string;
@@ -28,7 +28,7 @@ export class RecipientSchemaProps {
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Addresses' })
   address: string;
 }
 

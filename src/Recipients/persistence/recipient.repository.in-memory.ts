@@ -1,7 +1,6 @@
-import { RecipientRepository } from '../domain/recipient.repository';
 import { Recipient } from '../domain/recipient';
 
-export class RecipientRepositoryInMemory implements RecipientRepository {
+export class RecipientRepositoryInMemory {
   private readonly recipients: Recipient[] = [
     new Recipient(
       '1',
