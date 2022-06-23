@@ -28,4 +28,8 @@ export class RecipientsService {
   getAll(): Promise<Recipient[]> {
     return this.recipientRepository.getAll();
   }
+
+  async getOne(recipientId: string): Promise<Recipient> {
+    return await this.recipientRepository.getOne(recipientId);
+  }
 }

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -38,5 +39,14 @@ export class RecipientsController {
     return recipients.map((recipient) =>
       RecipientAdapter.fromAnimalToAnimalResponse(recipient),
     );
+  }
+
+  @Get(':recipientId')
+  async getOne(
+    @Req() request: Request,
+    @Param('recipientId') recipientId: string,
+  ): Promise<RecipientResponse> {
+    const recipient = await this.recipientsService.getOne(recipientId);
+    return RecipientAdapter.fromAnimalToAnimalResponse(recipient);
   }
 }

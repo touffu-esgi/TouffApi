@@ -43,7 +43,18 @@ export class RecipientRepositoryMongoose implements RecipientRepository {
     );
   }
 
-  getOne(id: string): Promise<Recipient> {
-    return Promise.resolve(undefined);
+  async getOne(recipientId: string): Promise<Recipient> {
+    const recipient: RecipientDocument = await this.recipientModel.findById(
+      recipientId,
+    );
+    return new Recipient(
+      recipient._id,
+      recipient.name,
+      recipient.surname,
+      recipient.email,
+      recipient.phoneNumber,
+      recipient.password,
+      recipient.address,
+    );
   }
 }
