@@ -28,7 +28,7 @@ export class ProviderAdapter {
     dto: AddProviderDto | GetProviderDto,
   ): Provider {
     return new Provider({
-      id: dto['id'] ? dto['id'] : '',
+      _id: dto['id'] ? dto['id'] : '',
       name: dto.name,
       surname: dto.surname,
       email: dto.email,

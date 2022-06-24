@@ -33,9 +33,6 @@ export class ProviderSchemaProps {
 
   @Prop()
   profile_desc: string;
-
-  @Prop()
-  id?: string;
 }
 
 export type ProviderDocument = ProviderProps & Document;
