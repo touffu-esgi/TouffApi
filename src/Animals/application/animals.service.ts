@@ -18,4 +18,8 @@ export class AnimalsService {
   getAll(): Promise<Animal[]> {
     return this.animalRepository.getAll();
   }
+
+  async getOne(animalId: string) {
+    return this.animalRepository.getOne(animalId);
+  }
 }

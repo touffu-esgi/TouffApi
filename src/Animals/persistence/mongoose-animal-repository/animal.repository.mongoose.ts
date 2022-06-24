@@ -21,7 +21,10 @@ export class AnimalRepositoryMongoose implements AnimalRepository {
     return new Animal(newAnimal.name, newAnimal.type, newAnimal._id);
   }
 
-  getOne(animalId: string): Promise<Animal> {
-    return Promise.resolve(undefined);
+  async getOne(animalId: string): Promise<Animal> {
+    const animal: AnimalDocument = await this.animalModel
+      .findById(animalId)
+      .exec();
+    return new Animal(animal.name, animal.type, animal._id);
   }
 }
