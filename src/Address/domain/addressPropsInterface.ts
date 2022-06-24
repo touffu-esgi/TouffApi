@@ -1,5 +1,5 @@
-export interface AddressProps {
-  readonly id: string;
+export interface AddressPropsInterface {
+  readonly id?: string;
   readonly addr1: string;
   readonly addr2?: string;
   readonly zipcode: string;

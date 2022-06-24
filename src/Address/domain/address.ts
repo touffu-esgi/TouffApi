@@ -1,15 +1,15 @@
-import { AddressProps } from './address.props';
+import { AddressPropsInterface } from './addressPropsInterface';
+import { AddressProps } from '../persistance/mongoose-address-repository/address.schema';
 
 export class Address implements AddressProps {
-  private readonly _id: string;
-  private readonly _addr1: string;
-  private readonly _addr2?: string;
-  private readonly _zipcode: string;
-  private readonly _city: string;
-  private readonly _country: string;
+  _id: string;
+  _addr1: string;
+  _addr2: string;
+  _city: string;
+  _country: string;
+  _zipcode: string;
 
-  constructor(addressProps: AddressProps) {
-    this._id = addressProps.id;
+  constructor(addressProps: AddressPropsInterface) {
     this._addr1 = addressProps.addr1;
     this._addr2 = addressProps.addr2;
     this._zipcode = addressProps.zipcode;
