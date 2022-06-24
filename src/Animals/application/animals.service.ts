@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { AddAnimalDto } from '../dto/add-animal.dto';
 import { Animal } from '../domain/animal';
-import { AnimalRepositoryInMemory } from '../persistence/animal.repository.in-memory';
 import { AnimalTypeFactory } from './exceptions/animal-type.factory';
+import { AnimalProps } from '../persistence/mongoose-animal-repository/animal.schema';
+import { AnimalRepositoryMongoose } from '../persistence/mongoose-animal-repository/animal.repository.mongoose';
 
 @Injectable()
 export class AnimalsService {
-  constructor(private animalRepository: AnimalRepositoryInMemory) {}
+  constructor(private animalRepository: AnimalRepositoryMongoose) {}
 
   async add(dto: AddAnimalDto): Promise<Animal> {
     const animalType = AnimalTypeFactory.fromString(dto.type);
-    const nextId = await this.animalRepository.getNextId();
-
-    const animal = new Animal(dto.name, animalType, nextId);
-
-    await this.animalRepository.save(animal);
-    return animal;
+    const animalProps: AnimalProps = { name: dto.name, type: animalType };
+    return await this.animalRepository.save(animalProps);
   }
 
   getAll(): Promise<Animal[]> {
