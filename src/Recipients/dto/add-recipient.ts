@@ -8,7 +8,6 @@ export class AddRecipientDto {
   surname: string;
 
   @IsNotEmpty()
-  @IsEmail()
   email: string;
 
   @IsNotEmpty()

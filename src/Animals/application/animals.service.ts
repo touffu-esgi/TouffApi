@@ -12,7 +12,7 @@ export class AnimalsService {
     const animalType = AnimalTypeFactory.fromString(dto.type);
     const nextId = await this.animalRepository.getNextId();
 
-    const animal = new Animal(dto.name, animalType, nextId);
+    const animal = new Animal(dto.name, animalType, nextId, dto.recipientId);
 
     await this.animalRepository.save(animal);
     return animal;
@@ -20,5 +20,9 @@ export class AnimalsService {
 
   getAll(): Promise<Animal[]> {
     return this.animalRepository.getAll();
+  }
+
+  async getAllByRecipientId(recipientId: string) {
+    return this.animalRepository.getAllByRecipientId(recipientId);
   }
 }
