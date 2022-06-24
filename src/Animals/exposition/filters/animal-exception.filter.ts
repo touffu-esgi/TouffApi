@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AnimalTypeNotAllowedException } from '../../application/exceptions/animal-type-not-allowed.exception';
+import { AnimalNotFoundException } from '../../application/exceptions/animal-not-found.exception';
 
 @Catch()
 export class AnimalExceptionFilter implements ExceptionFilter {
@@ -28,6 +29,9 @@ export class AnimalExceptionFilter implements ExceptionFilter {
     switch (exception.name) {
       case AnimalTypeNotAllowedException.name:
         body.statusCode = 400;
+        break;
+      case AnimalNotFoundException.name:
+        body.statusCode = 404;
         break;
     }
 

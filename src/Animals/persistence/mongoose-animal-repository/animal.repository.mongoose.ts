@@ -3,6 +3,7 @@ import { Animal } from '../../domain/animal';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AnimalDocument, AnimalProps } from './animal.schema';
+import { AnimalNotFoundException } from '../../application/exceptions/animal-not-found.exception';
 
 export class AnimalRepositoryMongoose implements AnimalRepository {
   constructor(
@@ -25,6 +26,11 @@ export class AnimalRepositoryMongoose implements AnimalRepository {
     const animal: AnimalDocument = await this.animalModel
       .findById(animalId)
       .exec();
+    if (!animal) {
+      throw new AnimalNotFoundException(
+        `animal with id: ${animalId} not found`,
+      );
+    }
     return new Animal(animal.name, animal.type, animal._id);
   }
 }
