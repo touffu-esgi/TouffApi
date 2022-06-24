@@ -9,12 +9,46 @@ export class ProviderRepositoryMongoose implements ProviderRepository {
   constructor(
     @InjectModel('Providers') private providerModel: Model<ProviderDocument>,
   ) {}
-  getAll(): Promise<Provider[]> {
-    return Promise.resolve([]);
+
+  async getAll(): Promise<Provider[]> {
+    const providers: ProviderDocument[] = await this.providerModel
+      .find()
+      .exec();
+    return providers.map(
+      (provider) =>
+        new Provider({
+          address: provider.address,
+          base_tariff: provider.base_tariff,
+          email: provider.email,
+          _id: provider.id,
+          name: provider.name,
+          password: '',
+          phone: provider.phone,
+          profile_desc: provider.profile_desc,
+          profile_title: provider.profile_title,
+          radius: provider.radius,
+          surname: provider.surname,
+        }),
+    );
   }
 
-  getOne(providerId: string): Promise<Provider> {
-    return Promise.resolve(undefined);
+  async getOne(providerId: string): Promise<Provider> {
+    const provider: ProviderDocument = await this.providerModel
+      .findById(providerId)
+      .exec();
+    return new Provider({
+      address: provider.address,
+      base_tariff: provider.base_tariff,
+      email: provider.email,
+      _id: provider.id,
+      name: provider.name,
+      password: provider.password,
+      phone: provider.phone,
+      profile_desc: provider.profile_desc,
+      profile_title: provider.profile_title,
+      radius: provider.radius,
+      surname: provider.surname,
+    });
   }
 
   async save(provider: ProviderProps): Promise<Provider> {
