@@ -6,10 +6,10 @@ import { GetUserDto } from '../dto/get-user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepositoryInMemory: UserRepositoryInMemory) {}
+  constructor(private userRepository: UserRepositoryInMemory) {}
 
   async save(addUserDto: AddUserDto): Promise<User> {
-    const nextId = await this.userRepositoryInMemory.getNextId();
+    const nextId = await this.userRepository.getNextId();
 
     const newUser = new User(
       nextId,
@@ -18,19 +18,19 @@ export class UserService {
       addUserDto.userReference,
       addUserDto.userType,
     );
-    await this.userRepositoryInMemory.add(newUser);
+    await this.userRepository.add(newUser);
     return newUser;
   }
 
   async getAll(): Promise<User[]> {
-    return await this.userRepositoryInMemory.getAll();
+    return await this.userRepository.getAll();
   }
 
   async getOne(userId: string): Promise<User> {
-    return await this.userRepositoryInMemory.getOne(userId);
+    return await this.userRepository.getOne(userId);
   }
 
   async getUserByEmailAndPassword(user: GetUserDto): Promise<User> {
-    return await this.userRepositoryInMemory.getUserByEmailAndPassword(user);
+    return await this.userRepository.getUserByEmailAndPassword(user);
   }
 }
