@@ -26,11 +26,11 @@ export class MessageService {
     const conversations = await this.msgRepository.getUserConversations(userId);
     for (const recipientId of Object.keys(conversations)) {
       const user = await this.userRepository.getOne(recipientId);
-      if (user.userTypes === 'provider') {
+      if (user.userType === 'provider') {
         const sender = await this.providerRepository.getOne(user.userReference);
         conversations[recipientId].senderName = sender.name;
       }
-      if (user.userTypes === 'recipient') {
+      if (user.userType === 'recipient') {
         const sender = await this.recipientRepository.getOne(
           user.userReference,
         );

@@ -1,11 +1,10 @@
-import { Body, Controller, Get, Param, Query, Req } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
 import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
-import { formatInDateToStandardJS } from '../../../shared/utils/date-time.utils';
 
 @Controller('availability')
 export class AvailabilityController {
