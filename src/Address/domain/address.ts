@@ -15,6 +15,7 @@ export class Address implements AddressProps {
     this._zipcode = addressProps.zipcode;
     this._city = addressProps.city;
     this._country = addressProps.country;
+    this._id = addressProps.id;
   }
 
   get id(): string {

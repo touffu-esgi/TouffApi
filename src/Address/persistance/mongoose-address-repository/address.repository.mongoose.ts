@@ -12,7 +12,7 @@ export class AddressRepositoryMongoose implements AddressRepository {
   async add(address: AddressProps): Promise<Address> {
     const newAddress: AddressDocument = await this.addressModel.create(address);
     return new Address({
-      id: newAddress._id,
+      id: newAddress._id.toString(),
       addr1: newAddress.addr1,
       addr2: newAddress.addr2 ? newAddress.addr2 : '',
       city: newAddress.city,
@@ -21,11 +21,34 @@ export class AddressRepositoryMongoose implements AddressRepository {
     });
   }
 
-  getAll(filters: unknown): Promise<Address[]> {
-    return Promise.resolve([]);
+  async getAll(filters: unknown): Promise<Address[]> {
+    const addresses: AddressDocument[] = await this.addressModel
+      .find(filters)
+      .exec();
+    return addresses.map(
+      (address) =>
+        new Address({
+          addr1: address.addr1,
+          addr2: address.addr2 ? address.addr2 : '',
+          city: address.city,
+          country: address.country,
+          id: address.id,
+          zipcode: address.zipcode,
+        }),
+    );
   }
 
-  getOne(addressId: string): Promise<Address> {
-    return Promise.resolve(undefined);
+  async getOne(addressId: string): Promise<Address> {
+    const address: AddressDocument = await this.addressModel
+      .findById(addressId)
+      .exec();
+    return new Address({
+      addr1: address.addr1,
+      addr2: address.addr2 ? address.addr2 : '',
+      city: address.city,
+      country: address.country,
+      id: address.id,
+      zipcode: address.zipcode,
+    });
   }
 }
