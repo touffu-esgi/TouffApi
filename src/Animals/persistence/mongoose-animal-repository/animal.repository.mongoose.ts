@@ -9,8 +9,11 @@ export class AnimalRepositoryMongoose implements AnimalRepository {
     @InjectModel('Animals') private animalModel: Model<AnimalDocument>,
   ) {}
 
-  getAll(): Promise<Animal[]> {
-    return Promise.resolve([]);
+  async getAll(): Promise<Animal[]> {
+    const animals: AnimalDocument[] = await this.animalModel.find().exec();
+    return animals.map(
+      (animal) => new Animal(animal.name, animal.type, animal._id),
+    );
   }
 
   async save(animal: AnimalProps): Promise<Animal> {
