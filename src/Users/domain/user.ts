@@ -26,7 +26,7 @@ export class User {
     return this._id;
   }
 
-  get userTypes(): string {
+  get userType(): string {
     return this._userType;
   }
 
