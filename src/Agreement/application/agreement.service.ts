@@ -88,13 +88,13 @@ export class AgreementService {
     return occupiedTimeframes.length > 0;
   }
 
-  async update(dto: UpdateAgreementDto) {
+  async update(dto: UpdateAgreementDto, agreementId: string) {
     const recurence = dto.recurring
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
 
     const agreement = new Agreement({
-      id: dto._id,
+      id: agreementId,
       recurring: dto.recurring,
       recurrence: recurence,
       providerRef: '',

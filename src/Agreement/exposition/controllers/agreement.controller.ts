@@ -62,12 +62,13 @@ export class AgreementController {
     };
   }
 
-  @Put()
+  @Put(':agreementId')
   @HttpCode(204)
   async update(
     @Body() updateAgreementDto: UpdateAgreementDto,
+    @Param('agreementId') agreementId: string,
     @Req() req: Request,
   ): Promise<void> {
-    await this.agreementService.update(updateAgreementDto);
+    await this.agreementService.update(updateAgreementDto, agreementId);
   }
 }

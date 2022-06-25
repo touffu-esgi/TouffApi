@@ -2,7 +2,7 @@ import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class UpdateAgreementDto {
   @IsNotEmpty()
-  _id: string;
+  id: string;
 
   recurring?: boolean;
 
@@ -17,4 +17,10 @@ export class UpdateAgreementDto {
   remuneration?: number;
 
   status?: string;
+
+  animals?: [string];
+
+  providerRef?: string;
+
+  recipientRef?: string;
 }
