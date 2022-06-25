@@ -69,8 +69,10 @@ export class AvailabilityService {
     dateFrom: Date,
   ): Promise<{ beginAt: number; endAt: number }[]> {
     const userAgreements = await this.agreementRepository.getAll({
+      status: 'Agreed',
       providerRef: providerId,
     });
+    if (userAgreements.length === 0) return availabilities;
     let nextWeekday = dateFrom;
     let dailyAvailability: { beginAt: number; endAt: number }[] = [];
     for (const agreement of userAgreements) {
