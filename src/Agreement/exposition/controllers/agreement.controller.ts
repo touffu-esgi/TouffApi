@@ -17,7 +17,7 @@ import { AgreementResponse } from '../../domain/agreement.response';
 import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAgreementDto } from '../../dto/add-agreement.dto';
-import { UpdateAgreementDto } from '../../dto/update-agreement-dto';
+import { UpdateAgreementDto } from '../../dto/update-agreement.dto';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())
@@ -68,6 +68,6 @@ export class AgreementController {
     @Body() updateAgreementDto: UpdateAgreementDto,
     @Req() req: Request,
   ): Promise<void> {
-    const agreement = await this.agreementService.update(updateAgreementDto);
+    await this.agreementService.update(updateAgreementDto);
   }
 }

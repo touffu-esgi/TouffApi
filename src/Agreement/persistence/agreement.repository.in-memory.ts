@@ -2,6 +2,7 @@ import { AgreementRepository } from '../domain/agreement.repository';
 import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
+import { UpdateAgreementDto } from '../dto/update-agreement.dto';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   private readonly agreements = [
@@ -77,5 +78,31 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
         if (day.getDate() === agreement.beginningDate.getDate()) return true;
     }
     return false;
+  }
+
+  update(updateAgreementDto: Agreement) {
+    if (updateAgreementDto.id) {
+      const index = this.agreements.findIndex(
+        (agreement) => agreement.id == updateAgreementDto.id,
+      );
+      if (updateAgreementDto.duration) {
+        this.agreements[index].duration = +updateAgreementDto.duration;
+      }
+      if (updateAgreementDto.remuneration) {
+        this.agreements[index].remuneration = +updateAgreementDto.remuneration;
+      }
+      if (updateAgreementDto.recurring) {
+        this.agreements[index].recurring = updateAgreementDto.recurring;
+      }
+      if (updateAgreementDto.recurrence) {
+        this.agreements[index].recurrence = updateAgreementDto.recurrence;
+      }
+      if (updateAgreementDto.beginningDate) {
+        this.agreements[index].beginningDate = updateAgreementDto.beginningDate;
+      }
+      if (updateAgreementDto.endDate) {
+        this.agreements[index].endDate = updateAgreementDto.endDate;
+      }
+    }
   }
 }

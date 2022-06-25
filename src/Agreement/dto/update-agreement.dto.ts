@@ -8,19 +8,13 @@ export class UpdateAgreementDto {
 
   recurrence?: string;
 
-  providerRef?: string;
+  beginningDate?: Date;
 
-  recipientRef?: string;
+  endDate?: Date;
 
-  animalsRefs?: string[];
-
-  beginningDate?: string;
-
-  endDate?: string;
-
-  @IsPositive()
   duration?: number;
 
-  @IsPositive()
   remuneration?: number;
+
+  status?: string;
 }

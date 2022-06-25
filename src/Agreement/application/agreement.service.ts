@@ -11,6 +11,7 @@ import { timeToDouble } from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
 import { MessageService } from '../../Message/application/message.service';
 import { AddMessageDto } from '../../Message/dto/add-message.dto';
+import { UpdateAgreementDto } from '../dto/update-agreement.dto';
 
 @Injectable()
 export class AgreementService {
@@ -85,5 +86,27 @@ export class AgreementService {
         this.availabilityRepository.timeOverlapsTimeframe(endTime, timeframe),
     );
     return occupiedTimeframes.length > 0;
+  }
+
+  async update(dto: UpdateAgreementDto) {
+    const recurence = dto.recurring
+      ? getAgreementRecurrenceEnumFromString(dto.recurrence)
+      : AgreementRecurrenceEnum.None;
+
+    const agreement = new Agreement({
+      id: dto._id,
+      recurring: dto.recurring,
+      recurrence: recurence,
+      providerRef: '',
+      recipientRef: '',
+      animalsRefs: [''],
+      beginningDate: dto.beginningDate,
+      endDate: dto.endDate,
+      duration: dto.duration,
+      remuneration: dto.remuneration,
+      status: dto.status,
+    });
+
+    this.agreementRepository.update(agreement);
   }
 }
