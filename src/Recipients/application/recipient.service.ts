@@ -40,15 +40,15 @@ export class RecipientsService {
   }
 
   async getAll(): Promise<Recipient[]> {
-    const users = await this.recipientRepository.getAll();
-    for (const i of Object.keys(users)) {
+    const recipients = await this.recipientRepository.getAll();
+    for (const i of Object.keys(recipients)) {
       const recipientUser =
         await this.userRepository.getOneByUserTypeAndReference(
-          users[i].id,
+          recipients[i].id,
           'recipient',
         );
-      users[i].userId = recipientUser.id;
+      recipients[i].userId = recipientUser.id;
     }
-    return users;
+    return recipients;
   }
 }
