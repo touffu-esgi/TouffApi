@@ -1,9 +1,9 @@
 import { Address } from '../domain/address';
-import { AddressProps } from '../domain/address.props';
+import { AddressPropsInterface } from '../domain/addressPropsInterface';
 import { HttpException } from '@nestjs/common';
 import { AddressRepository } from '../domain/address.repository';
 
-export class AddressRepositoryInMemory implements AddressRepository {
+export class AddressRepositoryInMemory {
   private readonly addresses: Address[] = [
     new Address({
       id: '1',
