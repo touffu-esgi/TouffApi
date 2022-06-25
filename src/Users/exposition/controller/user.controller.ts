@@ -15,6 +15,8 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
 import { UserExceptionFilter } from '../filter/user.filter';
+import { User } from '../../domain/user';
+import { GetUserDto } from '../../dto/get-user.dto';
 
 @Controller('user')
 @UseFilters(UserExceptionFilter)
@@ -51,6 +53,19 @@ export class UserController {
     const user = await this.userService.getOne(userId);
     return UserAdapter.fromUserToUserResponse(
       user,
+      HttpUtils.getBaseUrlOf(request),
+    );
+  }
+
+  @Post('/login')
+  @HttpCode(200)
+  async getUserByEmailAndPassword(
+    @Body() user: GetUserDto,
+    @Req() request: Request,
+  ): Promise<UserResponse> {
+    const userFound = await this.userService.getUserByEmailAndPassword(user);
+    return UserAdapter.fromUserToUserResponse(
+      userFound,
       HttpUtils.getBaseUrlOf(request),
     );
   }
