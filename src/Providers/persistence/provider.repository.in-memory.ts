@@ -5,7 +5,7 @@ import { ProviderNotFoundException } from '../application/exceptions/provider-no
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
     new Provider({
-      id: '1',
+      _id: '1',
       name: 'Nathan',
       surname: 'Letourneau',
       email: 'nletourneau@mail.mail',
@@ -17,7 +17,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       profile_desc: 'Bla-bla-bla',
     }),
     new Provider({
-      id: '2',
+      _id: '2',
       name: 'Schlegel',
       surname: 'Sarah',
       email: 'sschlegel@wp.pl',
@@ -29,7 +29,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       profile_desc: 'Bla-bla-bla',
     }),
     new Provider({
-      id: '3',
+      _id: '3',
       name: 'Omnes',
       surname: 'Théo',
       email: 'Omnes@Théo.pl',

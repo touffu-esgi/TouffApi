@@ -1,5 +1,4 @@
 export interface ProviderProps {
-  readonly id: string;
   readonly name: string;
   readonly surname: string;
   readonly email: string;
@@ -10,4 +9,5 @@ export interface ProviderProps {
   readonly radius: number;
   readonly profile_title: string;
   readonly profile_desc: string;
+  readonly _id?: string;
 }

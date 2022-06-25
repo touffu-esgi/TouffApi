@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ProviderRepositoryInMemory } from '../persistence/provider.repository.in-memory';
 import { Provider } from '../domain/provider';
+import { ProviderRepositoryMongoose } from '../persistence/mongoose-provider-repository/provider.repository.mongoose';
+import { ProviderProps } from '../domain/provider.props';
 
 @Injectable()
 export class ProvidersService {
-  constructor(private providerRepository: ProviderRepositoryInMemory) {}
+  constructor(private providerRepository: ProviderRepositoryMongoose) {}
 
-  async add(providerEmptyId: Provider) {
-    const newId = this.providerRepository.getNextId();
-    const provider = new Provider({
-      id: newId,
+  async add(providerEmptyId: Provider): Promise<Provider> {
+    const provider: ProviderProps = {
       name: providerEmptyId.name,
       surname: providerEmptyId.surname,
       email: providerEmptyId.email,
@@ -20,9 +20,8 @@ export class ProvidersService {
       radius: providerEmptyId.radius,
       profile_title: "Bonjour, je m'appelle " + providerEmptyId.name,
       profile_desc: 'Ce profil est personalisable',
-    });
-    await this.providerRepository.save(provider);
-    return newId;
+    };
+    return await this.providerRepository.save(provider);
   }
 
   async getAll(): Promise<Provider[]> {
