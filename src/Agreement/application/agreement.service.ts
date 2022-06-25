@@ -9,6 +9,8 @@ import {
 import { AvailabilityRepositoryInMemory } from '../../Availability/persistence/availability.repository.in-memory';
 import { timeToDouble } from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
+import { MessageService } from '../../Message/application/message.service';
+import { AddMessageDto } from '../../Message/dto/add-message.dto';
 
 @Injectable()
 export class AgreementService {
