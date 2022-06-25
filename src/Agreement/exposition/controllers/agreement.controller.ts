@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseFilters,
@@ -16,6 +17,7 @@ import { AgreementResponse } from '../../domain/agreement.response';
 import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAgreementDto } from '../../dto/add-agreement.dto';
+import { UpdateAgreementDto } from '../../dto/update-agreement-dto';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())
@@ -58,5 +60,14 @@ export class AgreementController {
     return {
       url: HttpUtils.getFullUrlOf(req) + '/' + agreement.id,
     };
+  }
+
+  @Put()
+  @HttpCode(204)
+  async update(
+    @Body() updateAgreementDto: UpdateAgreementDto,
+    @Req() req: Request,
+  ): Promise<void> {
+    const agreement = await this.agreementService.update(updateAgreementDto);
   }
 }
