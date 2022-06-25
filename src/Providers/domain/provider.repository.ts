@@ -1,7 +1,8 @@
 import { Provider } from './provider';
+import { ProviderProps } from './provider.props';
 
 export interface ProviderRepository {
-  save(provider: Provider): Promise<Provider>;
+  save(provider: ProviderProps): Promise<Provider>;
   getAll(): Promise<Provider[]>;
   getOne(providerId: string): Promise<Provider>;
 }

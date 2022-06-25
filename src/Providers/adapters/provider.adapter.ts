@@ -9,7 +9,7 @@ export class ProviderAdapter {
     baseUrl: string,
   ) {
     const props = {
-      id: provider.id,
+      _id: provider._id,
       name: provider.name,
       surname: provider.surname,
       email: provider.email,
@@ -28,7 +28,7 @@ export class ProviderAdapter {
     dto: AddProviderDto | GetProviderDto,
   ): Provider {
     return new Provider({
-      id: dto['id'] ? dto['id'] : '',
+      _id: !(dto instanceof AddProviderDto) && dto._id ? dto._id : '',
       name: dto.name,
       surname: dto.surname,
       email: dto.email,

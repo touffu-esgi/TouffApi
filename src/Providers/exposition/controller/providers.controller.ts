@@ -28,9 +28,9 @@ export class ProvidersController {
     @Req() request: Request,
   ): Promise<{ url: string }> {
     const providerObject = ProviderAdapter.fromDtoToProvider(providerDto);
-    const providerId = await this.providersService.add(providerObject);
+    const provider = await this.providersService.add(providerObject);
     return {
-      url: HttpUtils.getFullUrlOf(request) + '/' + providerId,
+      url: HttpUtils.getFullUrlOf(request) + '/' + provider.id,
     };
   }
 

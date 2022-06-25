@@ -14,7 +14,7 @@ export class ProviderResponse {
   profile_desc: string;
 
   constructor(providerProps: ProviderProps) {
-    this.id = providerProps.id;
+    this.id = providerProps._id;
     this.name = providerProps.name;
     this.surname = providerProps.surname;
     this.email = providerProps.email;
