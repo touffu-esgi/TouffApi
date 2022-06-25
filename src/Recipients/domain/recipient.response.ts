@@ -5,6 +5,7 @@ export class RecipientResponse {
   phoneNumber: string;
   address: string;
   id: string;
+  userId: string;
 
   constructor(
     id: string,
@@ -13,6 +14,7 @@ export class RecipientResponse {
     email: string,
     phoneNumber: string,
     address: string,
+    userId: string,
   ) {
     this.id = id;
     this.name = name;
@@ -20,5 +22,6 @@ export class RecipientResponse {
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.address = address;
+    this.userId = userId;
   }
 }

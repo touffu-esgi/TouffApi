@@ -1,5 +1,6 @@
 export class Recipient {
   private readonly _id: string;
+  private _userId?: string;
   private readonly _name: string;
   private readonly _surname: string;
   private readonly _email: string;
@@ -51,5 +52,13 @@ export class Recipient {
 
   get address(): string {
     return this._address;
+  }
+
+  get userId(): string {
+    return this._userId;
+  }
+
+  set userId(id) {
+    this._userId = id;
   }
 }

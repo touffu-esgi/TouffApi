@@ -1,7 +1,5 @@
 import { RecipientRepository } from '../domain/recipient.repository';
 import { Recipient } from '../domain/recipient';
-import { initializeApp } from 'firebase/app';
-import { getFirestore, addDoc, collection } from 'firebase/firestore/lite';
 
 export class RecipientRepositoryInMemory implements RecipientRepository {
   private readonly recipients: Recipient[] = [
@@ -35,7 +33,7 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
   }
 
   async getOne(id: string): Promise<Recipient> {
-    const recipients = this.recipients.filter((p) => p.id === id);
+    const recipients = this.recipients.filter((r) => r.id === id);
     if (recipients.length > 0) return recipients[0];
     throw new Error(`Recipient ${id} not found`);
   }
