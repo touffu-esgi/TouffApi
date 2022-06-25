@@ -1,10 +1,20 @@
-import { Controller, Get, Param, Query, Req, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseFilters,
+} from '@nestjs/common';
 import { PositionService } from '../../application/position.service';
 import { Request } from 'express';
 import { PositionResponse } from '../../domain/position.response';
 import { PositionAdapter } from '../../adapters/position.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { PositionExceptionFilter } from '../filters/position.exception.filter';
+import { AddPositionDto } from '../../dto/add-position.dto';
 
 @Controller('position')
 @UseFilters(new PositionExceptionFilter())
@@ -42,5 +52,16 @@ export class PositionController {
     return positions.map((position) =>
       PositionAdapter.toPositionResponse(position, baseUrl),
     );
+  }
+
+  @Post()
+  async add(
+    @Req() req: Request,
+    @Body() addDto: AddPositionDto,
+  ): Promise<{ url: string }> {
+    const position = await this.positionService.add(addDto);
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + position.agreementRef,
+    };
   }
 }

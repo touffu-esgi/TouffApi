@@ -1,6 +1,5 @@
 import { Position } from '../domain/position';
 import { PositionResponse } from '../domain/position.response';
-import { ControllerEndpointsUtils } from '../../shared/utils/controller.endpoints.utils';
 
 export class PositionAdapter {
   public static toPositionResponse(

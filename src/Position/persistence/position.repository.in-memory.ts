@@ -31,7 +31,7 @@ export class PositionRepositoryInMemory implements PositionRepository {
   }
 
   getNextId(): string {
-    throw new Error('Not implemented');
+    return (+this.positions.at(-1).id + 1).toString();
   }
 
   async getRoute(
@@ -49,5 +49,10 @@ export class PositionRepositoryInMemory implements PositionRepository {
     throw new EmptyPositionsException(
       `No position for agreement ${agreementId} between ${dateFrom} && ${dateTo}`,
     );
+  }
+
+  async add(position: Position): Promise<Position> {
+    this.positions.push(position);
+    return position;
   }
 }
