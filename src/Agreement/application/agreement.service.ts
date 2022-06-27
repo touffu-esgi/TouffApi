@@ -65,7 +65,7 @@ export class AgreementService {
       endDate: endDate,
       duration: dto.duration,
       remuneration: dto.remuneration,
-      status: 'InDiscussion',
+      status: 'Agreed',
     });
     return await this.agreementRepository.add(agreement);
   }
