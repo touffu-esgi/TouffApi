@@ -21,6 +21,16 @@ export class AgreementService {
     return await this.agreementRepository.getAll(filters);
   }
 
+  async getOneFromAnimalAndDatetime(
+    dt: Date,
+    animalId: string,
+  ): Promise<Agreement> {
+    return await this.agreementRepository.getOneFromAnimalAndDatetime(
+      dt,
+      animalId,
+    );
+  }
+
   async getOne(agreementId: string): Promise<Agreement> {
     return await this.agreementRepository.getOne(agreementId);
   }
@@ -62,7 +72,7 @@ export class AgreementService {
       endDate: endDate,
       duration: dto.duration,
       remuneration: dto.remuneration,
-      status: 'InDiscussion',
+      status: 'Agreed',
     });
     return await this.agreementRepository.add(agreement);
   }
