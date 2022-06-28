@@ -64,29 +64,4 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     const currentId = +this.availabilities.at(-1).id;
     return (currentId + 1).toString();
   }
-
-  public updateTimeframeIfOccupied(
-    occupiedBeginTime: number,
-    occupiedEndTime: number,
-    timeframe: { beginAt: number; endAt: number },
-    dailyAvailabilities: { beginAt: number; endAt: number }[],
-  ): { beginAt: number; endAt: number }[] {
-    let isSplit = false;
-    if (timeIsInTimeframe(occupiedBeginTime, timeframe)) {
-      isSplit = true;
-      dailyAvailabilities.push({
-        beginAt: timeframe.beginAt,
-        endAt: occupiedBeginTime,
-      });
-    }
-    if (timeIsInTimeframe(occupiedEndTime, timeframe)) {
-      isSplit = true;
-      dailyAvailabilities.push({
-        beginAt: occupiedEndTime,
-        endAt: timeframe.endAt,
-      });
-    }
-    if (!isSplit) dailyAvailabilities.push(timeframe);
-    return dailyAvailabilities;
-  }
 }
