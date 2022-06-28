@@ -3,7 +3,11 @@ import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
 import { NoCurrentAgreementException } from '../application/exceptions/no-current-agreement.exception';
-import { timeToDouble } from '../../shared/utils/date-time.utils';
+import {
+  dateIsBetweenBounds,
+  timeIsInPeriod,
+  timeToDouble,
+} from '../../shared/utils/date-time.utils';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   private readonly agreements = [
@@ -86,13 +90,18 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     animalId: string,
   ): Promise<Agreement> {
     const agreements = this.agreements.filter((agreement) => {
-      const dateIsInAgreementBounds =
-        agreement.beginningDate <= dt && agreement.endDate >= dt;
+      const dateIsInAgreementBounds = dateIsBetweenBounds(
+        dt,
+        agreement.beginningDate,
+        agreement.endDate,
+      );
       const animalIsInAgreement =
         agreement.animalsRefs.indexOf(animalId) !== -1;
-      const timeIsOnAgreementPeriod =
-        timeToDouble(dt) - timeToDouble(agreement.beginningDate) <=
-        agreement.duration;
+      const timeIsOnAgreementPeriod = timeIsInPeriod(
+        dt,
+        agreement.beginningDate,
+        agreement.duration,
+      );
       return (
         animalIsInAgreement &&
         dateIsInAgreementBounds &&

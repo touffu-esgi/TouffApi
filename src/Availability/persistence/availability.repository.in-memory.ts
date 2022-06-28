@@ -2,6 +2,7 @@ import { AvailabilityRepository } from '../domain/availability.repository';
 import { Availability } from '../domain/availability';
 import { getWeekDayAsString } from '../domain/weekdays';
 import { NotAvailableException } from '../application/exceptions/not-available.exception';
+import { timeIsInTimeframe } from '../../shared/utils/date-time.utils';
 
 export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
   private availabilities = [
@@ -71,14 +72,14 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     dailyAvailabilities: { beginAt: number; endAt: number }[],
   ): { beginAt: number; endAt: number }[] {
     let isSplit = false;
-    if (this.timeOverlapsTimeframe(occupiedBeginTime, timeframe)) {
+    if (timeIsInTimeframe(occupiedBeginTime, timeframe)) {
       isSplit = true;
       dailyAvailabilities.push({
         beginAt: timeframe.beginAt,
         endAt: occupiedBeginTime,
       });
     }
-    if (this.timeOverlapsTimeframe(occupiedEndTime, timeframe)) {
+    if (timeIsInTimeframe(occupiedEndTime, timeframe)) {
       isSplit = true;
       dailyAvailabilities.push({
         beginAt: occupiedEndTime,
@@ -87,12 +88,5 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     }
     if (!isSplit) dailyAvailabilities.push(timeframe);
     return dailyAvailabilities;
-  }
-
-  public timeOverlapsTimeframe(
-    time: number,
-    timeframe: { beginAt: number; endAt: number },
-  ): boolean {
-    return time > timeframe.beginAt && time < timeframe.endAt;
   }
 }
