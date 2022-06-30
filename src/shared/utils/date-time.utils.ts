@@ -37,5 +37,5 @@ export function timeIsInTimeframe(
   time: number,
   timeframe: { beginAt: number; endAt: number },
 ): boolean {
-  return time > timeframe.beginAt && time < timeframe.endAt;
+  return time >= timeframe.beginAt && time <= timeframe.endAt;
 }

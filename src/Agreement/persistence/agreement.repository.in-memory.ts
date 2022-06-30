@@ -89,12 +89,21 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     dt: Date,
     animalId: string,
   ): Promise<Agreement> {
+    const agreementsMatchingDay = [];
+
+    for (const agreement of this.agreements) {
+      if (await this.dayMatchesAgreement(agreement.id, dt)) {
+        agreementsMatchingDay.push(agreement.id);
+      }
+    }
+
     const agreements = this.agreements.filter((agreement) => {
       const dateIsInAgreementBounds = dateIsBetweenBounds(
         dt,
         agreement.beginningDate,
         agreement.endDate,
       );
+      const isAgreed = agreement.status === 'Agreed';
       const animalIsInAgreement =
         agreement.animalsRefs.indexOf(animalId) !== -1;
       const timeIsOnAgreementPeriod = timeIsInPeriod(
@@ -102,11 +111,14 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
         agreement.beginningDate,
         agreement.duration,
       );
+      const dayIsInReccurence =
+        agreementsMatchingDay.indexOf(agreement.id) !== -1;
       return (
+        isAgreed &&
         animalIsInAgreement &&
         dateIsInAgreementBounds &&
         timeIsOnAgreementPeriod &&
-        this.dayMatchesAgreement(agreement.id, dt)
+        dayIsInReccurence
       );
     });
     if (agreements.length > 0) return agreements[0];
