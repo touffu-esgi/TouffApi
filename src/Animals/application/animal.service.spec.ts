@@ -42,7 +42,6 @@ describe('AnimalsService', () => {
 
     await animalsService.add(addAnimalDto);
 
-    console.log(animals);
     expect(animals.at(-1)).toEqual({
       name: 'jean',
       type: AnimalTypes.dog,
