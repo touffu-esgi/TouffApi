@@ -22,7 +22,11 @@ export class RecipientsService {
     return await this.recipientRepository.save(recipient);
   }
 
-  getAll(): Promise<Recipient[]> {
-    return this.recipientRepository.getAll();
+  async getAll(): Promise<Recipient[]> {
+    return await this.recipientRepository.getAll();
+  }
+
+  async getOne(recipientId: string): Promise<Recipient> {
+    return await this.recipientRepository.getOne(recipientId);
   }
 }
