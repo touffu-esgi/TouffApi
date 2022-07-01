@@ -7,7 +7,10 @@ import {
   getAgreementRecurrenceEnumFromString,
 } from '../domain/agreement.recurrence.enum';
 import { AvailabilityRepositoryInMemory } from '../../Availability/persistence/availability.repository.in-memory';
-import { timeToDouble } from '../../shared/utils/date-time.utils';
+import {
+  addMonthsToDate,
+  timeToDouble,
+} from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
 
 @Injectable()
@@ -31,7 +34,9 @@ export class AgreementService {
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
     const beginDate = new Date(dto.beginningDate);
-    const endDate = new Date(dto.endDate);
+    const endDate = dto.endDate
+      ? new Date(dto.endDate)
+      : addMonthsToDate(beginDate, 6);
     const providerBusyAvailability =
       await this.availabilityRepository.getWeeklyDefaultAvailability(
         dto.providerRef,

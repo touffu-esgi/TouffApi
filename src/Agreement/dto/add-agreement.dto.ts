@@ -18,7 +18,6 @@ export class AddAgreementDto {
   @IsNotEmpty()
   beginningDate: string;
 
-  @IsNotEmpty()
   endDate: string;
 
   @IsNotEmpty()

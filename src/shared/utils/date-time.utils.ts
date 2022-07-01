@@ -16,3 +16,7 @@ export function formatInDateToStandardJS(dateIn: string): string {
   if (dateSplit.length !== 3) throw new Error('Wrong date format');
   return `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`;
 }
+
+export function addMonthsToDate(date: Date, noMonthsToAdd: number): Date {
+  return new Date(date.setMonth(date.getMonth() + noMonthsToAdd));
+}
