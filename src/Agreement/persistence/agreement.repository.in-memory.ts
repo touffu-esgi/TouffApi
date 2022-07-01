@@ -4,6 +4,7 @@ import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
+  //status types : 'InDiscussion', 'Agreed', 'Canceled'
   private readonly agreements = [
     new Agreement({
       id: '1',
@@ -16,7 +17,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       endDate: new Date(2022, 12, 6, 14, 30),
       duration: 1,
       remuneration: 25.5,
-      status: 'Agreed',
+      status: 'InDiscussion',
     }),
     new Agreement({
       id: '2',
