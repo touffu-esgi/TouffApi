@@ -7,7 +7,10 @@ import {
   getAgreementRecurrenceEnumFromString,
 } from '../domain/agreement.recurrence.enum';
 import { AvailabilityRepositoryInMemory } from '../../Availability/persistence/availability.repository.in-memory';
-import { timeToDouble } from '../../shared/utils/date-time.utils';
+import {
+  timeIsInTimeframe,
+  timeToDouble,
+} from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
 
 @Injectable()
@@ -19,6 +22,16 @@ export class AgreementService {
 
   async getAll(filters: unknown): Promise<Agreement[]> {
     return await this.agreementRepository.getAll(filters);
+  }
+
+  async getOneFromAnimalAndDatetime(
+    dt: Date,
+    animalId: string,
+  ): Promise<Agreement> {
+    return await this.agreementRepository.getOneFromAnimalAndDatetime(
+      dt,
+      animalId,
+    );
   }
 
   async getOne(agreementId: string): Promise<Agreement> {
@@ -76,11 +89,8 @@ export class AgreementService {
     const endTime = beginTime + duration;
     occupiedTimeframes.filter(
       (timeframe) =>
-        this.availabilityRepository.timeOverlapsTimeframe(
-          beginTime,
-          timeframe,
-        ) &&
-        this.availabilityRepository.timeOverlapsTimeframe(endTime, timeframe),
+        timeIsInTimeframe(beginTime, timeframe) &&
+        timeIsInTimeframe(endTime, timeframe),
     );
     return occupiedTimeframes.length > 0;
   }

@@ -7,6 +7,7 @@ import {
 import { Request, Response } from 'express';
 import { AgreementNotFoundException } from '../../application/exceptions/agreement-not-found.exception';
 import { ProviderBusyException } from '../../application/exceptions/provider-busy.exception';
+import { NoCurrentAgreementException } from '../../application/exceptions/no-current-agreement.exception';
 
 export class AgreementExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
@@ -30,6 +31,9 @@ export class AgreementExceptionFilter implements ExceptionFilter {
         break;
       case ProviderBusyException.name:
         body.statusCode = 412;
+        break;
+      case NoCurrentAgreementException.name:
+        body.statusCode = 201;
         break;
       default:
         body.statusCode = 500;
