@@ -1,6 +1,7 @@
 import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
+import { GetUserDto } from '../dto/get-user.dto';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
@@ -29,5 +30,15 @@ export class UserRepositoryInMemory implements UserRepository {
   async getNextId(): Promise<string> {
     const lastId = +this.usersMockRepositoryImplement.at(-1).id;
     return (lastId + 1).toString();
+  }
+
+  async getUserByEmailAndPassword(user: GetUserDto): Promise<User> {
+    const userFound = this.usersMockRepositoryImplement.filter(
+      (u) => u.email === user.email && u.password === user.password,
+    );
+    if (userFound.length > 0) return userFound[0];
+    throw new UserNotFoundException(
+      `User with email : ${user.email} not found`,
+    );
   }
 }
