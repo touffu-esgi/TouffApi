@@ -17,6 +17,7 @@ import {
 } from '@nestjs/common';
 import { AddBillDto } from '../../dto/add-bill.dto';
 import { Bill } from '../../domain/bill';
+import { AddAllBillsDto } from '../../dto/add-all-bills.dto';
 
 @Controller('bill')
 @UseFilters(new BillExceptionFilter())
@@ -30,10 +31,10 @@ export class BillController {
     return bill;
   }
 
-  // @Post()
-  // @HttpCode(201)
-  // async addAll(@Body dto: AddBillDto): Promise<Bill> {
-  //   const bill = this.billService.add(dto);
-  //   return bill;
-  // }
+  @Post('all')
+  @HttpCode(201)
+  async addAll(@Body() dto: AddAllBillsDto): Promise<Bill[]> {
+    const bills = this.billService.addAll(dto);
+    return bills;
+  }
 }

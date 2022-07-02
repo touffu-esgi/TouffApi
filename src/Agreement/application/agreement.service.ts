@@ -44,7 +44,7 @@ export class AgreementService {
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
     const beginDate = new Date(dto.beginningDate);
-    const endDate = new Date(dto.endDate);
+    const endDate = new Date(dto.endDate + 'T23:59');
     const providerBusyAvailability =
       await this.availabilityRepository.getWeeklyDefaultAvailability(
         dto.providerRef,

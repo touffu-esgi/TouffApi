@@ -5,6 +5,7 @@ import { AgreementNotFoundException } from '../application/exceptions/agreement-
 import { NoCurrentAgreementException } from '../application/exceptions/no-current-agreement.exception';
 import {
   dateIsBetweenBounds,
+  getDate,
   timeIsInPeriod,
 } from '../../shared/utils/date-time.utils';
 
@@ -18,7 +19,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       providerRef: '1',
       recipientRef: '1',
       animalsRefs: ['1', '2'],
-      beginningDate: new Date('2022-05-06T09:30'),
+      beginningDate: new Date('2022-05-06T08:30'),
       endDate: new Date('2022-12-06T23:59'),
       duration: 4,
       remuneration: 25.5,
@@ -31,10 +32,23 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       recipientRef: '2',
       animalsRefs: ['3'],
       beginningDate: new Date('2022-05-06T13:23'),
-      endDate: new Date('2022-05-06T13:23'),
+      endDate: new Date('2022-05-06T23:59'),
       duration: 2,
       remuneration: 130.0,
-      status: 'InDiscussion',
+      status: 'Agreed',
+    }),
+    new Agreement({
+      id: '3',
+      recurring: true,
+      recurrence: AgreementRecurrenceEnum.Daily,
+      providerRef: '1',
+      recipientRef: '1',
+      animalsRefs: ['1', '2'],
+      beginningDate: new Date('2022-05-07T09:30'),
+      endDate: new Date('2022-06-06T23:59'),
+      duration: 4,
+      remuneration: 25.5,
+      status: 'Agreed',
     }),
   ];
 
@@ -70,13 +84,13 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
 
   async dayMatchesAgreement(agreement: Agreement, day: Date): Promise<boolean> {
     if (agreement.status !== 'Agreed') return false;
-    if (agreement.beginningDate > day || agreement.endDate < day) return false;
-    switch (agreement.recurrence.toString()) {
+    if (getDate(agreement.beginningDate) > day || agreement.endDate < day)
+      return false;
+    switch (agreement.recurrence) {
       case AgreementRecurrenceEnum.Daily:
         return true;
       case AgreementRecurrenceEnum.Weekly:
         if (agreement.beginningDate.getDay() === day.getDay()) {
-          console.log(agreement.beginningDate.getDay(), day, day.getDay());
           return true;
         }
         break;
@@ -96,7 +110,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     const agreementsMatchingDay = [];
 
     for (const agreement of this.agreements) {
-      if (await this.dayMatchesAgreement(agreement.id, dt)) {
+      if (await this.dayMatchesAgreement(agreement, dt)) {
         agreementsMatchingDay.push(agreement.id);
       }
     }

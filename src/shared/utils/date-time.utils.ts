@@ -22,7 +22,12 @@ export function dateIsBetweenBounds(
   dateFrom: Date,
   dateTo: Date,
 ): boolean {
+  dateFrom = getDate(dateFrom);
   return dateFrom <= dt && dt <= dateTo;
+}
+
+export function getDate(dt: Date): Date {
+  return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 2, 0, 0, 0);
 }
 
 export function timeIsInPeriod(

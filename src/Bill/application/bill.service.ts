@@ -4,6 +4,8 @@ import { Bill } from '../domain/bill';
 import { AddBillDto } from '../dto/add-bill.dto';
 import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreement.repository.in-memory';
 import { Agreement } from '../../Agreement/domain/agreement';
+import { dateIsBetweenBounds } from '../../shared/utils/date-time.utils';
+import { AddAllBillsDto } from '../dto/add-all-bills.dto';
 
 @Injectable()
 export class BillService {
@@ -44,12 +46,33 @@ export class BillService {
     let curDate = new Date(dateFrom);
     while (curDate < dateTo) {
       if (
-        await this.agreementRepository.dayMatchesAgreement(agreement, curDate)
+        dateIsBetweenBounds(
+          curDate,
+          agreement.beginningDate,
+          agreement.endDate,
+        ) &&
+        (await this.agreementRepository.dayMatchesAgreement(agreement, curDate))
       ) {
-        dates.push(curDate);
+        dates.push(new Date(curDate));
       }
       curDate = new Date(curDate.setDate(curDate.getDate() + 1));
     }
     return dates;
+  }
+
+  async addAll(dto: AddAllBillsDto): Promise<Bill[]> {
+    const bills: Bill[] = [];
+    const agreements = await this.agreementRepository.getAll({
+      status: 'Agreed',
+    });
+    for (const agreement of agreements) {
+      const addBillDto: AddBillDto = {
+        agreementId: agreement.id,
+        dateFrom: dto.dateFrom,
+        dateTo: dto.dateTo,
+      };
+      bills.push(await this.add(addBillDto));
+    }
+    return bills;
   }
 }
