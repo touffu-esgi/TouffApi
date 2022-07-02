@@ -26,20 +26,21 @@ export class BillController {
 
   @Post()
   @HttpCode(201)
-  async addBill(@Body() dto: AddBillDto): Promise<Bill> {
-    const bill = this.billService.add(dto);
-    return bill;
+  async addBill(@Body() dto: AddBillDto): Promise<BillResponse> {
+    const bill = await this.billService.add(dto);
+    return BillAdapter.toBillResponse(bill);
   }
 
   @Post('all')
   @HttpCode(201)
-  async addAll(@Body() dto: AddAllBillsDto): Promise<Bill[]> {
-    const bills = this.billService.addAll(dto);
-    return bills;
+  async addAll(@Body() dto: AddAllBillsDto): Promise<BillResponse[]> {
+    const bills = await this.billService.addAll(dto);
+    return bills.map((bill) => BillAdapter.toBillResponse(bill));
   }
 
   @Get()
-  async getAll(@Query() filters) {
-    return this.billService.getAll(filters);
+  async getAll(@Query() filters): Promise<BillResponse[]> {
+    const bills = await this.billService.getAll(filters);
+    return bills.map((bill) => BillAdapter.toBillResponse(bill));
   }
 }
