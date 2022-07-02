@@ -81,7 +81,7 @@ export class AvailabilityService {
       const endTime = beginTime + agreement.duration;
       if (
         await this.agreementRepository.dayMatchesAgreement(
-          agreement.id,
+          agreement,
           nextWeekday,
         )
       ) {

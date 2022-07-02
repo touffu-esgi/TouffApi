@@ -17,7 +17,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       endDate: new Date(2022, 12, 6, 14, 30),
       duration: 1,
       remuneration: 25.5,
-      status: 'InDiscussion',
+      status: 'Agreed',
     }),
     new Agreement({
       id: '2',
@@ -63,14 +63,15 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     return (+this.agreements.at(-1).id + 1).toString();
   }
 
-  async dayMatchesAgreement(agreementId: string, day: Date): Promise<boolean> {
-    const agreement = await this.getOne(agreementId);
+  async dayMatchesAgreement(agreement: Agreement, day: Date): Promise<boolean> {
+    if (agreement.status !== 'Agreed') return false;
     if (agreement.beginningDate > day || agreement.endDate < day) return false;
     switch (agreement.recurrence.toString()) {
       case AgreementRecurrenceEnum.Daily:
         return true;
       case AgreementRecurrenceEnum.Weekly:
         if (agreement.beginningDate.getDay() === day.getDay()) {
+          console.log(agreement.beginningDate.getDay(), day, day.getDay());
           return true;
         }
         break;
