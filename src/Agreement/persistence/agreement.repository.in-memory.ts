@@ -6,7 +6,6 @@ import { NoCurrentAgreementException } from '../application/exceptions/no-curren
 import {
   dateIsBetweenBounds,
   timeIsInPeriod,
-  timeToDouble,
 } from '../../shared/utils/date-time.utils';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
@@ -14,13 +13,13 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     new Agreement({
       id: '1',
       recurring: true,
-      recurrence: AgreementRecurrenceEnum.Weekly,
+      recurrence: AgreementRecurrenceEnum.Daily,
       providerRef: '1',
       recipientRef: '1',
       animalsRefs: ['1', '2'],
-      beginningDate: new Date(2022, 5, 6, 12, 30),
-      endDate: new Date(2022, 12, 6, 14, 30),
-      duration: 1,
+      beginningDate: new Date('2022-05-06T09:30'),
+      endDate: new Date('2022-12-06T23:59'),
+      duration: 4,
       remuneration: 25.5,
       status: 'Agreed',
     }),
@@ -30,8 +29,8 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       providerRef: '2',
       recipientRef: '2',
       animalsRefs: ['3'],
-      beginningDate: new Date(2022, 6, 1, 13, 23),
-      endDate: new Date(2022, 6, 1, 13, 23),
+      beginningDate: new Date('2022-05-06T13:23'),
+      endDate: new Date('2022-05-06T13:23'),
       duration: 2,
       remuneration: 130.0,
       status: 'InDiscussion',
@@ -81,6 +80,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
         break;
       case AgreementRecurrenceEnum.Monthly:
         if (day.getDate() === agreement.beginningDate.getDate()) return true;
+        break;
+      default:
+        return true;
     }
     return false;
   }
