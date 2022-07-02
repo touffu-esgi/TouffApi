@@ -7,9 +7,9 @@ export class BillRepositoryInMemory implements BillRepository {
       id: '1',
       onePaymentValue: 37.5,
       total: 148,
-      agreementId: '1',
-      providerId: '1',
-      recipientId: '1',
+      agreementRef: '1',
+      providerRef: '1',
+      recipientRef: '1',
       datesAgreement: [
         new Date('2022-06-06'),
         new Date('2022-06-13'),
@@ -19,6 +19,10 @@ export class BillRepositoryInMemory implements BillRepository {
       dateBill: new Date('2022-07-01'),
     }),
   ];
+
+  async getAll() {
+    return this.bills;
+  }
 
   async add(bill: Bill): Promise<Bill> {
     this.bills.push(bill);

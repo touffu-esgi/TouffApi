@@ -37,4 +37,9 @@ export class BillController {
     const bills = this.billService.addAll(dto);
     return bills;
   }
+
+  @Get()
+  async getAll(@Query() filters) {
+    return this.billService.getAll(filters);
+  }
 }

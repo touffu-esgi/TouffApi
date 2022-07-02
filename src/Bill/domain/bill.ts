@@ -3,9 +3,9 @@ export class Bill implements BillProps {
   private readonly _id: string;
   private readonly _onePaymentValue: number;
   private readonly _total: number;
-  private readonly _agreementId: string;
-  private readonly _providerId: string;
-  private readonly _recipientId: string;
+  private readonly _agreementRef: string;
+  private readonly _providerRef: string;
+  private readonly _recipientRef: string;
   private readonly _datesAgreement: Date[];
   private readonly _dateBill: Date;
   private readonly _datePaid?: Date;
@@ -14,9 +14,9 @@ export class Bill implements BillProps {
     this._id = billProps.id;
     this._onePaymentValue = billProps.onePaymentValue;
     this._total = billProps.total;
-    this._agreementId = billProps.agreementId;
-    this._providerId = billProps.providerId;
-    this._recipientId = billProps.recipientId;
+    this._agreementRef = billProps.agreementRef;
+    this._providerRef = billProps.providerRef;
+    this._recipientRef = billProps.recipientRef;
     this._datesAgreement = billProps.datesAgreement;
     this._dateBill = billProps.dateBill;
     this._datePaid = billProps.datePaid ? billProps.datePaid : null;
@@ -34,16 +34,16 @@ export class Bill implements BillProps {
     return this._total;
   }
 
-  get agreementId(): string {
-    return this._agreementId;
+  get agreementRef(): string {
+    return this._agreementRef;
   }
 
-  get providerId(): string {
-    return this._providerId;
+  get providerRef(): string {
+    return this._providerRef;
   }
 
-  get recipientId(): string {
-    return this._recipientId;
+  get recipientRef(): string {
+    return this._recipientRef;
   }
 
   get datesAgreement(): Date[] {

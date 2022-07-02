@@ -25,9 +25,9 @@ export class BillService {
       onePaymentValue: agreement.remuneration,
       datesAgreement: datesDone,
       total: this.computeTotal(agreement.remuneration, datesDone.length),
-      agreementId: agreement.id,
-      recipientId: agreement.recipientRef,
-      providerId: agreement.providerRef,
+      agreementRef: agreement.id,
+      recipientRef: agreement.recipientRef,
+      providerRef: agreement.providerRef,
       dateBill: new Date(),
     });
     return await this.billRepository.add(bill);
@@ -72,6 +72,18 @@ export class BillService {
         dateTo: dto.dateTo,
       };
       bills.push(await this.add(addBillDto));
+    }
+    return bills;
+  }
+
+  async getAll(filters: any): Promise<Bill[]> {
+    let bills = await this.billRepository.getAll();
+    if (filters) {
+      Object.keys(filters).forEach((propName) => {
+        bills = bills.filter(
+          (bill) => !bill[propName] || bill[propName] === filters[propName],
+        );
+      });
     }
     return bills;
   }
