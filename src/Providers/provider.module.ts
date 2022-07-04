@@ -4,6 +4,7 @@ import { ProvidersService } from './application/providers.service';
 import { ProviderRepositoryInMemory } from './persistence/provider.repository.in-memory';
 import { AddressService } from '../Address/application/address.service';
 import { AddressRepositoryInMemory } from '../Address/persistance/address.repository.in-memory';
+import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
 
 @Module({
   controllers: [ProvidersController],
@@ -12,6 +13,7 @@ import { AddressRepositoryInMemory } from '../Address/persistance/address.reposi
     ProviderRepositoryInMemory,
     AddressService,
     AddressRepositoryInMemory,
+    UserRepositoryInMemory,
   ],
 })
 export class ProviderModule {}

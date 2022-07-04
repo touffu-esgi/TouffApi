@@ -1,6 +1,7 @@
 export class ControllerEndpointsUtils {
   public static getEndpoint(endpointName: string) {
     const endpoints = {
+      agreement: 'agreement',
       addresses: 'address',
       animals: 'animals',
       providers: 'provider',

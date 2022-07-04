@@ -14,6 +14,7 @@ import { AgreementModule } from './Agreement/agreement.module';
 import { RecommendationModule } from './Recommendation/recommendation.module';
 import { AvailabilityModule } from './Availability/availability.module';
 import { ReportModule } from './Report/report.module';
+import { PositionModule } from './Position/position.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReportModule } from './Report/report.module';
     RecommendationModule,
     AvailabilityModule,
     ReportModule,
+    PositionModule,
   ],
   controllers: [AppController],
   providers: [

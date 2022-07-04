@@ -1,15 +1,15 @@
 import {
   ArgumentsHost,
+  Catch,
   ExceptionFilter,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { AgreementNotFoundException } from '../../application/exceptions/agreement-not-found.exception';
-import { ProviderBusyException } from '../../application/exceptions/provider-busy.exception';
-import { NoCurrentAgreementException } from '../../application/exceptions/no-current-agreement.exception';
+import { EmptyPositionsException } from '../../application/exceptions/empty-positions.exception';
 
-export class AgreementExceptionFilter implements ExceptionFilter {
+@Catch()
+export class PositionExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -26,17 +26,8 @@ export class AgreementExceptionFilter implements ExceptionFilter {
     };
 
     switch (exception.name) {
-      case AgreementNotFoundException.name:
-        body.statusCode = 404;
-        break;
-      case ProviderBusyException.name:
-        body.statusCode = 412;
-        break;
-      case NoCurrentAgreementException.name:
-        body.statusCode = 201;
-        break;
-      default:
-        body.statusCode = 500;
+      case EmptyPositionsException.name:
+        body.statusCode = 204;
         break;
     }
 

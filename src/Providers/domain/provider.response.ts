@@ -2,6 +2,7 @@ import { ProviderProps } from './provider.props';
 
 export class ProviderResponse {
   id: string;
+  userId: string;
   name: string;
   surname: string;
   email: string;
@@ -15,6 +16,7 @@ export class ProviderResponse {
 
   constructor(providerProps: ProviderProps) {
     this.id = providerProps.id;
+    this.userId = providerProps.userId;
     this.name = providerProps.name;
     this.surname = providerProps.surname;
     this.email = providerProps.email;

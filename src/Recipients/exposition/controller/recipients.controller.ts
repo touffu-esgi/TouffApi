@@ -15,6 +15,7 @@ import { AddRecipientDto } from '../../dto/add-recipient';
 import { RecipientsService } from '../../application/recipient.service';
 import { RecipientResponse } from '../../domain/recipient.response';
 import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
+import { Recipient } from '../../domain/recipient';
 
 @Controller('recipient')
 @UseFilters(new RecipientExceptionFilter())
@@ -33,11 +34,20 @@ export class RecipientsController {
     };
   }
 
+  @Get(':recipientId')
+  async getOne(
+    @Req() req: Request,
+    @Param('recipientId') recipiendId: string,
+  ): Promise<RecipientResponse> {
+    const recipient = await this.recipientsService.getOne(recipiendId);
+    return RecipientAdapter.toRecipientResponse(recipient);
+  }
+
   @Get()
   async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
     const recipients = await this.recipientsService.getAll();
     return recipients.map((recipient) =>
-      RecipientAdapter.fromAnimalToAnimalResponse(recipient),
+      RecipientAdapter.toRecipientResponse(recipient),
     );
   }
 

@@ -4,7 +4,6 @@ import { HasAlreadyReportedException } from '../application/exceptions/has-alrea
 
 export class ReportRepositoryInMemory implements ReportRepository {
   reports: Report[] = [
-    new Report('1', '1', '2', 'Fake'),
     new Report('1', '3', '2', 'Fake one'),
     new Report('1', '1', '3', 'Pas très très gentil'),
   ];
