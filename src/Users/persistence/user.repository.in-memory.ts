@@ -43,6 +43,18 @@ export class UserRepositoryInMemory implements UserRepository {
   }
 
   updateOneUser(newStatus: { userId: string; status: string }) {
-    //TODO
+    const index = this.usersMockRepositoryImplement.findIndex(
+      (user) => user.id == newStatus.userId,
+    );
+    if (
+      this.usersMockRepositoryImplement[index] &&
+      this.verifyStatus(newStatus.status)
+    ) {
+      this.usersMockRepositoryImplement[index].status = newStatus.status;
+    }
+  }
+
+  private verifyStatus(status: string): boolean {
+    return status == 'active' || status == 'blocked';
   }
 }

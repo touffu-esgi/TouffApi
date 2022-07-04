@@ -11,14 +11,14 @@ export class UserResponse {
     email: string,
     userReference: string,
     userType: string,
+    status: string,
     profilePic = 'default.png',
-    status = 'active',
   ) {
     this.id = id;
     this.email = email;
     this.userType = userType;
     this.userReference = userReference;
-    this.profilePic = profilePic;
     this.status = status;
+    this.profilePic = profilePic;
   }
 }

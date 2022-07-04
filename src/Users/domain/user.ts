@@ -5,7 +5,7 @@ export class User {
   private readonly _userReference: string;
   private readonly _userType: string;
   private readonly _profilePic: string;
-  private readonly _status: string;
+  public status: string;
 
   constructor(
     id: string,
@@ -22,15 +22,11 @@ export class User {
     this._id = id;
     this._userType = userType;
     this._profilePic = profilePic;
-    this._status = status;
+    this.status = status;
   }
 
   get id(): string {
     return this._id;
-  }
-
-  get status(): string {
-    return this._status;
   }
 
   get userType(): string {
