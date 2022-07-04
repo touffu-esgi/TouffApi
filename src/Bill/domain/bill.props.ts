@@ -7,5 +7,5 @@ export interface BillProps {
   readonly recipientRef: string;
   readonly datesAgreement: Date[];
   readonly dateBill: Date;
-  readonly datePaid?: Date;
+  datePaid?: Date;
 }

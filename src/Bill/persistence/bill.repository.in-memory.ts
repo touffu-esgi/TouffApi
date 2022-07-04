@@ -1,5 +1,6 @@
 import { Bill } from '../domain/bill';
 import { BillRepository } from '../domain/bill.repository';
+import { Agreement } from '../../Agreement/domain/agreement';
 
 export class BillRepositoryInMemory implements BillRepository {
   private bills: Bill[] = [
@@ -34,6 +35,11 @@ export class BillRepositoryInMemory implements BillRepository {
   }
 
   updateOne(id: string) {
-    console.log(id);
+    if (id) {
+      const index = this.bills.findIndex((agreement) => agreement.id == id);
+      if (this.bills[index] && !this.bills[index]._datePaid) {
+        this.bills[index]._datePaid = new Date();
+      }
+    }
   }
 }

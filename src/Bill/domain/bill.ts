@@ -8,7 +8,7 @@ export class Bill implements BillProps {
   private readonly _recipientRef: string;
   private readonly _datesAgreement: Date[];
   private readonly _dateBill: Date;
-  private readonly _datePaid?: Date;
+  _datePaid?: Date;
 
   constructor(billProps: BillProps) {
     this._id = billProps.id;
