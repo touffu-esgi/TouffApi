@@ -3,13 +3,26 @@ import { AgreementController } from './exposition/controllers/agreement.controll
 import { AgreementRepositoryInMemory } from './persistence/agreement.repository.in-memory';
 import { AgreementService } from './application/agreement.service';
 import { AvailabilityRepositoryInMemory } from '../Availability/persistence/availability.repository.in-memory';
+import { MessageService } from '../Message/application/message.service';
+import { MessageRepositoryInMemory } from '../Message/persistance/message.repository.in-memory';
+import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
+import { ProviderRepositoryInMemory } from '../Providers/persistence/provider.repository.in-memory';
+import { RecipientRepositoryInMemory } from '../Recipients/persistence/recipient.repository.in-memory';
 
 @Module({
+  imports: [
+    UserRepositoryInMemory,
+    ProviderRepositoryInMemory,
+    RecipientRepositoryInMemory,
+  ],
   controllers: [AgreementController],
   providers: [
     AgreementService,
     AgreementRepositoryInMemory,
     AvailabilityRepositoryInMemory,
+    UserRepositoryInMemory,
+    ProviderRepositoryInMemory,
+    RecipientRepositoryInMemory,
   ],
 })
 export class AgreementModule {}
