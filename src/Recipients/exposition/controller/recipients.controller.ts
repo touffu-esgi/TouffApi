@@ -50,4 +50,13 @@ export class RecipientsController {
       RecipientAdapter.toRecipientResponse(recipient),
     );
   }
+
+  @Get(':recipientId')
+  async getOne(
+    @Param('recipientId') recipientId: string,
+    @Req() request: Request,
+  ): Promise<RecipientResponse> {
+    const recipient = await this.recipientsService.getOne(recipientId);
+    return RecipientAdapter.fromAnimalToAnimalResponse(recipient);
+  }
 }
