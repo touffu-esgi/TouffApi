@@ -7,6 +7,7 @@ import { Agreement } from '../../Agreement/domain/agreement';
 import { dateIsBetweenBounds } from '../../shared/utils/date-time.utils';
 import { AddAllBillsDto } from '../dto/add-all-bills.dto';
 import { UpdateBillDto } from '../dto/update-bill.dto';
+import { BillNotFoundException } from './exceptions/bill-not-found.exception';
 
 @Injectable()
 export class BillService {
@@ -85,6 +86,9 @@ export class BillService {
           (bill) => !bill[propName] || bill[propName] === filters[propName],
         );
       });
+    }
+    if (bills.length == 0) {
+      throw new BillNotFoundException();
     }
     return bills;
   }

@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { BillNotFoundException } from '../../application/exceptions/bill-not-found.exception';
 
 @Catch()
 export class BillExceptionFilter implements ExceptionFilter {
@@ -25,6 +26,9 @@ export class BillExceptionFilter implements ExceptionFilter {
     };
 
     switch (exception.name) {
+      case BillNotFoundException.name:
+        body.statusCode = 404;
+        break;
       default:
         body.statusCode = 500;
         break;
