@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Req,
   UseFilters,
@@ -36,5 +37,15 @@ export class AnimalsController {
   async getAll(@Req() request: Request): Promise<AnimalResponse[]> {
     const animals = await this.animalsService.getAll();
     return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
+  }
+
+  @Get(':animalId')
+  async getOne(
+    @Req() request: Request,
+    @Param('animalId') animalId: string,
+  ): Promise<AnimalResponse> {
+    const animal = await this.animalsService.getOne(animalId);
+
+    return AnimalAdapter.toAnimalResponse(animal);
   }
 }

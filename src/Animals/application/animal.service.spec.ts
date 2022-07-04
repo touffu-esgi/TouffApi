@@ -1,9 +1,10 @@
 import { AnimalsService } from './animals.service';
-import { AnimalRepositoryInMemory } from '../persistence/animal.repository.in-memory';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AddAnimalDto } from '../dto/add-animal.dto';
 import { Animal } from '../domain/animal';
 import { AnimalTypes } from '../domain/animal.types';
+import { AnimalRepositoryMongoose } from '../persistence/mongoose-animal-repository/animal.repository.mongoose';
+import { AnimalProps } from '../persistence/mongoose-animal-repository/animal.schema';
 
 describe('AnimalsService', () => {
   let animalsService: AnimalsService;
@@ -27,9 +28,9 @@ describe('AnimalsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AnimalsService, AnimalRepositoryInMemory],
+      providers: [AnimalsService, AnimalRepositoryMongoose],
     })
-      .overrideProvider(AnimalRepositoryInMemory)
+      .overrideProvider(AnimalRepositoryMongoose)
       .useValue(mockAnimalsRepository)
       .compile();
 
@@ -37,17 +38,13 @@ describe('AnimalsService', () => {
   });
 
   it('should create one animal', async function () {
-    const addAnimalDto: AddAnimalDto = {
+    const addAnimalDto: Animal = new Animal('jean', AnimalTypes.dog, '4');
+
+    await animalsService.add(addAnimalDto);
+
+    expect(animals.at(-1)).toEqual({
       name: 'jean',
       type: AnimalTypes.dog,
-    };
-
-    const newAnimal = await animalsService.add(addAnimalDto);
-
-    expect(newAnimal).toEqual({
-      _name: 'jean',
-      _type: AnimalTypes.dog,
-      _id: '4',
     });
   });
 

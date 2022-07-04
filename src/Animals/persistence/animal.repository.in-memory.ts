@@ -22,4 +22,8 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
   async getAll(): Promise<Animal[]> {
     return this.animals;
   }
+
+  getOne(animalId: string): Promise<Animal> {
+    return Promise.resolve(undefined);
+  }
 }
