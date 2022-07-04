@@ -10,6 +10,7 @@ export class ProviderAdapter {
   ) {
     const props = {
       id: provider.id,
+      userId: provider.userId,
       name: provider.name,
       surname: provider.surname,
       email: provider.email,

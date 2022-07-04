@@ -2,6 +2,7 @@ import { ProviderProps } from './provider.props';
 
 export class Provider implements ProviderProps {
   private readonly _id: string;
+  private _userId?: string;
   private readonly _name: string;
   private readonly _surname: string;
   private readonly _email: string;
@@ -66,5 +67,13 @@ export class Provider implements ProviderProps {
 
   get profile_desc() {
     return this._profile_desc;
+  }
+
+  get userId(): string {
+    return this._userId;
+  }
+
+  set userId(id: string) {
+    this._userId = id;
   }
 }
