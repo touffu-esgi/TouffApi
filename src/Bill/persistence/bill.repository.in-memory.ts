@@ -32,4 +32,8 @@ export class BillRepositoryInMemory implements BillRepository {
   async getNextId(): Promise<string> {
     return (+this.bills.at(-1).id + 1).toString();
   }
+
+  updateOne(id: string) {
+    console.log(id);
+  }
 }

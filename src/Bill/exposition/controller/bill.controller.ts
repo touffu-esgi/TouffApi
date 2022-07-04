@@ -11,6 +11,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseFilters,
@@ -18,6 +19,7 @@ import {
 import { AddBillDto } from '../../dto/add-bill.dto';
 import { Bill } from '../../domain/bill';
 import { AddAllBillsDto } from '../../dto/add-all-bills.dto';
+import { UpdateBillDto } from '../../dto/update-bill.dto';
 
 @Controller('bill')
 @UseFilters(new BillExceptionFilter())
@@ -42,5 +44,11 @@ export class BillController {
   async getAll(@Query() filters): Promise<BillResponse[]> {
     const bills = await this.billService.getAll(filters);
     return bills.map((bill) => BillAdapter.toBillResponse(bill));
+  }
+
+  @Put()
+  @HttpCode(204)
+  async updateBill(@Body() dto: UpdateBillDto) {
+    await this.billService.updateOne(dto);
   }
 }

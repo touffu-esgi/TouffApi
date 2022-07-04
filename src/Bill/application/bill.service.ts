@@ -6,6 +6,7 @@ import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreeme
 import { Agreement } from '../../Agreement/domain/agreement';
 import { dateIsBetweenBounds } from '../../shared/utils/date-time.utils';
 import { AddAllBillsDto } from '../dto/add-all-bills.dto';
+import { UpdateBillDto } from '../dto/update-bill.dto';
 
 @Injectable()
 export class BillService {
@@ -86,5 +87,10 @@ export class BillService {
       });
     }
     return bills;
+  }
+
+  async updateOne(dto: UpdateBillDto) {
+    const id = dto.billId;
+    this.billRepository.updateOne(id);
   }
 }
