@@ -4,6 +4,7 @@ export class UserResponse {
   userReference: string;
   userType: string;
   profilePic: string;
+  status: string;
 
   constructor(
     id: string,
@@ -11,11 +12,13 @@ export class UserResponse {
     userReference: string,
     userType: string,
     profilePic = 'default.png',
+    status = 'active',
   ) {
     this.id = id;
     this.email = email;
     this.userType = userType;
     this.userReference = userReference;
     this.profilePic = profilePic;
+    this.status = status;
   }
 }

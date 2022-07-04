@@ -41,4 +41,8 @@ export class UserRepositoryInMemory implements UserRepository {
       `User with email : ${user.email} not found`,
     );
   }
+
+  updateOneUser(newStatus: { userId: string; status: string }) {
+    //TODO
+  }
 }

@@ -3,6 +3,7 @@ import { User } from '../domain/user';
 import { UserRepositoryInMemory } from '../persistence/user.repository.in-memory';
 import { Injectable } from '@nestjs/common';
 import { GetUserDto } from '../dto/get-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -32,5 +33,10 @@ export class UserService {
 
   async getUserByEmailAndPassword(user: GetUserDto): Promise<User> {
     return await this.userRepository.getUserByEmailAndPassword(user);
+  }
+
+  async updateOneUser(user: UpdateUserDto) {
+    const newStatus = { userId: user.id, status: user.status };
+    this.userRepository.updateOneUser(newStatus);
   }
 }
