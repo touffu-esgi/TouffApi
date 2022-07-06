@@ -30,8 +30,8 @@ export class ProvidersService {
     return newId;
   }
 
-  async getAll(): Promise<Provider[]> {
-    const providers = await this.providerRepository.getAll();
+  async getAll(filters: unknown = {}): Promise<Provider[]> {
+    const providers = await this.providerRepository.getAll(filters);
     for (const i of Object.keys(providers)) {
       const providerUser =
         await this.userRepository.getOneByUserTypeAndReference(

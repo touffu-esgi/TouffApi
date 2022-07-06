@@ -50,8 +50,18 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
     return provider;
   }
 
-  async getAll(): Promise<Provider[]> {
-    return this.providers;
+  async getAll(filters: unknown = {}): Promise<Provider[]> {
+    let providers = this.providers;
+    if (filters) {
+      Object.keys(filters).forEach((propName) => {
+        providers = providers.filter(
+          (provider) =>
+            !provider[propName] ||
+            provider[propName].indexOf(filters[propName]) !== -1,
+        );
+      });
+    }
+    return providers;
   }
 
   async getOne(id: string): Promise<Provider> {
