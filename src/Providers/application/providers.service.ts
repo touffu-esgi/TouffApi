@@ -20,6 +20,7 @@ export class ProvidersService {
       password: providerEmptyId.password,
       phone: providerEmptyId.phone,
       address: providerEmptyId.address,
+      animalType: providerEmptyId.animalType,
       base_tariff: providerEmptyId.base_tariff,
       radius: providerEmptyId.radius,
       profile_title: "Bonjour, je m'appelle " + providerEmptyId.name,

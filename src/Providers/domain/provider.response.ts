@@ -9,6 +9,7 @@ export class ProviderResponse {
   password: string;
   phone?: string;
   address: string;
+  animalType: string[];
   base_tariff: number;
   radius: number;
   profile_title: string;
@@ -23,6 +24,7 @@ export class ProviderResponse {
     this.password = providerProps.password;
     this.phone = providerProps.phone;
     this.address = providerProps.address;
+    this.animalType = providerProps.animalType;
     this.base_tariff = providerProps.base_tariff;
     this.radius = providerProps.radius;
     this.profile_title = providerProps.profile_title;
