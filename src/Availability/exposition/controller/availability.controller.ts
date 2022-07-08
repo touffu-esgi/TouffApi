@@ -7,6 +7,7 @@ import {
   Post,
   Query,
   Req,
+  UseFilters,
 } from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
@@ -15,9 +16,10 @@ import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
 import { AddAvailabilityDto } from '../../dto/add-availability.dto';
-import { AddAgreementDto } from '../../../Agreement/dto/add-agreement.dto';
+import { AvailabilityExceptionFilter } from '../filters/availabilityExceptionFilter';
 
 @Controller('availability')
+@UseFilters(new AvailabilityExceptionFilter())
 export class AvailabilityController {
   constructor(private availabilityService: AvailabilityService) {}
 
