@@ -8,6 +8,7 @@ import {
 import { Request, Response } from 'express';
 import { DayAlreadyExistException } from '../../application/exceptions/day-already-exist.exception';
 import { NotAvailableException } from '../../application/exceptions/not-available.exception';
+import { AvailabilityNotFoundException } from '../../application/exceptions/availability-not-found.exception';
 
 @Catch()
 export class AvailabilityExceptionFilter implements ExceptionFilter {
@@ -31,6 +32,9 @@ export class AvailabilityExceptionFilter implements ExceptionFilter {
         body.statusCode = 400;
         break;
       case NotAvailableException.name:
+        body.statusCode = 404;
+        break;
+      case AvailabilityNotFoundException.name:
         body.statusCode = 404;
         break;
     }

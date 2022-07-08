@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseFilters,
@@ -17,6 +18,7 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
 import { AddAvailabilityDto } from '../../dto/add-availability.dto';
 import { AvailabilityExceptionFilter } from '../filters/availabilityExceptionFilter';
+import { UpdateAvailabilityDto } from '../../dto/update-availability.dto';
 
 @Controller('availability')
 @UseFilters(new AvailabilityExceptionFilter())
@@ -68,5 +70,14 @@ export class AvailabilityController {
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),
     );
+  }
+
+  @Put()
+  @HttpCode(204)
+  async update(
+    @Body() updateAvailabilityDto: UpdateAvailabilityDto,
+    @Req() req: Request,
+  ) {
+    await this.availabilityService.update(updateAvailabilityDto);
   }
 }
