@@ -8,6 +8,7 @@ import {
   timeIsInTimeframe,
   timeToDouble,
 } from '../../shared/utils/date-time.utils';
+import { AddAvailabilityDto } from '../dto/add-availability.dto';
 
 @Injectable()
 export class AvailabilityService {
@@ -124,5 +125,16 @@ export class AvailabilityService {
     }
     if (!isSplit) dailyAvailabilities.push(timeframe);
     return dailyAvailabilities;
+  }
+
+  async add(addAvailabilityDto: AddAvailabilityDto): Promise<Availability> {
+    const availability = new Availability({
+      dailyAvailability: addAvailabilityDto.dailyAvailability,
+      day: addAvailabilityDto.day,
+      id: await this.availabilityRepository.getNextId(),
+      providerId: addAvailabilityDto.providerId.toString(),
+    });
+
+    return await this.availabilityRepository.add(availability);
   }
 }

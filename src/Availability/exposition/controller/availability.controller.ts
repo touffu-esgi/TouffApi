@@ -1,14 +1,37 @@
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
 import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
+import { AddAvailabilityDto } from '../../dto/add-availability.dto';
+import { AddAgreementDto } from '../../../Agreement/dto/add-agreement.dto';
 
 @Controller('availability')
 export class AvailabilityController {
   constructor(private availabilityService: AvailabilityService) {}
+
+  @Post()
+  @HttpCode(201)
+  async add(
+    @Body() addAvailabilityDto: AddAvailabilityDto,
+    @Req() req: Request,
+  ): Promise<{ url: string }> {
+    const availability = await this.availabilityService.add(addAvailabilityDto);
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + availability.id,
+    };
+  }
 
   @Get(':weekday/:providerId')
   async getDailyAvailability(
