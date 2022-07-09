@@ -72,9 +72,13 @@ export class UserController {
     );
   }
 
-  @Put()
+  @Put(':userId')
   @HttpCode(204)
-  async updateOneUser(@Body() user: UpdateUserDto, @Req() request: Request) {
-    await this.userService.updateOneUser(user);
+  async updateOneUser(
+    @Body() user: UpdateUserDto,
+    @Param('userId') userId: string,
+    @Req() request: Request,
+  ) {
+    await this.userService.updateOneUser(user, userId);
   }
 }

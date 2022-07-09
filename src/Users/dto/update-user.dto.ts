@@ -1,9 +1,8 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty } from 'class-validator';
+import { UserStatusEnum } from '../domain/user.status.enum';
 
 export class UpdateUserDto {
   @IsNotEmpty()
-  id: string;
-
-  @IsNotEmpty()
+  @IsEnum(UserStatusEnum)
   status: string;
 }
