@@ -8,6 +8,9 @@ import {
   timeIsInTimeframe,
   timeToDouble,
 } from '../../shared/utils/date-time.utils';
+import { AddAvailabilityDto } from '../dto/add-availability.dto';
+import { DayAlreadyExistException } from './exceptions/day-already-exist.exception';
+import { UpdateAvailabilityDto } from '../dto/update-availability.dto';
 
 @Injectable()
 export class AvailabilityService {
@@ -124,5 +127,49 @@ export class AvailabilityService {
     }
     if (!isSplit) dailyAvailabilities.push(timeframe);
     return dailyAvailabilities;
+  }
+
+  async add(addAvailabilityDto: AddAvailabilityDto): Promise<Availability> {
+    const availability = new Availability({
+      dailyAvailability: addAvailabilityDto.dailyAvailability,
+      day: addAvailabilityDto.day,
+      id: await this.availabilityRepository.getNextId(),
+      providerId: addAvailabilityDto.providerId.toString(),
+    });
+
+    await this.throwErrorIfDayAlreadyBeenSetUp(addAvailabilityDto);
+
+    return await this.availabilityRepository.add(availability);
+  }
+
+  async update(updateAvailabilityDto: UpdateAvailabilityDto) {
+    this.availabilityRepository.update(updateAvailabilityDto);
+  }
+
+  private async verifyIfProviderAlreadySetUpThisDay(
+    providerId: string,
+    day: string,
+  ): Promise<boolean> {
+    try {
+      await this.getDefaultDailyAvailability(providerId, day);
+      return false;
+    } catch (e) {
+      if (e.name == 'NotAvailableException') {
+        return true;
+      }
+    }
+  }
+
+  private async throwErrorIfDayAlreadyBeenSetUp(
+    dto: AddAvailabilityDto | UpdateAvailabilityDto,
+  ) {
+    const dayAlreadyExists = !(await this.verifyIfProviderAlreadySetUpThisDay(
+      dto.providerId.toString(),
+      dto.day,
+    ));
+
+    if (dayAlreadyExists) {
+      throw new DayAlreadyExistException(`${dto.day} already been set up`);
+    }
   }
 }
