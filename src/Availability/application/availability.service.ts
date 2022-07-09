@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreement.repository.in-memory';
 import {
   getNextWeekday,
+  timeIsInTimeframe,
   timeToDouble,
 } from '../../shared/utils/date-time.utils';
 
@@ -81,23 +82,47 @@ export class AvailabilityService {
       const endTime = beginTime + agreement.duration;
       if (
         await this.agreementRepository.dayMatchesAgreement(
-          agreement.id,
+          agreement,
           nextWeekday,
         )
       ) {
         availabilities.forEach((timeframe) => {
-          dailyAvailability =
-            this.availabilityRepository.updateTimeframeIfOccupied(
-              beginTime,
-              endTime,
-              timeframe,
-              dailyAvailability,
-            );
+          dailyAvailability = this.splitTimeframeIfOccupied(
+            beginTime,
+            endTime,
+            timeframe,
+            dailyAvailability,
+          );
         });
       } else {
         dailyAvailability = availabilities;
       }
     }
     return dailyAvailability;
+  }
+
+  public splitTimeframeIfOccupied(
+    occupiedBeginTime: number,
+    occupiedEndTime: number,
+    timeframe: { beginAt: number; endAt: number },
+    dailyAvailabilities: { beginAt: number; endAt: number }[],
+  ): { beginAt: number; endAt: number }[] {
+    let isSplit = false;
+    if (timeIsInTimeframe(occupiedBeginTime, timeframe)) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: timeframe.beginAt,
+        endAt: occupiedBeginTime,
+      });
+    }
+    if (timeIsInTimeframe(occupiedEndTime, timeframe)) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: occupiedEndTime,
+        endAt: timeframe.endAt,
+      });
+    }
+    if (!isSplit) dailyAvailabilities.push(timeframe);
+    return dailyAvailabilities;
   }
 }

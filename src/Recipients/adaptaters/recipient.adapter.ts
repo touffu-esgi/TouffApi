@@ -2,7 +2,7 @@ import { RecipientResponse } from '../domain/recipient.response';
 import { Recipient } from '../domain/recipient';
 
 export class RecipientAdapter {
-  public static fromAnimalToAnimalResponse(dto: Recipient) {
+  public static toRecipientResponse(dto: Recipient) {
     return new RecipientResponse(
       dto.id,
       dto.name,
@@ -10,6 +10,7 @@ export class RecipientAdapter {
       dto.email,
       dto.phoneNumber,
       dto.address,
+      dto.userId,
     );
   }
 }

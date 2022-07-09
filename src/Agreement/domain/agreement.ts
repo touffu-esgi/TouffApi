@@ -8,7 +8,7 @@ export class Agreement implements AgreementProps {
   private readonly _recipientRef: string;
   private readonly _animalsRefs: string[];
   private readonly _beginningDate: Date;
-  private readonly _endDate: Date;
+  private readonly _endDate?: Date;
   private readonly _recurrence?: AgreementRecurrenceEnum;
   private readonly _duration: number;
   private readonly _remuneration?: number;

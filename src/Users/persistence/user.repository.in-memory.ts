@@ -7,7 +7,7 @@ import { UserUpdate } from '../domain/user.update';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
-    new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
+    new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
     new User('2', 'sarah@sarah.sarah', 'password', '2', 'provider'),
     new User('3', 'Theo@Theo.Theo', 'password', '3', 'provider'),
   ];
@@ -27,6 +27,15 @@ export class UserRepositoryInMemory implements UserRepository {
     );
     if (user.length > 0) return user[0];
     throw new UserNotFoundException(`User ${userId} not found`);
+  }
+
+  async getOneByUserTypeAndReference(userReference: string, userType: string) {
+    const user = this.usersMockRepositoryImplement.filter(
+      (user) =>
+        user.userReference == userReference && user.userType === userType,
+    );
+    if (user.length > 0) return user[0];
+    throw new UserNotFoundException(`${userType} ${userReference} not found`);
   }
 
   async getNextId(): Promise<string> {

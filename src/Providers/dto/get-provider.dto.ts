@@ -4,6 +4,8 @@ export class GetProviderDto {
   @IsNotEmpty()
   id: string;
 
+  userId: string;
+
   @IsNotEmpty()
   name: string;
 

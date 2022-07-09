@@ -5,7 +5,7 @@ export class AddReportDto {
   reportedUserId: string;
 
   @IsNotEmpty()
-  reporterUserId: string;
+  reportingUserId: string;
 
   @MinLength(0)
   @MaxLength(512)

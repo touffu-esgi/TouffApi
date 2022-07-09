@@ -1,15 +1,15 @@
 import {
   ArgumentsHost,
+  Catch,
   ExceptionFilter,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { AgreementNotFoundException } from '../../application/exceptions/agreement-not-found.exception';
-import { ProviderBusyException } from '../../application/exceptions/provider-busy.exception';
-import { NoCurrentAgreementException } from '../../application/exceptions/no-current-agreement.exception';
+import { BillNotFoundException } from '../../application/exceptions/bill-not-found.exception';
 
-export class AgreementExceptionFilter implements ExceptionFilter {
+@Catch()
+export class BillExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -26,14 +26,8 @@ export class AgreementExceptionFilter implements ExceptionFilter {
     };
 
     switch (exception.name) {
-      case AgreementNotFoundException.name:
+      case BillNotFoundException.name:
         body.statusCode = 404;
-        break;
-      case ProviderBusyException.name:
-        body.statusCode = 412;
-        break;
-      case NoCurrentAgreementException.name:
-        body.statusCode = 201;
         break;
       default:
         body.statusCode = 500;
