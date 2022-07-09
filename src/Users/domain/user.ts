@@ -6,6 +6,7 @@ export class User {
   private readonly _userType: string;
   private readonly _profilePic: string;
   public status: string;
+  public blockDate: Date | null;
 
   constructor(
     id: string,
@@ -15,6 +16,7 @@ export class User {
     userType: string,
     profilePic = 'default.png',
     status = 'active',
+    blockDate = null,
   ) {
     this._email = email;
     this._password = password;
@@ -23,6 +25,7 @@ export class User {
     this._userType = userType;
     this._profilePic = profilePic;
     this.status = status;
+    this.blockDate = blockDate;
   }
 
   get id(): string {

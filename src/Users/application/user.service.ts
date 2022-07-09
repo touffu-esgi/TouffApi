@@ -4,6 +4,7 @@ import { UserRepositoryInMemory } from '../persistence/user.repository.in-memory
 import { Injectable } from '@nestjs/common';
 import { GetUserDto } from '../dto/get-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { UserUpdate } from '../domain/user.update';
 
 @Injectable()
 export class UserService {
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   async updateOneUser(user: UpdateUserDto, userId: string) {
-    const newStatus = { userId: userId, status: user.status };
-    this.userRepository.updateOneUser(newStatus);
+    const updateUser = new UserUpdate(user.status, userId);
+    this.userRepository.updateOneUser(updateUser);
   }
 }

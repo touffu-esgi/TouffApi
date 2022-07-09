@@ -2,6 +2,8 @@ import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 import { GetUserDto } from '../dto/get-user.dto';
+import { UserStatusEnum } from '../domain/user.status.enum';
+import { UserUpdate } from '../domain/user.update';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
@@ -42,19 +44,22 @@ export class UserRepositoryInMemory implements UserRepository {
     );
   }
 
-  updateOneUser(newStatus: { userId: string; status: string }) {
+  updateOneUser(newStatus: UserUpdate) {
     const index = this.usersMockRepositoryImplement.findIndex(
-      (user) => user.id == newStatus.userId,
+      (user) => user.id == newStatus.id,
     );
     if (
       this.usersMockRepositoryImplement[index] &&
       this.verifyStatus(newStatus.status)
     ) {
       this.usersMockRepositoryImplement[index].status = newStatus.status;
+      if (newStatus.status == UserStatusEnum.active) {
+        this.usersMockRepositoryImplement[index].blockDate = new Date();
+      }
     }
   }
 
   private verifyStatus(status: string): boolean {
-    return status == 'active' || status == 'blocked';
+    return status == UserStatusEnum.active || status == UserStatusEnum.blocked;
   }
 }
