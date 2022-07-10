@@ -7,7 +7,7 @@ import { UserUpdate } from '../domain/user.update';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
-    new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
+    new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
     new User('2', 'sarah@sarah.sarah', 'password', '2', 'provider'),
     new User('3', 'Theo@Theo.Theo', 'password', '3', 'provider'),
   ];

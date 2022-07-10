@@ -7,9 +7,9 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       '1',
       'nathan',
       'letourneau',
-      'nathan@nathan.fr',
+      'nathan@nathan.nathan',
       '0000000000',
-      '123456789',
+      'password',
       '78 rue de paris à paris',
     ),
     new Recipient(

@@ -16,7 +16,6 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
 import { UserExceptionFilter } from '../filter/user.filter';
-import { User } from '../../domain/user';
 import { GetUserDto } from '../../dto/get-user.dto';
 import { UpdateUserDto } from '../../dto/update-user.dto';
 
