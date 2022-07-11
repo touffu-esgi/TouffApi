@@ -10,6 +10,7 @@ import {
 } from '../../shared/utils/date-time.utils';
 import { AddAvailabilityDto } from '../dto/add-availability.dto';
 import { DayAlreadyExistException } from './exceptions/day-already-exist.exception';
+import { UpdateAvailabilityDto } from '../dto/update-availability.dto';
 
 @Injectable()
 export class AvailabilityService {
@@ -136,18 +137,13 @@ export class AvailabilityService {
       providerId: addAvailabilityDto.providerId.toString(),
     });
 
-    const dayAlreadyExists = !(await this.verifyIfProviderAlreadySetUpThisDay(
-      addAvailabilityDto.providerId.toString(),
-      addAvailabilityDto.day,
-    ));
-
-    if (dayAlreadyExists) {
-      throw new DayAlreadyExistException(
-        `${addAvailabilityDto.day} already been set up`,
-      );
-    }
+    await this.throwErrorIfDayAlreadyBeenSetUp(addAvailabilityDto);
 
     return await this.availabilityRepository.add(availability);
+  }
+
+  async update(updateAvailabilityDto: UpdateAvailabilityDto) {
+    this.availabilityRepository.update(updateAvailabilityDto);
   }
 
   private async verifyIfProviderAlreadySetUpThisDay(
@@ -161,6 +157,19 @@ export class AvailabilityService {
       if (e.name == 'NotAvailableException') {
         return true;
       }
+    }
+  }
+
+  private async throwErrorIfDayAlreadyBeenSetUp(
+    dto: AddAvailabilityDto | UpdateAvailabilityDto,
+  ) {
+    const dayAlreadyExists = !(await this.verifyIfProviderAlreadySetUpThisDay(
+      dto.providerId.toString(),
+      dto.day,
+    ));
+
+    if (dayAlreadyExists) {
+      throw new DayAlreadyExistException(`${dto.day} already been set up`);
     }
   }
 }

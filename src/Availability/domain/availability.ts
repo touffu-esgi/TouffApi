@@ -3,7 +3,7 @@ import { getWeekDayAsString } from './weekdays';
 
 export class Availability implements AvailabilityProps {
   private readonly _id: string;
-  private readonly _day: string;
+  private _day: string;
   private _dailyAvailability: {
     beginAt: number;
     endAt: number;
@@ -62,5 +62,9 @@ export class Availability implements AvailabilityProps {
       this.dailyAvailabilityAtIndex(index).beginAt -
       this.dailyAvailabilityAtIndex(index).endAt
     );
+  }
+
+  set setDay(value: string) {
+    this._day = value;
   }
 }
