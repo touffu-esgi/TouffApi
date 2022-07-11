@@ -1,15 +1,15 @@
 import { AgreementRecurrenceEnum } from './agreement.recurrence.enum';
 
 export interface AgreementProps {
-  id: string;
-  recurring: boolean;
-  recurrence?: AgreementRecurrenceEnum;
-  providerRef: string;
-  recipientRef: string;
-  animalsRefs: string[];
-  beginningDate: Date;
-  endDate: Date;
-  duration: number;
-  remuneration: number;
-  status: string;
+  readonly id: string;
+  readonly recurring: boolean;
+  readonly recurrence?: AgreementRecurrenceEnum;
+  readonly providerRef: string;
+  readonly recipientRef: string;
+  readonly animalsRefs: string[];
+  readonly beginningDate: Date;
+  readonly endDate?: Date;
+  readonly duration: number;
+  readonly remuneration: number;
+  readonly status: string;
 }

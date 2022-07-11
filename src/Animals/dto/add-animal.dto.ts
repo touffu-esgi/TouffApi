@@ -6,4 +6,7 @@ export class AddAnimalDto {
 
   @IsNotEmpty()
   type: string;
+
+  @IsNotEmpty()
+  recipientId: string;
 }

@@ -18,6 +18,7 @@ import { AgreementAdapter } from '../../adapters/agreement.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAgreementDto } from '../../dto/add-agreement.dto';
 import { UpdateAgreementDto } from '../../dto/update-agreement.dto';
+import { Agreement } from '../../domain/agreement';
 
 @Controller('agreement')
 @UseFilters(new AgreementExceptionFilter())
@@ -35,6 +36,28 @@ export class AgreementController {
         agreement,
         HttpUtils.getBaseUrlOf(req),
       ),
+    );
+  }
+
+  @Get('datetime')
+  async getAgreementAtDateTime(
+    @Req() req: Request,
+    @Query() filters,
+  ): Promise<AgreementResponse> {
+    let dt = new Date();
+    if (filters.dt) {
+      dt = new Date(filters.dt);
+    }
+    if (!filters.animal) {
+      throw new Error("Pas d'animal");
+    }
+    const agreement = await this.agreementService.getOneFromAnimalAndDatetime(
+      dt,
+      filters.animal,
+    );
+    return AgreementAdapter.toAgreementResponse(
+      agreement,
+      HttpUtils.getBaseUrlOf(req),
     );
   }
 

@@ -33,7 +33,7 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
   }
 
   async getOne(id: string): Promise<Recipient> {
-    const recipients = this.recipients.filter((p) => p.id === id);
+    const recipients = this.recipients.filter((r) => r.id === id);
     if (recipients.length > 0) return recipients[0];
     throw new Error(`Recipient ${id} not found`);
   }

@@ -8,9 +8,9 @@ import { AnimalTypes } from '../domain/animal.types';
 describe('AnimalsService', () => {
   let animalsService: AnimalsService;
   let animals: Animal[] = [
-    new Animal('roucky', AnimalTypes.dog, '1'),
-    new Animal('sirius', AnimalTypes.cat, '2'),
-    new Animal('lili', AnimalTypes.cat, '3'),
+    new Animal('roucky', AnimalTypes.dog, '1', '1'),
+    new Animal('sirius', AnimalTypes.cat, '2', '1'),
+    new Animal('lili', AnimalTypes.cat, '3', '1'),
   ];
 
   const mockAnimalsRepository = {
@@ -40,6 +40,7 @@ describe('AnimalsService', () => {
     const addAnimalDto: AddAnimalDto = {
       name: 'jean',
       type: AnimalTypes.dog,
+      recipientId: '4',
     };
 
     const newAnimal = await animalsService.add(addAnimalDto);
@@ -48,6 +49,7 @@ describe('AnimalsService', () => {
       _name: 'jean',
       _type: AnimalTypes.dog,
       _id: '4',
+      _recipientId: '4',
     });
   });
 
@@ -60,6 +62,7 @@ describe('AnimalsService', () => {
     const addAnimalDto: AddAnimalDto = {
       name: 'jean',
       type: 'giraffe',
+      recipientId: '1',
     };
 
     await expect(() => animalsService.add(addAnimalDto)).rejects.toThrow(

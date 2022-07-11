@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty, MinLength } from 'class-validator';
 
 export class AddRecipientDto {
   @IsNotEmpty()
@@ -8,7 +8,6 @@ export class AddRecipientDto {
   surname: string;
 
   @IsNotEmpty()
-  //@IsEmail()
   email: string;
 
   @IsNotEmpty()

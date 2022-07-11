@@ -7,7 +7,10 @@ import {
   getAgreementRecurrenceEnumFromString,
 } from '../domain/agreement.recurrence.enum';
 import { AvailabilityRepositoryInMemory } from '../../Availability/persistence/availability.repository.in-memory';
-import { timeToDouble } from '../../shared/utils/date-time.utils';
+import {
+  timeIsInTimeframe,
+  timeToDouble,
+} from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
 import { MessageService } from '../../Message/application/message.service';
 import { AddMessageDto } from '../../Message/dto/add-message.dto';
@@ -24,6 +27,16 @@ export class AgreementService {
     return await this.agreementRepository.getAll(filters);
   }
 
+  async getOneFromAnimalAndDatetime(
+    dt: Date,
+    animalId: string,
+  ): Promise<Agreement> {
+    return await this.agreementRepository.getOneFromAnimalAndDatetime(
+      dt,
+      animalId,
+    );
+  }
+
   async getOne(agreementId: string): Promise<Agreement> {
     return await this.agreementRepository.getOne(agreementId);
   }
@@ -34,7 +47,7 @@ export class AgreementService {
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
     const beginDate = new Date(dto.beginningDate);
-    const endDate = new Date(dto.endDate);
+    const endDate = new Date(dto.endDate + 'T23:59');
     const providerBusyAvailability =
       await this.availabilityRepository.getWeeklyDefaultAvailability(
         dto.providerRef,
@@ -65,7 +78,7 @@ export class AgreementService {
       endDate: endDate,
       duration: dto.duration,
       remuneration: dto.remuneration,
-      status: 'Agreed',
+      status: 'InDiscussion',
     });
     return await this.agreementRepository.add(agreement);
   }
@@ -79,11 +92,8 @@ export class AgreementService {
     const endTime = beginTime + duration;
     occupiedTimeframes.filter(
       (timeframe) =>
-        this.availabilityRepository.timeOverlapsTimeframe(
-          beginTime,
-          timeframe,
-        ) &&
-        this.availabilityRepository.timeOverlapsTimeframe(endTime, timeframe),
+        timeIsInTimeframe(beginTime, timeframe) &&
+        timeIsInTimeframe(endTime, timeframe),
     );
     return occupiedTimeframes.length > 0;
   }
