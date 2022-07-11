@@ -11,6 +11,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'nletourneau@mail.mail',
       password: 'nletourneau',
       address: '1',
+      animalType: ['chien', 'chat'],
       radius: 3,
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
@@ -23,6 +24,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'sschlegel@wp.pl',
       password: 'sschlegel',
       address: '2',
+      animalType: ['chien'],
       radius: 3,
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
@@ -35,6 +37,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'Omnes@Théo.pl',
       password: 'Théo',
       address: '2',
+      animalType: ['chat', 'chameau'],
       radius: 3,
       base_tariff: 18,
       profile_title: 'Touriste de service',
@@ -47,8 +50,18 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
     return provider;
   }
 
-  async getAll(): Promise<Provider[]> {
-    return this.providers;
+  async getAll(filters: unknown = {}): Promise<Provider[]> {
+    let providers = this.providers;
+    if (filters) {
+      Object.keys(filters).forEach((propName) => {
+        providers = providers.filter(
+          (provider) =>
+            !provider[propName] ||
+            provider[propName].indexOf(filters[propName]) !== -1,
+        );
+      });
+    }
+    return providers;
   }
 
   async getOne(id: string): Promise<Provider> {
