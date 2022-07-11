@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -15,8 +16,8 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
 import { UserExceptionFilter } from '../filter/user.filter';
-import { User } from '../../domain/user';
 import { GetUserDto } from '../../dto/get-user.dto';
+import { UpdateUserDto } from '../../dto/update-user.dto';
 
 @Controller('user')
 @UseFilters(UserExceptionFilter)
@@ -68,5 +69,15 @@ export class UserController {
       userFound,
       HttpUtils.getBaseUrlOf(request),
     );
+  }
+
+  @Put(':userId')
+  @HttpCode(204)
+  async updateOneUser(
+    @Body() user: UpdateUserDto,
+    @Param('userId') userId: string,
+    @Req() request: Request,
+  ) {
+    await this.userService.updateOneUser(user, userId);
   }
 }

@@ -2,10 +2,12 @@ import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 import { GetUserDto } from '../dto/get-user.dto';
+import { UserStatusEnum } from '../domain/user.status.enum';
+import { UserUpdate } from '../domain/user.update';
 
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
-    new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
+    new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
     new User('2', 'sarah@sarah.sarah', 'password', '2', 'provider'),
     new User('3', 'Theo@Theo.Theo', 'password', '3', 'provider'),
   ];
@@ -49,5 +51,24 @@ export class UserRepositoryInMemory implements UserRepository {
     throw new UserNotFoundException(
       `User with email : ${user.email} not found`,
     );
+  }
+
+  updateOneUser(newStatus: UserUpdate) {
+    const index = this.usersMockRepositoryImplement.findIndex(
+      (user) => user.id == newStatus.id,
+    );
+    if (
+      this.usersMockRepositoryImplement[index] &&
+      this.verifyStatus(newStatus.status)
+    ) {
+      this.usersMockRepositoryImplement[index].status = newStatus.status;
+      if (newStatus.status == UserStatusEnum.active) {
+        this.usersMockRepositoryImplement[index].blockDate = new Date();
+      }
+    }
+  }
+
+  private verifyStatus(status: string): boolean {
+    return status == UserStatusEnum.active || status == UserStatusEnum.blocked;
   }
 }
