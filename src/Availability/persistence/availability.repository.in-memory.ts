@@ -11,7 +11,7 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
       day: getWeekDayAsString('MONDAY'),
       dailyAvailability: [
         {
-          beginAt: 9.0,
+          beginAt: 10.5,
           endAt: 13.0,
         },
         {
@@ -30,7 +30,7 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
           endAt: 12.5,
         },
       ],
-      providerId: '2',
+      providerId: '1',
     }),
   ];
 
@@ -63,5 +63,10 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
   async getNextId(): Promise<string> {
     const currentId = +this.availabilities.at(-1).id;
     return (currentId + 1).toString();
+  }
+
+  async add(availability: Availability): Promise<Availability> {
+    this.availabilities.push(availability);
+    return availability;
   }
 }
