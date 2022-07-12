@@ -41,6 +41,15 @@ export class AnimalsController {
     return animals.map((animal) => AnimalAdapter.toAnimalResponse(animal));
   }
 
+  @Get(':animalId/one')
+  async getOne(
+    @Param('animalId') animalId: string,
+    @Req() request: Request,
+  ): Promise<AnimalResponse> {
+    const animal = await this.animalsService.getOne(animalId);
+    return AnimalAdapter.toAnimalResponse(animal);
+  }
+
   @Get(':providerId')
   async getAllByProviderId(
     @Param('providerId') providerId: string,

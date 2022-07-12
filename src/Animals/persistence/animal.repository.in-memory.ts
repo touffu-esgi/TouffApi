@@ -6,8 +6,8 @@ import { ProviderNotFoundException } from '../../Providers/application/exception
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [
     new Animal('roucky', AnimalTypes.dog, '1', '1'),
-    new Animal('sirius', AnimalTypes.cat, '2', '1'),
-    new Animal('lili', AnimalTypes.cat, '3', '1'),
+    new Animal('sirius', AnimalTypes.cat, '2', '2'),
+    new Animal('lili', AnimalTypes.cat, '3', '2'),
   ];
 
   async save(animal: Animal): Promise<Animal> {
@@ -27,5 +27,10 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
   getAllByRecipientId(recipientId: string) {
     const Animals = this.animals.filter((p) => p.recipientId === recipientId);
     if (Animals.length > 0) return Animals;
+  }
+
+  async getOne(animalId: string): Promise<Animal> {
+    const animal = this.animals.filter((p) => p.id === animalId);
+    if (animal.length > 0) return animal[0];
   }
 }

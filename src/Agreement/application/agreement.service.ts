@@ -109,7 +109,7 @@ export class AgreementService {
       recurrence: recurence,
       providerRef: '',
       recipientRef: '',
-      animalsRefs: [''],
+      animalsRefs: dto.animals,
       beginningDate: dto.beginningDate,
       endDate: dto.endDate,
       duration: dto.duration,

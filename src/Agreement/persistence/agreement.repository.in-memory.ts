@@ -169,6 +169,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       if (updateAgreementDto.endDate) {
         this.agreements[index].endDate = updateAgreementDto.endDate;
       }
+      if (updateAgreementDto.animalsRefs) {
+        this.agreements[index].animalsRefs = updateAgreementDto.animalsRefs;
+      }
     }
   }
 }
