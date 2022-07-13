@@ -19,7 +19,6 @@ export class AddProviderDto {
   @IsNotEmpty()
   address: string;
 
-  @IsNotEmpty()
   animalType: string[];
 
   @IsPositive()
@@ -27,6 +26,9 @@ export class AddProviderDto {
 
   @IsPositive()
   radius: number;
+
+  @IsNotEmpty()
+  user_id: string;
 
   profile_title: string;
 

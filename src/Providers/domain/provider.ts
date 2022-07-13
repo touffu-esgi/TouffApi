@@ -1,9 +1,6 @@
 import { ProviderProps } from './provider.props';
 
 export class Provider implements ProviderProps {
-  get animalType(): string[] {
-    return this._animalType;
-  }
   private readonly _id: string;
   private _userId?: string;
   private readonly _name: string;
@@ -31,6 +28,10 @@ export class Provider implements ProviderProps {
     this._radius = providerProps.radius;
     this._profile_title = providerProps.profile_title;
     this._profile_desc = providerProps.profile_desc;
+  }
+
+  get animalType(): string[] {
+    return this._animalType;
   }
 
   get id(): string {
