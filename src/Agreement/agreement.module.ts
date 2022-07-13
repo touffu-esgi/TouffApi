@@ -16,6 +16,7 @@ import { RecipientRepositoryInMemory } from '../Recipients/persistence/recipient
     RecipientRepositoryInMemory,
   ],
   controllers: [AgreementController],
+  exports: [AgreementRepositoryInMemory],
   providers: [
     AgreementService,
     AgreementRepositoryInMemory,

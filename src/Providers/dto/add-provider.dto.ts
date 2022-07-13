@@ -27,9 +27,6 @@ export class AddProviderDto {
   @IsPositive()
   radius: number;
 
-  @IsNotEmpty()
-  user_id: string;
-
   profile_title: string;
 
   profile_desc: string;

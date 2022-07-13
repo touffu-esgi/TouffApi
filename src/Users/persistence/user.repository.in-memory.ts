@@ -3,7 +3,9 @@ import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 import { GetUserDto } from '../dto/get-user.dto';
 import { UserUpdate } from '../domain/user.update';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
     new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
