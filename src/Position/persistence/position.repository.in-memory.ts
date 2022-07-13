@@ -13,7 +13,7 @@ export class PositionRepositoryInMemory implements PositionRepository {
     }),
     new Position({
       id: '2',
-      agreementRef: '1',
+      agreementRef: '3',
       xCoordinate: 48.32,
       yCoordinate: 2.1,
       datetime: new Date('2022-06-25T21:30:10'),
