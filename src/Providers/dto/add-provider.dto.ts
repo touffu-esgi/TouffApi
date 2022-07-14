@@ -19,7 +19,6 @@ export class AddProviderDto {
   @IsNotEmpty()
   address: string;
 
-  @IsNotEmpty()
   animalType: string[];
 
   @IsPositive()

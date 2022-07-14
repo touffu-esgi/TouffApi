@@ -3,13 +3,12 @@ import { RecipientsController } from './exposition/controller/recipients.control
 import { RecipientsService } from './application/recipient.service';
 import { RecipientRepositoryInMemory } from './persistence/recipient.repository.in-memory';
 import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
+import { UserModule } from '../Users/user.module';
 
 @Module({
   controllers: [RecipientsController],
-  providers: [
-    RecipientsService,
-    RecipientRepositoryInMemory,
-    UserRepositoryInMemory,
-  ],
+  exports: [RecipientRepositoryInMemory],
+  imports: [UserModule],
+  providers: [RecipientsService, RecipientRepositoryInMemory],
 })
 export class RecipientsModule {}

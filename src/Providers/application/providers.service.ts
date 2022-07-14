@@ -32,6 +32,7 @@ export class ProvidersService {
 
   async getAll(filters: unknown = {}): Promise<Provider[]> {
     const providers = await this.providerRepository.getAll(filters);
+    console.log(await this.userRepository.getAll());
     for (const i of Object.keys(providers)) {
       const providerUser =
         await this.userRepository.getOneByUserTypeAndReference(
