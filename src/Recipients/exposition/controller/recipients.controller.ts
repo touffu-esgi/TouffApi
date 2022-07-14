@@ -15,7 +15,6 @@ import { AddRecipientDto } from '../../dto/add-recipient';
 import { RecipientsService } from '../../application/recipient.service';
 import { RecipientResponse } from '../../domain/recipient.response';
 import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
-import { Recipient } from '../../domain/recipient';
 
 @Controller('recipient')
 @UseFilters(new RecipientExceptionFilter())
