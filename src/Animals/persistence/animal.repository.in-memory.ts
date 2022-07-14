@@ -1,7 +1,6 @@
 import { AnimalRepository } from '../domain/animal.repository';
 import { Animal } from '../domain/animal';
 import { AnimalTypes } from '../domain/animal.types';
-import { ProviderNotFoundException } from '../../Providers/application/exceptions/provider-not-found-exception';
 
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [

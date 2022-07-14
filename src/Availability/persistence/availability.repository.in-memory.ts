@@ -2,7 +2,6 @@ import { AvailabilityRepository } from '../domain/availability.repository';
 import { Availability } from '../domain/availability';
 import { getWeekDayAsString } from '../domain/weekdays';
 import { NotAvailableException } from '../application/exceptions/not-available.exception';
-import { timeIsInTimeframe } from '../../shared/utils/date-time.utils';
 import { UpdateAvailabilityDto } from '../dto/update-availability.dto';
 import { AvailabilityNotFoundException } from '../application/exceptions/availability-not-found.exception';
 

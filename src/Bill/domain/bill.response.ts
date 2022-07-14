@@ -1,5 +1,5 @@
 import { BillProps } from './bill.props';
-import { Bill } from './bill';
+
 export class BillResponse implements BillProps {
   readonly id: string;
   readonly onePaymentValue: number;
