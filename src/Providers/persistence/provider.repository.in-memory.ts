@@ -94,9 +94,6 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       if (updateProvider.phone) {
         this.providers[index].phone = updateProvider.phone;
       }
-      if (updateProvider.address) {
-        this.providers[index].address = updateProvider.address;
-      }
       if (updateProvider.animalType) {
         this.providers[index].animalType = updateProvider.animalType;
       }

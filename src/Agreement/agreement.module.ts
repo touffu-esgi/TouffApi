@@ -8,22 +8,18 @@ import { MessageRepositoryInMemory } from '../Message/persistance/message.reposi
 import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
 import { ProviderRepositoryInMemory } from '../Providers/persistence/provider.repository.in-memory';
 import { RecipientRepositoryInMemory } from '../Recipients/persistence/recipient.repository.in-memory';
+import { UserModule } from '../Users/user.module';
+import { ProviderModule } from '../Providers/provider.module';
+import { RecipientsModule } from '../Recipients/recipient.module';
 
 @Module({
-  imports: [
-    UserRepositoryInMemory,
-    ProviderRepositoryInMemory,
-    RecipientRepositoryInMemory,
-  ],
+  imports: [UserModule, ProviderModule, RecipientsModule],
   controllers: [AgreementController],
   exports: [AgreementRepositoryInMemory],
   providers: [
     AgreementService,
     AgreementRepositoryInMemory,
     AvailabilityRepositoryInMemory,
-    UserRepositoryInMemory,
-    ProviderRepositoryInMemory,
-    RecipientRepositoryInMemory,
   ],
 })
 export class AgreementModule {}
