@@ -13,16 +13,7 @@ export class Availability implements AvailabilityProps {
   constructor(availabilityProps: AvailabilityProps) {
     this._id = availabilityProps.id;
     this._day = getWeekDayAsString(availabilityProps.day);
-    if (availabilityProps.dailyAvailability.length === 0) {
-      this._dailyAvailability = [
-        {
-          beginAt: 8,
-          endAt: 18,
-        },
-      ];
-    } else {
-      this._dailyAvailability = availabilityProps.dailyAvailability;
-    }
+    this._dailyAvailability = availabilityProps.dailyAvailability;
     this._providerId = availabilityProps.providerId;
   }
 
