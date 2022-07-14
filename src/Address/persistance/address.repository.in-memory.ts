@@ -1,6 +1,7 @@
 import { Address } from '../domain/address';
 import { HttpException } from '@nestjs/common';
 import { AddressRepository } from '../domain/address.repository';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class AddressRepositoryInMemory implements AddressRepository {
   private readonly addresses: Address[] = [
@@ -31,12 +32,8 @@ export class AddressRepositoryInMemory implements AddressRepository {
     let addresses = this.addresses;
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        addresses = addresses.filter(
-          (address) =>
-            !address[propName] ||
-            address[propName]
-              .toLowerCase()
-              .indexOf(filters[propName].toLowerCase()) !== -1,
+        addresses = addresses.filter((address) =>
+          filterByProp(address, propName, filters[propName], true),
         );
       });
     }

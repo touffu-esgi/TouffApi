@@ -8,6 +8,7 @@ import { dateIsBetweenBounds } from '../../shared/utils/date-time.utils';
 import { AddAllBillsDto } from '../dto/add-all-bills.dto';
 import { UpdateBillDto } from '../dto/update-bill.dto';
 import { BillNotFoundException } from './exceptions/bill-not-found.exception';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 @Injectable()
 export class BillService {
@@ -82,10 +83,8 @@ export class BillService {
     let bills = await this.billRepository.getAll();
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        bills = bills.filter(
-          (bill) =>
-            !bill[propName] ||
-            bill[propName].toLowerCase() === filters[propName].toLowerCase(),
+        bills = bills.filter((bill) =>
+          filterByProp(bill, propName, filters[propName], true),
         );
       });
     }

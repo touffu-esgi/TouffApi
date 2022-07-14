@@ -1,6 +1,7 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
 import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
@@ -54,12 +55,8 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
     let providers = this.providers;
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        providers = providers.filter(
-          (provider) =>
-            !provider[propName] ||
-            provider[propName]
-              .toLowerCase()
-              .indexOf(filters[propName].toLowerCase()) !== -1,
+        providers = providers.filter((provider) =>
+          filterByProp(provider, propName, filters[propName]),
         );
       });
     }
