@@ -57,7 +57,9 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
         providers = providers.filter(
           (provider) =>
             !provider[propName] ||
-            provider[propName].indexOf(filters[propName]) !== -1,
+            provider[propName]
+              .toLowerCase()
+              .indexOf(filters[propName].toLowerCase()) !== -1,
         );
       });
     }

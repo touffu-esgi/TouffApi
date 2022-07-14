@@ -83,7 +83,9 @@ export class BillService {
     if (filters) {
       Object.keys(filters).forEach((propName) => {
         bills = bills.filter(
-          (bill) => !bill[propName] || bill[propName] === filters[propName],
+          (bill) =>
+            !bill[propName] ||
+            bill[propName].toLowerCase() === filters[propName].toLowerCase(),
         );
       });
     }

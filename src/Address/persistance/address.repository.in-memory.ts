@@ -34,7 +34,9 @@ export class AddressRepositoryInMemory implements AddressRepository {
         addresses = addresses.filter(
           (address) =>
             !address[propName] ||
-            address[propName].indexOf(filters[propName]) !== -1,
+            address[propName]
+              .toLowerCase()
+              .indexOf(filters[propName].toLowerCase()) !== -1,
         );
       });
     }

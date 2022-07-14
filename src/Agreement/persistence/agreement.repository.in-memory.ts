@@ -58,7 +58,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       Object.keys(filters).forEach((propName) => {
         agreements = agreements.filter(
           (agreement) =>
-            !agreement[propName] || agreement[propName] === filters[propName],
+            !agreement[propName] ||
+            agreement[propName].toLowerCase() ===
+              filters[propName].toLowerCase(),
         );
       });
     }
