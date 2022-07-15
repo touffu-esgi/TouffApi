@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Req,
+  Res,
   UploadedFile,
   UseFilters,
   UseInterceptors,
@@ -38,6 +39,15 @@ export class UserController {
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + user.id,
     };
+  }
+
+  @Get('/profileImage')
+  @HttpCode(200)
+  async getImage(@Req() request: Request, @Res() res) {
+    return res.sendFile(
+      process.cwd() +
+        '/upload/image/269451-Sepikfd23d1c0-f1d6-43c9-b339-91ecd6c6959f.jpeg',
+    );
   }
 
   @Get()
