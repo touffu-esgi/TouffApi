@@ -43,13 +43,14 @@ export class UserController {
     };
   }
 
-  @Get('/profileImage')
+  @Get('/profileImage/:imagePath')
   @HttpCode(200)
-  async getImage(@Req() request: Request, @Res() res) {
-    return res.sendFile(
-      process.cwd() +
-        '/upload/image/269451-Sepikfd23d1c0-f1d6-43c9-b339-91ecd6c6959f.jpeg',
-    );
+  async getImage(
+    @Req() request: Request,
+    @Res() res,
+    @Param('imagePath') imagePath: string,
+  ) {
+    return res.sendFile(process.cwd() + '/upload/image/' + imagePath);
   }
 
   @Get()
@@ -102,7 +103,7 @@ export class UserController {
     }),
   )
   async uploadImage(@UploadedFile() file): Promise<{ url: string }> {
-    return { url: file.path };
+    return { url: file.path.split('/').pop()! };
   }
 
   @Put(':userId')

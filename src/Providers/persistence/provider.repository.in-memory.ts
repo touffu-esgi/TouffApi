@@ -50,7 +50,6 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   async save(provider: Provider): Promise<Provider> {
     this.providers.push(provider);
-    console.log(this.providers);
     return provider;
   }
 

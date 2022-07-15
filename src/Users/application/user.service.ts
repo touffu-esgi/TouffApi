@@ -19,6 +19,7 @@ export class UserService {
       addUserDto.password,
       addUserDto.userReference,
       addUserDto.userType,
+      addUserDto.profilePic,
     );
     await this.userRepository.add(newUser);
     return newUser;

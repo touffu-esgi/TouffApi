@@ -80,12 +80,4 @@ export class Provider implements ProviderProps {
   get profile_pic() {
     return this._profile_pic;
   }
-
-  get userId(): string {
-    return this._userId;
-  }
-
-  set userId(id: string) {
-    this._userId = id;
-  }
 }
