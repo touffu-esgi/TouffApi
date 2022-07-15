@@ -37,7 +37,7 @@ export class RecipientsController {
   async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
     const recipients = await this.recipientsService.getAll();
     return recipients.map((recipient) =>
-      RecipientAdapter.fromAnimalToAnimalResponse(recipient),
+      RecipientAdapter.fromRecipientToRecipientResponse(recipient),
     );
   }
 
@@ -47,6 +47,6 @@ export class RecipientsController {
     @Req() request: Request,
   ): Promise<RecipientResponse> {
     const recipient = await this.recipientsService.getOne(recipientId);
-    return RecipientAdapter.fromAnimalToAnimalResponse(recipient);
+    return RecipientAdapter.fromRecipientToRecipientResponse(recipient);
   }
 }
