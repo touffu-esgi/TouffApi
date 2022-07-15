@@ -6,7 +6,9 @@ import {
   Param,
   Post,
   Req,
+  UploadedFile,
   UseFilters,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { UserService } from '../../application/user.service';
@@ -15,8 +17,11 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { UserAdapter } from '../../adapter/user.adapter';
 import { UserResponse } from '../../domain/user.response';
 import { UserExceptionFilter } from '../filter/user.filter';
-import { User } from '../../domain/user';
 import { GetUserDto } from '../../dto/get-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
 @Controller('user')
 @UseFilters(UserExceptionFilter)
@@ -68,5 +73,23 @@ export class UserController {
       userFound,
       HttpUtils.getBaseUrlOf(request),
     );
+  }
+
+  @Post('/image')
+  @HttpCode(200)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './upload/image',
+        filename: (req, file, cb) => {
+          const fileName: string = file.originalname.split('.')[0] + uuidv4();
+          const extension: string = file.originalname.split('.')[1];
+          cb(null, `${fileName}.${extension}`);
+        },
+      }),
+    }),
+  )
+  async uploadImage(@UploadedFile() file): Promise<{ url: string }> {
+    return { url: file.path };
   }
 }
