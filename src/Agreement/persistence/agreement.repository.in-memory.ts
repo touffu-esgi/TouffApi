@@ -151,26 +151,19 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       const index = this.agreements.findIndex(
         (agreement) => agreement.id == updateAgreementDto.id,
       );
-      if (updateAgreementDto.duration) {
-        this.agreements[index].duration = +updateAgreementDto.duration;
-      }
-      if (updateAgreementDto.remuneration) {
-        this.agreements[index].remuneration = +updateAgreementDto.remuneration;
-      }
-      if (updateAgreementDto.recurring) {
-        this.agreements[index].recurring = updateAgreementDto.recurring;
-      }
-      if (updateAgreementDto.recurrence) {
-        this.agreements[index].recurrence = updateAgreementDto.recurrence;
-      }
-      if (updateAgreementDto.beginningDate) {
-        this.agreements[index].beginningDate = updateAgreementDto.beginningDate;
-      }
-      if (updateAgreementDto.endDate) {
-        this.agreements[index].endDate = updateAgreementDto.endDate;
-      }
-      if (updateAgreementDto.animalsRefs) {
-        this.agreements[index].animalsRefs = updateAgreementDto.animalsRefs;
+      if (index != -1) {
+        for (const agreementProps of Object.keys(updateAgreementDto)) {
+          if (
+            agreementProps === 'duration' ||
+            agreementProps === 'remuneration'
+          ) {
+            this.agreements[index][agreementProps] =
+              +updateAgreementDto[agreementProps];
+          } else {
+            this.agreements[index][agreementProps] =
+              updateAgreementDto[agreementProps];
+          }
+        }
       }
     }
   }
