@@ -24,6 +24,9 @@ export class GetProviderDto {
   @IsNotEmpty()
   address: string;
 
+  @IsNotEmpty()
+  animalType: string[];
+
   @IsPositive()
   base_tariff: number;
 
@@ -33,4 +36,6 @@ export class GetProviderDto {
   profile_title: string;
 
   profile_desc: string;
+
+  profile_pic: string;
 }

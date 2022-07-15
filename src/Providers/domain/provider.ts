@@ -2,7 +2,7 @@ import { ProviderProps } from './provider.props';
 
 export class Provider implements ProviderProps {
   private readonly _id: string;
-  private _userId?: string;
+  public userId?: string;
   private readonly _name: string;
   private readonly _surname: string;
   private readonly _email: string;
@@ -13,6 +13,8 @@ export class Provider implements ProviderProps {
   private readonly _radius: number;
   private readonly _profile_title: string;
   private readonly _profile_desc: string;
+  private readonly _animalType: string[];
+  private readonly _profile_pic: string;
 
   constructor(providerProps: ProviderProps) {
     this._id = providerProps.id;
@@ -22,10 +24,16 @@ export class Provider implements ProviderProps {
     this._password = providerProps.password;
     this._phone = providerProps.phone ? providerProps.phone : '';
     this._address = providerProps.address;
+    this._animalType = providerProps.animalType;
     this._base_tariff = providerProps.base_tariff;
     this._radius = providerProps.radius;
     this._profile_title = providerProps.profile_title;
     this._profile_desc = providerProps.profile_desc;
+    this._profile_pic = providerProps.profile_pic;
+  }
+
+  get animalType(): string[] {
+    return this._animalType;
   }
 
   get id(): string {
@@ -67,6 +75,10 @@ export class Provider implements ProviderProps {
 
   get profile_desc() {
     return this._profile_desc;
+  }
+
+  get profile_pic() {
+    return this._profile_pic;
   }
 
   get userId(): string {

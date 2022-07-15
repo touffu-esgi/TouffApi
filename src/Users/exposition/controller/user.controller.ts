@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Req,
   Res,
   UploadedFile,
@@ -23,6 +24,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateUserDto } from '../../dto/update-user.dto';
 
 @Controller('user')
 @UseFilters(UserExceptionFilter)
@@ -85,7 +87,7 @@ export class UserController {
     );
   }
 
-  @Post('/image')
+  @Post('/image/profile')
   @HttpCode(200)
   @UseInterceptors(
     FileInterceptor('file', {
@@ -101,5 +103,15 @@ export class UserController {
   )
   async uploadImage(@UploadedFile() file): Promise<{ url: string }> {
     return { url: file.path };
+  }
+
+  @Put(':userId')
+  @HttpCode(204)
+  async update(
+    @Body() updateUser: UpdateUserDto,
+    @Param('userId') userId: string,
+    @Req() req: Request,
+  ) {
+    await this.userService.update(userId, updateUser);
   }
 }

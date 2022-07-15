@@ -7,8 +7,10 @@ export interface ProviderProps {
   readonly password: string;
   readonly phone?: string;
   readonly address: string;
+  readonly animalType: string[];
   readonly base_tariff: number;
   readonly radius: number;
   readonly profile_title: string;
   readonly profile_desc: string;
+  readonly profile_pic: string;
 }

@@ -2,7 +2,10 @@ import { UserRepository } from '../domain/user.repository';
 import { User } from '../domain/user';
 import { UserNotFoundException } from '../../Recipients/application/exceptions/user-not-foud.exception';
 import { GetUserDto } from '../dto/get-user.dto';
+import { UserUpdate } from '../domain/user.update';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
     new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
@@ -51,5 +54,16 @@ export class UserRepositoryInMemory implements UserRepository {
     throw new UserNotFoundException(
       `User with email : ${user.email} not found`,
     );
+  }
+
+  update(updatedUser: UserUpdate) {
+    const index = this.usersMockRepositoryImplement.findIndex(
+      (user) => user.id == updatedUser.id,
+    );
+    if (index >= 0) {
+      if (updatedUser.email) {
+        this.usersMockRepositoryImplement[index].email = updatedUser.email;
+      }
+    }
   }
 }

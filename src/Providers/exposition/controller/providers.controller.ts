@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -35,8 +36,11 @@ export class ProvidersController {
   }
 
   @Get()
-  async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
-    const providers = await this.providersService.getAll();
+  async getAll(
+    @Query() filters,
+    @Req() request: Request,
+  ): Promise<ProviderResponse[]> {
+    const providers = await this.providersService.getAll(filters);
     return providers.map((provider) =>
       ProviderAdapter.fromProviderToProviderResponse(
         provider,

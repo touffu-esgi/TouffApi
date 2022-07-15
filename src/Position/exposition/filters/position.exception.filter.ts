@@ -27,7 +27,7 @@ export class PositionExceptionFilter implements ExceptionFilter {
 
     switch (exception.name) {
       case EmptyPositionsException.name:
-        body.statusCode = 204;
+        body.statusCode = 404;
         break;
     }
 

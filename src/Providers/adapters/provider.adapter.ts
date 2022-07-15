@@ -5,7 +5,7 @@ import { Provider } from '../domain/provider';
 
 export class ProviderAdapter {
   public static fromProviderToProviderResponse(
-    provider: GetProviderDto,
+    provider: Provider,
     baseUrl: string,
   ) {
     const props = {
@@ -17,10 +17,12 @@ export class ProviderAdapter {
       password: provider.password,
       phone: provider.phone,
       address: baseUrl + '/address/' + provider.address,
+      animalType: provider.animalType,
       base_tariff: provider.base_tariff,
       radius: provider.radius,
       profile_title: provider.profile_title,
       profile_desc: provider.profile_desc,
+      profile_pic: provider.profile_pic,
     };
     return new ProviderResponse(props);
   }
@@ -36,10 +38,12 @@ export class ProviderAdapter {
       password: dto.password,
       phone: dto.phone,
       address: dto.address,
+      animalType: dto.animalType,
       base_tariff: dto.base_tariff,
       radius: dto.radius,
       profile_title: dto.profile_title,
       profile_desc: dto.profile_desc,
+      profile_pic: dto.profile_pic,
     });
   }
 }

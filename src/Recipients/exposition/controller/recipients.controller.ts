@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ import { RecipientsService } from '../../application/recipient.service';
 import { RecipientResponse } from '../../domain/recipient.response';
 import { RecipientAdapter } from '../../adaptaters/recipient.adapter';
 import { Recipient } from '../../domain/recipient';
+import { UpdateRecipientDto } from '../../dto/update-recipient.dto';
 
 @Controller('recipient')
 @UseFilters(new RecipientExceptionFilter())
@@ -49,5 +51,15 @@ export class RecipientsController {
     return recipients.map((recipient) =>
       RecipientAdapter.toRecipientResponse(recipient),
     );
+  }
+
+  @Put(':recipientId')
+  @HttpCode(204)
+  async update(
+    @Body() updateRecipient: UpdateRecipientDto,
+    @Param('recipientId') recipiendId: string,
+    @Req() req: Request,
+  ) {
+    await this.recipientsService.update(recipiendId, updateRecipient);
   }
 }
