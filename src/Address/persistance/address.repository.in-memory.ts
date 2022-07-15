@@ -64,9 +64,9 @@ export class AddressRepositoryInMemory implements AddressRepository {
     );
 
     if (index != -1) {
-      for (const adderssProps of Object.keys(updatedAddress)) {
-        if (updatedAddress[adderssProps]) {
-          this.addresses[index][adderssProps] = updatedAddress[adderssProps];
+      for (const addressProps of Object.keys(updatedAddress)) {
+        if (updatedAddress[addressProps]) {
+          this.addresses[index][addressProps] = updatedAddress[addressProps];
         }
       }
     }
