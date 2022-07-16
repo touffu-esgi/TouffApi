@@ -44,3 +44,7 @@ export function timeIsInTimeframe(
 ): boolean {
   return time >= timeframe.beginAt && time <= timeframe.endAt;
 }
+
+export function addMonthsToDate(date: Date, noMonthsToAdd: number): Date {
+  return new Date(date.setMonth(date.getMonth() + noMonthsToAdd));
+}
