@@ -5,15 +5,13 @@ import { MessageRepositoryInMemory } from './persistance/message.repository.in-m
 import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
 import { ProviderRepositoryInMemory } from '../Providers/persistence/provider.repository.in-memory';
 import { RecipientRepositoryInMemory } from '../Recipients/persistence/recipient.repository.in-memory';
+import { ProviderModule } from '../Providers/provider.module';
+import { RecipientsModule } from '../Recipients/recipient.module';
+import { UserModule } from '../Users/user.module';
 
 @Module({
   controllers: [MessageController],
-  providers: [
-    MessageService,
-    MessageRepositoryInMemory,
-    UserRepositoryInMemory,
-    ProviderRepositoryInMemory,
-    RecipientRepositoryInMemory,
-  ],
+  imports: [ProviderModule, RecipientsModule, UserModule],
+  providers: [MessageService, MessageRepositoryInMemory],
 })
 export class MessageModule {}

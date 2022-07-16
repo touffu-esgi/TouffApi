@@ -5,6 +5,8 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
+  Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
@@ -15,6 +17,7 @@ import { AddProviderDto } from '../../dto/add-provider.dto';
 import { ProviderAdapter } from '../../adapters/provider.adapter';
 import { ProviderResponse } from '../../domain/provider.response';
 import { ProviderExceptionFilter } from '../filters/provider.exception.filter';
+import { UpdateProviderDto } from '../../dto/update-provider.dto';
 
 @Controller('provider')
 @UseFilters(new ProviderExceptionFilter())
@@ -35,8 +38,12 @@ export class ProvidersController {
   }
 
   @Get()
-  async getAll(@Req() request: Request): Promise<ProviderResponse[]> {
-    const providers = await this.providersService.getAll();
+  @HttpCode(200)
+  async getAll(
+    @Query() filters,
+    @Req() request: Request,
+  ): Promise<ProviderResponse[]> {
+    const providers = await this.providersService.getAll(filters);
     return providers.map((provider) =>
       ProviderAdapter.fromProviderToProviderResponse(
         provider,
@@ -46,6 +53,7 @@ export class ProvidersController {
   }
 
   @Get(':providerId')
+  @HttpCode(200)
   async getOne(
     @Param('providerId') providerId: string,
     @Req() request: Request,
@@ -55,5 +63,15 @@ export class ProvidersController {
       provider,
       HttpUtils.getBaseUrlOf(request),
     );
+  }
+
+  @Put(':providerId')
+  @HttpCode(204)
+  async update(
+    @Param('providerId') providerId: string,
+    @Body() updateProviderDto: UpdateProviderDto,
+    @Req() request: Request,
+  ) {
+    await this.providersService.update(providerId, updateProviderDto);
   }
 }

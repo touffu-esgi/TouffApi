@@ -5,8 +5,12 @@ import { Injectable } from '@nestjs/common';
 import { AgreementRepositoryInMemory } from '../../Agreement/persistence/agreement.repository.in-memory';
 import {
   getNextWeekday,
+  timeIsInTimeframe,
   timeToDouble,
 } from '../../shared/utils/date-time.utils';
+import { AddAvailabilityDto } from '../dto/add-availability.dto';
+import { DayAlreadyExistException } from './exceptions/day-already-exist.exception';
+import { UpdateAvailabilityDto } from '../dto/update-availability.dto';
 
 @Injectable()
 export class AvailabilityService {
@@ -81,23 +85,91 @@ export class AvailabilityService {
       const endTime = beginTime + agreement.duration;
       if (
         await this.agreementRepository.dayMatchesAgreement(
-          agreement.id,
+          agreement,
           nextWeekday,
         )
       ) {
         availabilities.forEach((timeframe) => {
-          dailyAvailability =
-            this.availabilityRepository.updateTimeframeIfOccupied(
-              beginTime,
-              endTime,
-              timeframe,
-              dailyAvailability,
-            );
+          dailyAvailability = this.splitTimeframeIfOccupied(
+            beginTime,
+            endTime,
+            timeframe,
+            dailyAvailability,
+          );
         });
       } else {
         dailyAvailability = availabilities;
       }
     }
     return dailyAvailability;
+  }
+
+  public splitTimeframeIfOccupied(
+    occupiedBeginTime: number,
+    occupiedEndTime: number,
+    timeframe: { beginAt: number; endAt: number },
+    dailyAvailabilities: { beginAt: number; endAt: number }[],
+  ): { beginAt: number; endAt: number }[] {
+    let isSplit = false;
+    if (timeIsInTimeframe(occupiedBeginTime, timeframe)) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: timeframe.beginAt,
+        endAt: occupiedBeginTime,
+      });
+    }
+    if (timeIsInTimeframe(occupiedEndTime, timeframe)) {
+      isSplit = true;
+      dailyAvailabilities.push({
+        beginAt: occupiedEndTime,
+        endAt: timeframe.endAt,
+      });
+    }
+    if (!isSplit) dailyAvailabilities.push(timeframe);
+    return dailyAvailabilities;
+  }
+
+  async add(addAvailabilityDto: AddAvailabilityDto): Promise<Availability> {
+    const availability = new Availability({
+      dailyAvailability: addAvailabilityDto.dailyAvailability,
+      day: addAvailabilityDto.day,
+      id: await this.availabilityRepository.getNextId(),
+      providerId: addAvailabilityDto.providerId.toString(),
+    });
+
+    await this.throwErrorIfDayAlreadyBeenSetUp(addAvailabilityDto);
+
+    return await this.availabilityRepository.add(availability);
+  }
+
+  async update(updateAvailabilityDto: UpdateAvailabilityDto) {
+    this.availabilityRepository.update(updateAvailabilityDto);
+  }
+
+  private async verifyIfProviderAlreadySetUpThisDay(
+    providerId: string,
+    day: string,
+  ): Promise<boolean> {
+    try {
+      await this.getDefaultDailyAvailability(providerId, day);
+      return false;
+    } catch (e) {
+      if (e.name == 'NotAvailableException') {
+        return true;
+      }
+    }
+  }
+
+  private async throwErrorIfDayAlreadyBeenSetUp(
+    dto: AddAvailabilityDto | UpdateAvailabilityDto,
+  ) {
+    const dayAlreadyExists = !(await this.verifyIfProviderAlreadySetUpThisDay(
+      dto.providerId.toString(),
+      dto.day,
+    ));
+
+    if (dayAlreadyExists) {
+      throw new DayAlreadyExistException(`${dto.day} already been set up`);
+    }
   }
 }

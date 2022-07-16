@@ -5,17 +5,19 @@ import { Provider } from '../domain/provider';
 
 export class ProviderAdapter {
   public static fromProviderToProviderResponse(
-    provider: GetProviderDto,
+    provider: Provider,
     baseUrl: string,
   ) {
     const props = {
       id: provider.id,
+      userId: provider.userId,
       name: provider.name,
       surname: provider.surname,
       email: provider.email,
       password: provider.password,
       phone: provider.phone,
       address: baseUrl + '/address/' + provider.address,
+      animalType: provider.animalType,
       base_tariff: provider.base_tariff,
       radius: provider.radius,
       profile_title: provider.profile_title,
@@ -35,6 +37,7 @@ export class ProviderAdapter {
       password: dto.password,
       phone: dto.phone,
       address: dto.address,
+      animalType: dto.animalType,
       base_tariff: dto.base_tariff,
       radius: dto.radius,
       profile_title: dto.profile_title,

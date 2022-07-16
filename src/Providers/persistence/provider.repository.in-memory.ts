@@ -1,6 +1,7 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
 import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
@@ -11,6 +12,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'nletourneau@mail.mail',
       password: 'nletourneau',
       address: '1',
+      animalType: ['chien', 'chat'],
       radius: 3,
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
@@ -23,6 +25,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'sschlegel@wp.pl',
       password: 'sschlegel',
       address: '2',
+      animalType: ['chien'],
       radius: 3,
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
@@ -35,6 +38,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       email: 'Omnes@Théo.pl',
       password: 'Théo',
       address: '2',
+      animalType: ['chat', 'chameau'],
       radius: 3,
       base_tariff: 18,
       profile_title: 'Touriste de service',
@@ -47,8 +51,16 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
     return provider;
   }
 
-  async getAll(): Promise<Provider[]> {
-    return this.providers;
+  async getAll(filters: unknown = {}): Promise<Provider[]> {
+    let providers = this.providers;
+    if (filters) {
+      Object.keys(filters).forEach((propName) => {
+        providers = providers.filter((provider) =>
+          filterByProp(provider, propName, filters[propName]),
+        );
+      });
+    }
+    return providers;
   }
 
   async getOne(id: string): Promise<Provider> {
@@ -59,5 +71,22 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   getNextId(): string {
     return (this.providers.length + 1).toString();
+  }
+
+  update(updateProvider: Provider) {
+    const index = this.providers.findIndex(
+      (provider) => provider.id === updateProvider.id,
+    );
+    if (index != -1) {
+      for (const providerProps of Object.keys(updateProvider)) {
+        if (updateProvider[providerProps]) {
+          this.providers[index][providerProps] = updateProvider[providerProps];
+        }
+      }
+    } else {
+      throw new ProviderNotFoundException(
+        `provider with id ${updateProvider.id} not found`,
+      );
+    }
   }
 }

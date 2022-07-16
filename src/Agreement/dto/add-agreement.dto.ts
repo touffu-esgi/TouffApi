@@ -4,6 +4,7 @@ export class AddAgreementDto {
   @IsNotEmpty()
   recurring: boolean;
 
+  @IsNotEmpty()
   recurrence: string;
 
   @IsNotEmpty()

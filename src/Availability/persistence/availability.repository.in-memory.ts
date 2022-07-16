@@ -2,6 +2,8 @@ import { AvailabilityRepository } from '../domain/availability.repository';
 import { Availability } from '../domain/availability';
 import { getWeekDayAsString } from '../domain/weekdays';
 import { NotAvailableException } from '../application/exceptions/not-available.exception';
+import { UpdateAvailabilityDto } from '../dto/update-availability.dto';
+import { AvailabilityNotFoundException } from '../application/exceptions/availability-not-found.exception';
 
 export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
   private availabilities = [
@@ -10,7 +12,7 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
       day: getWeekDayAsString('MONDAY'),
       dailyAvailability: [
         {
-          beginAt: 9.0,
+          beginAt: 10.5,
           endAt: 13.0,
         },
         {
@@ -29,7 +31,7 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
           endAt: 12.5,
         },
       ],
-      providerId: '2',
+      providerId: '1',
     }),
   ];
 
@@ -64,35 +66,31 @@ export class AvailabilityRepositoryInMemory implements AvailabilityRepository {
     return (currentId + 1).toString();
   }
 
-  public updateTimeframeIfOccupied(
-    occupiedBeginTime: number,
-    occupiedEndTime: number,
-    timeframe: { beginAt: number; endAt: number },
-    dailyAvailabilities: { beginAt: number; endAt: number }[],
-  ): { beginAt: number; endAt: number }[] {
-    let isSplit = false;
-    if (this.timeOverlapsTimeframe(occupiedBeginTime, timeframe)) {
-      isSplit = true;
-      dailyAvailabilities.push({
-        beginAt: timeframe.beginAt,
-        endAt: occupiedBeginTime,
-      });
-    }
-    if (this.timeOverlapsTimeframe(occupiedEndTime, timeframe)) {
-      isSplit = true;
-      dailyAvailabilities.push({
-        beginAt: occupiedEndTime,
-        endAt: timeframe.endAt,
-      });
-    }
-    if (!isSplit) dailyAvailabilities.push(timeframe);
-    return dailyAvailabilities;
+  async add(availability: Availability): Promise<Availability> {
+    this.availabilities.push(availability);
+    return availability;
   }
 
-  public timeOverlapsTimeframe(
-    time: number,
-    timeframe: { beginAt: number; endAt: number },
-  ): boolean {
-    return time > timeframe.beginAt && time < timeframe.endAt;
+  update(updateAvailabilityDto: UpdateAvailabilityDto) {
+    const index = this.availabilities.findIndex((availability) => {
+      return (
+        availability.providerId.toString() ==
+          updateAvailabilityDto.providerId.toString() &&
+        availability.id.toString() == updateAvailabilityDto.id.toString()
+      );
+    });
+    if (index != -1) {
+      if (updateAvailabilityDto.dailyAvailability) {
+        this.availabilities[index].setDailyAvailability =
+          updateAvailabilityDto.dailyAvailability;
+      }
+      if (updateAvailabilityDto.day) {
+        this.availabilities[index].setDay = updateAvailabilityDto.day;
+      }
+    } else {
+      throw new AvailabilityNotFoundException(
+        `availability ${updateAvailabilityDto.id} not found`,
+      );
+    }
   }
 }

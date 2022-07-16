@@ -2,14 +2,11 @@ import { Module } from '@nestjs/common';
 import { AvailabilityService } from './application/availability.service';
 import { AvailabilityRepositoryInMemory } from './persistence/availability.repository.in-memory';
 import { AvailabilityController } from './exposition/controller/availability.controller';
-import { AgreementRepositoryInMemory } from '../Agreement/persistence/agreement.repository.in-memory';
+import { AgreementModule } from '../Agreement/agreement.module';
 
 @Module({
   controllers: [AvailabilityController],
-  providers: [
-    AvailabilityService,
-    AvailabilityRepositoryInMemory,
-    AgreementRepositoryInMemory,
-  ],
+  imports: [AgreementModule],
+  providers: [AvailabilityService, AvailabilityRepositoryInMemory],
 })
 export class AvailabilityModule {}

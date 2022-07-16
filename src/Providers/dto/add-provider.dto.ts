@@ -19,6 +19,8 @@ export class AddProviderDto {
   @IsNotEmpty()
   address: string;
 
+  animalType: string[];
+
   @IsPositive()
   base_tariff: number;
 

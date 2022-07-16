@@ -15,6 +15,8 @@ import { RecommendationModule } from './Recommendation/recommendation.module';
 import { AvailabilityModule } from './Availability/availability.module';
 import { ReportModule } from './Report/report.module';
 import { PositionModule } from './Position/position.module';
+import { BillModule } from './Bill/bill.module';
+import { HealthModule } from './Health/health.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { PositionModule } from './Position/position.module';
     AvailabilityModule,
     ReportModule,
     PositionModule,
+    BillModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [

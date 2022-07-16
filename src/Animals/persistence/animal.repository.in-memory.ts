@@ -1,7 +1,6 @@
 import { AnimalRepository } from '../domain/animal.repository';
 import { Animal } from '../domain/animal';
 import { AnimalTypes } from '../domain/animal.types';
-import { ProviderNotFoundException } from '../../Providers/application/exceptions/provider-not-found-exception';
 
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [
@@ -27,5 +26,10 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
   getAllByRecipientId(recipientId: string) {
     const Animals = this.animals.filter((p) => p.recipientId === recipientId);
     if (Animals.length > 0) return Animals;
+  }
+
+  async getOne(animalId: string): Promise<Animal> {
+    const animal = this.animals.filter((p) => p.id === animalId);
+    if (animal.length > 0) return animal[0];
   }
 }
