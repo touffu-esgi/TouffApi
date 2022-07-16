@@ -8,16 +8,14 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       'nathan',
       'letourneau',
       'nathan@nathan.nathan',
-      '0000000000',
-      'password',
-      '78 rue de paris à paris',
+      '123456789',
+      '1',
     ),
     new Recipient(
       '2',
       'Lucille',
       'letourneau',
       'lucille@moineau.fr',
-      '0000000000',
       '123456789',
       '3',
     ),
@@ -48,17 +46,11 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       (recipient) => recipient.id == updatedRecipient.id,
     );
     if (index != -1) {
-      if (updatedRecipient.name) {
-        this.recipients[index].name = updatedRecipient.name;
-      }
-      if (updatedRecipient.surname) {
-        this.recipients[index].surname = updatedRecipient.surname;
-      }
-      if (updatedRecipient.email) {
-        this.recipients[index].email = updatedRecipient.email;
-      }
-      if (updatedRecipient.phoneNumber) {
-        this.recipients[index].phoneNumber = updatedRecipient.phoneNumber;
+      for (const recipientProps of Object.keys(updatedRecipient)) {
+        if (updatedRecipient[recipientProps]) {
+          this.recipients[index][recipientProps] =
+            updatedRecipient[recipientProps];
+        }
       }
     }
   }

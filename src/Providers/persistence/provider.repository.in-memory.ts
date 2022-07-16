@@ -79,35 +79,10 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       (provider) => provider.id === updateProvider.id,
     );
     if (index != -1) {
-      if (updateProvider.name) {
-        this.providers[index].name = updateProvider.name;
-      }
-      if (updateProvider.surname) {
-        this.providers[index].surname = updateProvider.surname;
-      }
-      if (updateProvider.email) {
-        this.providers[index].email = updateProvider.email;
-      }
-      if (updateProvider.password) {
-        this.providers[index].password = updateProvider.password;
-      }
-      if (updateProvider.phone) {
-        this.providers[index].phone = updateProvider.phone;
-      }
-      if (updateProvider.animalType) {
-        this.providers[index].animalType = updateProvider.animalType;
-      }
-      if (updateProvider.base_tariff) {
-        this.providers[index].base_tariff = updateProvider.base_tariff;
-      }
-      if (updateProvider.radius) {
-        this.providers[index].radius = updateProvider.radius;
-      }
-      if (updateProvider.profile_title) {
-        this.providers[index].profile_title = updateProvider.profile_title;
-      }
-      if (updateProvider.profile_desc) {
-        this.providers[index].profile_desc = updateProvider.profile_desc;
+      for (const providerProps of Object.keys(updateProvider)) {
+        if (updateProvider[providerProps]) {
+          this.providers[index][providerProps] = updateProvider[providerProps];
+        }
       }
     } else {
       throw new ProviderNotFoundException(

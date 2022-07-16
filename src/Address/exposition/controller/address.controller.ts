@@ -5,6 +5,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseFilters,
@@ -16,6 +17,7 @@ import { AddressAdapter } from '../../adapters/address.adapter';
 import { AddressExceptionFilter } from '../filters/address-exception.filter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AddAddressDto } from '../../dto/add-address.dto';
+import { UpdateAddressDto } from '../../dto/update-address.dto';
 
 @Controller('address')
 @UseFilters(new AddressExceptionFilter())
@@ -54,5 +56,15 @@ export class AddressController {
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + address.id,
     };
+  }
+
+  @Put(':addressId')
+  @HttpCode(204)
+  async update(
+    @Body() updateAddressDto: UpdateAddressDto,
+    @Param('addressId') addressId: string,
+    @Req() request: Request,
+  ) {
+    await this.addressService.update(addressId, updateAddressDto);
   }
 }

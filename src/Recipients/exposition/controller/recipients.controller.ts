@@ -42,14 +42,20 @@ export class RecipientsController {
     @Param('recipientId') recipiendId: string,
   ): Promise<RecipientResponse> {
     const recipient = await this.recipientsService.getOne(recipiendId);
-    return RecipientAdapter.toRecipientResponse(recipient);
+    return RecipientAdapter.toRecipientResponse(
+      recipient,
+      HttpUtils.getBaseUrlOf(req),
+    );
   }
 
   @Get()
-  async getAll(@Req() request: Request): Promise<RecipientResponse[]> {
+  async getAll(@Req() req: Request): Promise<RecipientResponse[]> {
     const recipients = await this.recipientsService.getAll();
     return recipients.map((recipient) =>
-      RecipientAdapter.toRecipientResponse(recipient),
+      RecipientAdapter.toRecipientResponse(
+        recipient,
+        HttpUtils.getBaseUrlOf(req),
+      ),
     );
   }
 }

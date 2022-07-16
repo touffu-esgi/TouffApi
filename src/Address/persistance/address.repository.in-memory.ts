@@ -57,4 +57,18 @@ export class AddressRepositoryInMemory implements AddressRepository {
   getNextId(): string {
     return (+this.addresses.at(-1).id + 1).toString();
   }
+
+  update(updatedAddress: Address) {
+    const index = this.addresses.findIndex(
+      (address) => address.id == updatedAddress.id,
+    );
+
+    if (index != -1) {
+      for (const addressProps of Object.keys(updatedAddress)) {
+        if (updatedAddress[addressProps]) {
+          this.addresses[index][addressProps] = updatedAddress[addressProps];
+        }
+      }
+    }
+  }
 }

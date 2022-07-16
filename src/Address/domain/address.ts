@@ -1,49 +1,25 @@
 import { AddressProps } from './address.props';
 
 export class Address implements AddressProps {
-  private readonly _id: string;
-  private readonly _addr1: string;
-  private readonly _addr2?: string;
-  private readonly _zipcode: string;
-  private readonly _city: string;
-  private readonly _country: string;
+  public id: string;
+  public addr1: string;
+  public addr2?: string;
+  public zipcode: string;
+  public city: string;
+  public country: string;
 
   constructor(addressProps: AddressProps) {
-    this._id = addressProps.id;
-    this._addr1 = addressProps.addr1;
-    this._addr2 = addressProps.addr2;
-    this._zipcode = addressProps.zipcode;
-    this._city = addressProps.city;
-    this._country = addressProps.country;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  get addr1(): string {
-    return this._addr1;
-  }
-
-  get addr2(): string {
-    return this._addr2;
-  }
-
-  get zipcode(): string {
-    return this._zipcode;
-  }
-
-  get city(): string {
-    return this._city;
-  }
-
-  get country(): string {
-    return this._country;
+    this.id = addressProps.id;
+    this.addr1 = addressProps.addr1;
+    this.addr2 = addressProps.addr2;
+    this.zipcode = addressProps.zipcode;
+    this.city = addressProps.city;
+    this.country = addressProps.country;
   }
 
   public toString(): string {
-    return `${this.addr1}, ${this._addr2 ? this._addr2 + ', ' : ''}, ${
-      this._zipcode
-    } ${this._country}, ${this._country}`;
+    return `${this.addr1}, ${this.addr2 ? this.addr2 + ', ' : ''}, ${
+      this.zipcode
+    } ${this.country}, ${this.country}`;
   }
 }
