@@ -16,6 +16,7 @@ import { AvailabilityModule } from './Availability/availability.module';
 import { ReportModule } from './Report/report.module';
 import { PositionModule } from './Position/position.module';
 import { BillModule } from './Bill/bill.module';
+import { HealthModule } from './Health/health.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { BillModule } from './Bill/bill.module';
     ReportModule,
     PositionModule,
     BillModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
