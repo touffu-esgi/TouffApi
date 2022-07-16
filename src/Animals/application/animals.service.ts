@@ -25,4 +25,8 @@ export class AnimalsService {
   async getAllByRecipientId(recipientId: string) {
     return this.animalRepository.getAllByRecipientId(recipientId);
   }
+
+  async getOne(animalId: string): Promise<Animal> {
+    return this.animalRepository.getOne(animalId);
+  }
 }

@@ -27,4 +27,9 @@ export class AnimalRepositoryInMemory implements AnimalRepository {
     const Animals = this.animals.filter((p) => p.recipientId === recipientId);
     if (Animals.length > 0) return Animals;
   }
+
+  async getOne(animalId: string): Promise<Animal> {
+    const animal = this.animals.filter((p) => p.id === animalId);
+    if (animal.length > 0) return animal[0];
+  }
 }
