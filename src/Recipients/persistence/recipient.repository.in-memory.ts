@@ -9,6 +9,7 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       'letourneau',
       'nathan@nathan.nathan',
       '123456789',
+      'password',
       '1',
     ),
     new Recipient(
@@ -17,6 +18,7 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
       'letourneau',
       'lucille@moineau.fr',
       '123456789',
+      'password',
       '3',
     ),
   ];

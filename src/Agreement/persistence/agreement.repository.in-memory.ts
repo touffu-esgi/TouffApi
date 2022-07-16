@@ -9,6 +9,7 @@ import {
   getDate,
   timeIsInPeriod,
 } from '../../shared/utils/date-time.utils';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   //status types : 'InDiscussion', 'Agreed', 'Canceled'
@@ -57,9 +58,8 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     let agreements = this.agreements;
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        agreements = agreements.filter(
-          (agreement) =>
-            !agreement[propName] || agreement[propName] === filters[propName],
+        agreements = agreements.filter((agreement) =>
+          filterByProp(agreement, propName, filters[propName], true),
         );
       });
     }
