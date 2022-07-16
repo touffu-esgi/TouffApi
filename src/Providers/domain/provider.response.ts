@@ -14,6 +14,7 @@ export class ProviderResponse {
   radius: number;
   profile_title: string;
   profile_desc: string;
+  profile_pic: string;
 
   constructor(providerProps: ProviderProps) {
     this.id = providerProps.id;
@@ -29,5 +30,6 @@ export class ProviderResponse {
     this.radius = providerProps.radius;
     this.profile_title = providerProps.profile_title;
     this.profile_desc = providerProps.profile_desc;
+    this.profile_pic = providerProps.profile_pic;
   }
 }

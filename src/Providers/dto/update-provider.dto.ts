@@ -24,4 +24,6 @@ export class UpdateProviderDto {
   profile_title: string;
 
   profile_desc: string;
+
+  profile_pic: string;
 }

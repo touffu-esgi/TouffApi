@@ -12,4 +12,6 @@ export class AddUserDto {
 
   @IsNotEmpty()
   password: string;
+
+  profilePic: string;
 }

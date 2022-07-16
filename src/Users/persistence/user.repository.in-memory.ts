@@ -73,8 +73,6 @@ export class UserRepositoryInMemory implements UserRepository {
 
     if (userUpdate.email)
       this.usersMockRepositoryImplement[index].email = userUpdate.email;
-
-    console.log(this.usersMockRepositoryImplement[index]);
   }
 
   private verifyStatus(status: string): boolean {

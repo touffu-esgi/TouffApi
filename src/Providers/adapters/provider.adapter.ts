@@ -22,6 +22,7 @@ export class ProviderAdapter {
       radius: provider.radius,
       profile_title: provider.profile_title,
       profile_desc: provider.profile_desc,
+      profile_pic: provider.profile_pic,
     };
     return new ProviderResponse(props);
   }
@@ -42,6 +43,7 @@ export class ProviderAdapter {
       radius: dto.radius,
       profile_title: dto.profile_title,
       profile_desc: dto.profile_desc,
+      profile_pic: dto.profile_pic,
     });
   }
 }

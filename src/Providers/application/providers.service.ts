@@ -29,6 +29,9 @@ export class ProvidersService {
       radius: providerEmptyId.radius,
       profile_title: "Bonjour, je m'appelle " + providerEmptyId.name,
       profile_desc: 'Ce profil est personalisable',
+      profile_pic: providerEmptyId.profile_pic
+        ? providerEmptyId.profile_pic
+        : '',
     });
     await this.providerRepository.save(provider);
     return newId;
@@ -82,6 +85,7 @@ export class ProvidersService {
       profile_title: updateProviderDto.profile_title,
       radius: updateProviderDto.radius,
       surname: updateProviderDto.surname,
+      profile_pic: updateProviderDto.profile_pic,
     });
     this.providerRepository.update(updateProvider);
   }
