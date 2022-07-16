@@ -1,14 +1,41 @@
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseFilters,
+} from '@nestjs/common';
 import { AvailabilityService } from '../../application/availability.service';
 import { Request } from 'express';
 import { Availability } from '../../domain/availability';
 import { AvailabilityAdapter } from '../../adapters/availability.adapter';
 import { HttpUtils } from '../../../shared/http/http.utils';
 import { AvailabilityResponse } from '../../domain/availability.response';
+import { AddAvailabilityDto } from '../../dto/add-availability.dto';
+import { AvailabilityExceptionFilter } from '../filters/availabilityExceptionFilter';
+import { UpdateAvailabilityDto } from '../../dto/update-availability.dto';
 
 @Controller('availability')
+@UseFilters(new AvailabilityExceptionFilter())
 export class AvailabilityController {
   constructor(private availabilityService: AvailabilityService) {}
+
+  @Post()
+  @HttpCode(201)
+  async add(
+    @Body() addAvailabilityDto: AddAvailabilityDto,
+    @Req() req: Request,
+  ): Promise<{ url: string }> {
+    const availability = await this.availabilityService.add(addAvailabilityDto);
+    return {
+      url: HttpUtils.getFullUrlOf(req) + '/' + availability.id,
+    };
+  }
 
   @Get(':weekday/:providerId')
   async getDailyAvailability(
@@ -43,5 +70,14 @@ export class AvailabilityController {
     return weeklyAvailability.map((availability) =>
       AvailabilityAdapter.toAvailabilityResponse(availability, baseUrl),
     );
+  }
+
+  @Put()
+  @HttpCode(204)
+  async update(
+    @Body() updateAvailabilityDto: UpdateAvailabilityDto,
+    @Req() req: Request,
+  ) {
+    await this.availabilityService.update(updateAvailabilityDto);
   }
 }

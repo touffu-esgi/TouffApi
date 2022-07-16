@@ -1,7 +1,5 @@
 import { Bill } from '../domain/bill';
 import { BillRepository } from '../domain/bill.repository';
-import { Agreement } from '../../Agreement/domain/agreement';
-import { BillNotFoundException } from '../application/exceptions/bill-not-found.exception';
 
 export class BillRepositoryInMemory implements BillRepository {
   private bills: Bill[] = [

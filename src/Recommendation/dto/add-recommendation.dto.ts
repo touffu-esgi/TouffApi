@@ -16,5 +16,5 @@ export class AddRecommendationDto {
   score: number;
 
   @IsNotEmpty()
-  dateReview: string;
+  dateReview: Date;
 }

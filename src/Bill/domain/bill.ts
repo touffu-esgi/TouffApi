@@ -1,4 +1,5 @@
 import { BillProps } from './bill.props';
+
 export class Bill implements BillProps {
   private readonly _id: string;
   private readonly _onePaymentValue: number;

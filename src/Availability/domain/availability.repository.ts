@@ -8,4 +8,5 @@ export interface AvailabilityRepository {
     weekday: WeekDays,
   ): Promise<Availability>;
   getNextId(): Promise<string>;
+  add(availability: Availability): Promise<Availability>;
 }
