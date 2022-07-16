@@ -56,4 +56,28 @@ export class UserRepositoryInMemory implements UserRepository {
       `User with email : ${user.email} not found`,
     );
   }
+
+  updateOneUser(userUpdate: UserUpdate) {
+    const index = this.usersMockRepositoryImplement.findIndex(
+      (user) => user.id == userUpdate.id,
+    );
+    if (
+      this.usersMockRepositoryImplement[index] &&
+      this.verifyStatus(userUpdate.status)
+    ) {
+      this.usersMockRepositoryImplement[index].status = userUpdate.status;
+      if (userUpdate.status == UserStatusEnum.blocked) {
+        this.usersMockRepositoryImplement[index].blockDate = new Date();
+      }
+    }
+
+    if (userUpdate.email)
+      this.usersMockRepositoryImplement[index].email = userUpdate.email;
+
+    console.log(this.usersMockRepositoryImplement[index]);
+  }
+
+  private verifyStatus(status: string): boolean {
+    return status == UserStatusEnum.active || status == UserStatusEnum.blocked;
+  }
 }

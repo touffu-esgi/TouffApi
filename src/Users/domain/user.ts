@@ -14,7 +14,6 @@ export class User {
     password: string,
     userReference: string,
     userType: string,
-    profilePic: string = 'default.png',
     profilePic = 'default.png',
     status = 'active',
     blockDate = null,
