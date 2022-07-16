@@ -1,6 +1,6 @@
 export class User {
   private readonly _id: string;
-  private readonly _email: string;
+  email: string;
   private readonly _password: string;
   private readonly _userReference: string;
   private readonly _userType: string;
@@ -14,11 +14,12 @@ export class User {
     password: string,
     userReference: string,
     userType: string,
+    profilePic: string = 'default.png',
     profilePic = 'default.png',
     status = 'active',
     blockDate = null,
   ) {
-    this._email = email;
+    this.email = email;
     this._password = password;
     this._userReference = userReference;
     this._id = id;
@@ -38,10 +39,6 @@ export class User {
 
   get userReference(): string {
     return this._userReference;
-  }
-
-  get email(): string {
-    return this._email;
   }
 
   get password(): string {

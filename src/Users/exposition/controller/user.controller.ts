@@ -73,11 +73,11 @@ export class UserController {
 
   @Put(':userId')
   @HttpCode(204)
-  async updateOneUser(
-    @Body() user: UpdateUserDto,
+  async update(
+    @Body() updateUser: UpdateUserDto,
     @Param('userId') userId: string,
-    @Req() request: Request,
+    @Req() req: Request,
   ) {
-    await this.userService.updateOneUser(user, userId);
+    await this.userService.update(userId, updateUser);
   }
 }

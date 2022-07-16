@@ -1,13 +1,10 @@
 import { IsEmail, IsNotEmpty, IsPositive, MinLength } from 'class-validator';
 
-export class AddProviderDto {
-  @IsNotEmpty()
+export class UpdateProviderDto {
   name: string;
 
-  @IsNotEmpty()
   surname: string;
 
-  @IsNotEmpty()
   @IsEmail()
   email: string;
 
@@ -16,15 +13,12 @@ export class AddProviderDto {
 
   phone: string;
 
-  @IsNotEmpty()
   address: string;
 
   animalType: string[];
 
-  @IsPositive()
   base_tariff: number;
 
-  @IsPositive()
   radius: number;
 
   profile_title: string;

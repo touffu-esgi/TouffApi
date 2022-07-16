@@ -5,7 +5,7 @@ import { Provider } from '../domain/provider';
 
 export class ProviderAdapter {
   public static fromProviderToProviderResponse(
-    provider: GetProviderDto,
+    provider: Provider,
     baseUrl: string,
   ) {
     const props = {

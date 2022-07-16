@@ -42,4 +42,24 @@ export class RecipientRepositoryInMemory implements RecipientRepository {
     const currentId = +this.recipients.at(-1).id;
     return (currentId + 1).toString();
   }
+
+  update(updatedRecipient: Recipient) {
+    const index = this.recipients.findIndex(
+      (recipient) => recipient.id == updatedRecipient.id,
+    );
+    if (index != -1) {
+      if (updatedRecipient.name) {
+        this.recipients[index].name = updatedRecipient.name;
+      }
+      if (updatedRecipient.surname) {
+        this.recipients[index].surname = updatedRecipient.surname;
+      }
+      if (updatedRecipient.email) {
+        this.recipients[index].email = updatedRecipient.email;
+      }
+      if (updatedRecipient.phoneNumber) {
+        this.recipients[index].phoneNumber = updatedRecipient.phoneNumber;
+      }
+    }
+  }
 }
