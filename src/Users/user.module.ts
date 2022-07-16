@@ -6,5 +6,6 @@ import { UserRepositoryInMemory } from './persistence/user.repository.in-memory'
 @Module({
   controllers: [UserController],
   providers: [UserService, UserRepositoryInMemory],
+  exports: [UserRepositoryInMemory],
 })
 export class UserModule {}

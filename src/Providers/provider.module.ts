@@ -5,15 +5,17 @@ import { ProviderRepositoryInMemory } from './persistence/provider.repository.in
 import { AddressService } from '../Address/application/address.service';
 import { AddressRepositoryInMemory } from '../Address/persistance/address.repository.in-memory';
 import { UserRepositoryInMemory } from '../Users/persistence/user.repository.in-memory';
+import { UserModule } from '../Users/user.module';
 
 @Module({
   controllers: [ProvidersController],
+  imports: [UserModule],
+  exports: [ProviderRepositoryInMemory],
   providers: [
     ProvidersService,
-    ProviderRepositoryInMemory,
     AddressService,
     AddressRepositoryInMemory,
-    UserRepositoryInMemory,
+    ProviderRepositoryInMemory,
   ],
 })
 export class ProviderModule {}

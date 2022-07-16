@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ProviderRepositoryInMemory } from '../persistence/provider.repository.in-memory';
 import { Provider } from '../domain/provider';
 import { UserRepositoryInMemory } from '../../Users/persistence/user.repository.in-memory';
+import { UpdateProviderDto } from '../dto/update-provider.dto';
 
 @Injectable()
 export class ProvidersService {
@@ -51,5 +52,23 @@ export class ProvidersService {
     );
     provider.userId = providerUser.id;
     return provider;
+  }
+
+  async update(providerId: string, updateProviderDto: UpdateProviderDto) {
+    const updateProvider = new Provider({
+      address: updateProviderDto.address,
+      animalType: updateProviderDto.animalType,
+      base_tariff: updateProviderDto.base_tariff,
+      email: updateProviderDto.email,
+      id: providerId,
+      name: updateProviderDto.name,
+      password: updateProviderDto.password,
+      phone: updateProviderDto.phone,
+      profile_desc: updateProviderDto.profile_desc,
+      profile_title: updateProviderDto.profile_title,
+      radius: updateProviderDto.radius,
+      surname: updateProviderDto.surname,
+    });
+    this.providerRepository.update(updateProvider);
   }
 }

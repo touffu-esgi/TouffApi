@@ -36,8 +36,10 @@ export class UserService {
     return await this.userRepository.getUserByEmailAndPassword(user);
   }
 
-  async updateOneUser(user: UpdateUserDto, userId: string) {
-    const updateUser = new UserUpdate(user.status, userId);
-    this.userRepository.updateOneUser(updateUser);
+  async update(userId: string, updateUser: UpdateUserDto) {
+    const updatedUser = new UserUpdate(userId);
+    if (updateUser.status) updatedUser.status = updateUser.status;
+    if (updateUser.email) updatedUser.email = updateUser.email;
+    this.userRepository.updateOneUser(updatedUser);
   }
 }

@@ -1,15 +1,14 @@
 export class UserUpdate {
-  private readonly _status?: string;
+  status?: string;
+  email?: string;
   private readonly _id: string;
 
-  constructor(status: string, id: string) {
-    this._status = status;
+  constructor(id: string, status?: string, email?: string) {
+    this.status = status;
+    this.email = email;
     this._id = id;
   }
 
-  get status(): string {
-    return this._status;
-  }
   get id(): string {
     return this._id;
   }

@@ -4,6 +4,7 @@ import { Recipient } from '../domain/recipient';
 import { RecipientRepositoryInMemory } from '../persistence/recipient.repository.in-memory';
 import { SecurityUtils } from '../../shared/utils/security.utils';
 import { UserRepositoryInMemory } from '../../Users/persistence/user.repository.in-memory';
+import { UpdateRecipientDto } from '../dto/update-recipient.dto';
 
 @Injectable()
 export class RecipientsService {
@@ -50,5 +51,19 @@ export class RecipientsService {
       recipients[i].userId = recipientUser.id;
     }
     return recipients;
+  }
+
+  async update(recipiendId: string, updateRecipient: UpdateRecipientDto) {
+    const updatedRecipiend = new Recipient(
+      recipiendId,
+      updateRecipient.name,
+      updateRecipient.surname,
+      updateRecipient.email,
+      updateRecipient.phoneNumber,
+      '',
+      '',
+    );
+
+    this.recipientRepository.update(updatedRecipiend);
   }
 }
