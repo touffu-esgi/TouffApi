@@ -14,7 +14,4 @@ export class AddRecommendationDto {
   @IsPositive()
   @Max(5.0)
   score: number;
-
-  @IsNotEmpty()
-  dateReview: Date;
 }
