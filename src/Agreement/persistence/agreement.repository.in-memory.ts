@@ -2,6 +2,7 @@ import { AgreementRepository } from '../domain/agreement.repository';
 import { Agreement } from '../domain/agreement';
 import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 import { AgreementNotFoundException } from '../application/exceptions/agreement-not-found.exception';
+import { UpdateAgreementDto } from '../dto/update-agreement.dto';
 import { NoCurrentAgreementException } from '../application/exceptions/no-current-agreement.exception';
 import {
   dateIsBetweenBounds,
@@ -29,7 +30,7 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     new Agreement({
       id: '2',
       recurring: false,
-      providerRef: '1',
+      providerRef: '2',
       recipientRef: '1',
       animalsRefs: ['3'],
       beginningDate: new Date('2022-07-06T18:30'),
@@ -45,9 +46,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       providerRef: '1',
       recipientRef: '1',
       animalsRefs: ['1', '2'],
-      beginningDate: new Date('2022-07-05T08:30'),
-      endDate: new Date('2022-12-06T23:59'),
-      duration: 3,
+      beginningDate: new Date('2022-12-07T20:00'),
+      endDate: new Date('2022-12-11T23:59'),
+      duration: 12,
       remuneration: 25.5,
       status: 'Agreed',
     }),
@@ -143,5 +144,27 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     throw new NoCurrentAgreementException(
       `No current agreement on ${dt} for animal ${animalId}`,
     );
+  }
+
+  update(updateAgreementDto: Agreement) {
+    if (updateAgreementDto.id) {
+      const index = this.agreements.findIndex(
+        (agreement) => agreement.id == updateAgreementDto.id,
+      );
+      if (index != -1) {
+        for (const agreementProps of Object.keys(updateAgreementDto)) {
+          if (
+            agreementProps === 'duration' ||
+            agreementProps === 'remuneration'
+          ) {
+            this.agreements[index][agreementProps] =
+              +updateAgreementDto[agreementProps];
+          } else {
+            this.agreements[index][agreementProps] =
+              updateAgreementDto[agreementProps];
+          }
+        }
+      }
+    }
   }
 }

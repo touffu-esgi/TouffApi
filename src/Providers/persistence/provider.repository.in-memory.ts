@@ -72,4 +72,21 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
   getNextId(): string {
     return (this.providers.length + 1).toString();
   }
+
+  update(updateProvider: Provider) {
+    const index = this.providers.findIndex(
+      (provider) => provider.id === updateProvider.id,
+    );
+    if (index != -1) {
+      for (const providerProps of Object.keys(updateProvider)) {
+        if (updateProvider[providerProps]) {
+          this.providers[index][providerProps] = updateProvider[providerProps];
+        }
+      }
+    } else {
+      throw new ProviderNotFoundException(
+        `provider with id ${updateProvider.id} not found`,
+      );
+    }
+  }
 }
