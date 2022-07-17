@@ -14,6 +14,8 @@ import {
 } from '../../shared/utils/date-time.utils';
 import { ProviderBusyException } from './exceptions/provider-busy.exception';
 import { UpdateAgreementDto } from '../dto/update-agreement.dto';
+import { Availability } from '../../Availability/domain/availability';
+import { IntWeekDays } from '../../Availability/domain/weekdays';
 
 @Injectable()
 export class AgreementService {
@@ -49,24 +51,6 @@ export class AgreementService {
     const endDate = dto.endDate
       ? new Date(dto.endDate)
       : addMonthsToDate(beginDate, 6);
-    const providerBusyAvailability =
-      await this.availabilityRepository.getWeeklyDefaultAvailability(
-        dto.providerRef,
-      );
-    let noOverlaps = true;
-    providerBusyAvailability.forEach((weekday) => {
-      noOverlaps =
-        noOverlaps &&
-        this.findIfNoOverlaps(
-          beginDate,
-          dto.duration,
-          weekday.dailyAvailability,
-        );
-      if (!noOverlaps)
-        throw new ProviderBusyException(
-          `Provider is already busy on ${weekday.day}`,
-        );
-    });
 
     const agreement = new Agreement({
       id: newId,
@@ -84,21 +68,6 @@ export class AgreementService {
     return await this.agreementRepository.add(agreement);
   }
 
-  private findIfNoOverlaps(
-    beginDate: Date,
-    duration: number,
-    occupiedTimeframes: { beginAt: number; endAt: number }[],
-  ): boolean {
-    const beginTime = timeToDouble(beginDate);
-    const endTime = beginTime + duration;
-    occupiedTimeframes.filter(
-      (timeframe) =>
-        timeIsInTimeframe(beginTime, timeframe) &&
-        timeIsInTimeframe(endTime, timeframe),
-    );
-    return occupiedTimeframes.length > 0;
-  }
-
   async update(dto: UpdateAgreementDto, agreementId: string) {
     const recurrence = dto.recurring
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
@@ -109,7 +78,6 @@ export class AgreementService {
       previousAgreement,
       dto,
     );
-    console.log(termsHaveChanged);
     const agreementCombination: {
       agreedByProvider: boolean;
       agreedByRecipient: boolean;
