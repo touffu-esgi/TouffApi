@@ -17,6 +17,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
       profile_desc: 'Bla-bla-bla',
+      profile_pic: '',
     }),
     new Provider({
       id: '2',
@@ -30,6 +31,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       base_tariff: 30.2,
       profile_title: 'Touriste de service',
       profile_desc: 'Bla-bla-bla',
+      profile_pic: '',
     }),
     new Provider({
       id: '3',
@@ -43,6 +45,7 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
       base_tariff: 18,
       profile_title: 'Touriste de service',
       profile_desc: 'Bla-bla-bla',
+      profile_pic: '',
     }),
   ];
 

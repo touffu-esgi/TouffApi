@@ -58,4 +58,14 @@ export class RecipientsController {
       ),
     );
   }
+
+  @Put(':recipientId')
+  @HttpCode(204)
+  async update(
+    @Body() updateRecipient: UpdateRecipientDto,
+    @Param('recipientId') recipiendId: string,
+    @Req() req: Request,
+  ) {
+    await this.recipientsService.update(recipiendId, updateRecipient);
+  }
 }
