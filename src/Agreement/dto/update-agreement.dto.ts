@@ -1,9 +1,6 @@
 import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class UpdateAgreementDto {
-  @IsNotEmpty()
-  id: string;
-
   recurring?: boolean;
 
   recurrence?: string;
@@ -23,4 +20,8 @@ export class UpdateAgreementDto {
   providerRef?: string;
 
   recipientRef?: string;
+
+  agreedByProvider?: boolean;
+
+  agreedByRecipient?: boolean;
 }

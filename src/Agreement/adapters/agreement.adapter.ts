@@ -4,6 +4,7 @@ import { AgreementRecurrenceEnum } from '../domain/agreement.recurrence.enum';
 
 export class AgreementAdapter {
   public static toAgreementResponse(agreement: Agreement, baseUrl: string) {
+    console.log(agreement);
     const animals = agreement.animalsRefs.map(
       (animal) => baseUrl + '/animals/' + animal,
     );

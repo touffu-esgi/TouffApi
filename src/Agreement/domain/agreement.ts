@@ -13,6 +13,8 @@ export class Agreement implements AgreementProps {
   duration: number;
   remuneration: number;
   status: string;
+  agreedByProvider?: boolean = false;
+  agreedByRecipient?: boolean = false;
 
   constructor(agreementProps: AgreementProps) {
     this.id = agreementProps.id;
@@ -26,5 +28,7 @@ export class Agreement implements AgreementProps {
     this.duration = agreementProps.duration;
     this.remuneration = agreementProps.remuneration;
     this.status = agreementProps.status;
+    this.agreedByProvider = agreementProps.agreedByProvider;
+    this.agreedByRecipient = agreementProps.agreedByRecipient;
   }
 }
