@@ -43,12 +43,17 @@ export class RecipientsService {
   async getAll(): Promise<Recipient[]> {
     const recipients = await this.recipientRepository.getAll();
     for (const i of Object.keys(recipients)) {
-      const recipientUser =
-        await this.userRepository.getOneByUserTypeAndReference(
-          recipients[i].id,
-          'recipient',
-        );
-      recipients[i].userId = recipientUser.id;
+      try {
+        const recipientUser =
+          await this.userRepository.getOneByUserTypeAndReference(
+            recipients[i].id,
+            'recipient',
+          );
+        recipients[i].userId = recipientUser.id;
+      } catch (e) {
+        console.log('User not found');
+        recipients[i].user = '';
+      }
     }
     return recipients;
   }

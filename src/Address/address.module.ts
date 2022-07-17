@@ -5,6 +5,7 @@ import { AddressController } from './exposition/controller/address.controller';
 
 @Module({
   controllers: [AddressController],
+  exports: [AddressRepositoryInMemory, AddressService],
   providers: [AddressService, AddressRepositoryInMemory],
 })
 export class AddressModule {}
