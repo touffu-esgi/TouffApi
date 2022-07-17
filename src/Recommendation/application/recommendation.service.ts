@@ -27,7 +27,7 @@ export class RecommendationService {
       recipientId: dto.recipientId,
       review: dto.review,
       score: dto.score,
-      dateReview: new Date(dto.dateReview),
+      dateReview: new Date(),
     });
     return await this.recommendationRepository.add(recommendation);
   }
