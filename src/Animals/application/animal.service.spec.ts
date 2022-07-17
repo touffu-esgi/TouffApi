@@ -8,9 +8,9 @@ import { AnimalTypes } from '../domain/animal.types';
 describe('AnimalsService', () => {
   let animalsService: AnimalsService;
   let animals: Animal[] = [
-    new Animal('roucky', AnimalTypes.dog, '1', '1'),
-    new Animal('sirius', AnimalTypes.cat, '2', '1'),
-    new Animal('lili', AnimalTypes.cat, '3', '1'),
+    new Animal('roucky', AnimalTypes.chien, '1', '1'),
+    new Animal('sirius', AnimalTypes.chat, '2', '1'),
+    new Animal('lili', AnimalTypes.chat, '3', '1'),
   ];
 
   const mockAnimalsRepository = {
@@ -39,7 +39,7 @@ describe('AnimalsService', () => {
   it('should create one animal', async function () {
     const addAnimalDto: AddAnimalDto = {
       name: 'jean',
-      type: AnimalTypes.dog,
+      type: AnimalTypes.chien,
       recipientId: '4',
     };
 
@@ -47,7 +47,7 @@ describe('AnimalsService', () => {
 
     expect(newAnimal).toEqual({
       _name: 'jean',
-      _type: AnimalTypes.dog,
+      _type: AnimalTypes.chien,
       _id: '4',
       _recipientId: '4',
     });
