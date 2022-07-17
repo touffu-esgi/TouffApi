@@ -15,6 +15,7 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { AnimalExceptionFilter } from '../filters/animal-exception.filter';
 import { AnimalResponse } from '../../domain/animal.response';
 import { AnimalAdapter } from '../../adapters/animal.adapter';
+import { AnimalTypes } from '../../domain/animal.types';
 
 @Controller('animals')
 export class AnimalsController {
@@ -31,6 +32,11 @@ export class AnimalsController {
     return {
       url: HttpUtils.getFullUrlOf(request) + '/' + newAnimal.id,
     };
+  }
+
+  @Get('/animalType')
+  async getAnimalType(@Req() request: Request): Promise<string[]> {
+    return Object.keys(AnimalTypes);
   }
 
   @Get()
