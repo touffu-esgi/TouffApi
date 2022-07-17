@@ -14,6 +14,7 @@ export class Provider implements ProviderProps {
   public profile_title: string;
   public profile_desc: string;
   public animalType: string[];
+  public profile_pic: string;
 
   constructor(providerProps: ProviderProps) {
     this.id = providerProps.id;
@@ -28,5 +29,6 @@ export class Provider implements ProviderProps {
     this.radius = providerProps.radius;
     this.profile_title = providerProps.profile_title;
     this.profile_desc = providerProps.profile_desc;
+    this.profile_pic = providerProps.profile_pic;
   }
 }
