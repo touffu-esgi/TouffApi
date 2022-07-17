@@ -31,7 +31,6 @@ export class AgreementController {
     @Query() filters,
   ): Promise<AgreementResponse[]> {
     const agreements = await this.agreementService.getAll(filters);
-    console.log(agreements);
     return agreements.map((agreement) =>
       AgreementAdapter.toAgreementResponse(
         agreement,

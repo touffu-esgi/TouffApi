@@ -109,7 +109,6 @@ export class AgreementService {
       previousAgreement,
       dto,
     );
-    console.log(termsHaveChanged);
     const agreementCombination: {
       agreedByProvider: boolean;
       agreedByRecipient: boolean;
