@@ -12,4 +12,6 @@ export interface AgreementProps {
   readonly duration: number;
   readonly remuneration: number;
   readonly status: string;
+  readonly agreedByProvider?: boolean;
+  readonly agreedByRecipient?: boolean;
 }

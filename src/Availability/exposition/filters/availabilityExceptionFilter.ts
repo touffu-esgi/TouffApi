@@ -32,7 +32,7 @@ export class AvailabilityExceptionFilter implements ExceptionFilter {
         body.statusCode = 400;
         break;
       case NotAvailableException.name:
-        body.statusCode = 404;
+        body.statusCode = 416;
         break;
       case AvailabilityNotFoundException.name:
         body.statusCode = 404;
