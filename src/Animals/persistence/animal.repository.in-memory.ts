@@ -4,9 +4,9 @@ import { AnimalTypes } from '../domain/animal.types';
 
 export class AnimalRepositoryInMemory implements AnimalRepository {
   private readonly animals: Animal[] = [
-    new Animal('roucky', AnimalTypes.dog, '1', '1'),
-    new Animal('sirius', AnimalTypes.cat, '2', '1'),
-    new Animal('lili', AnimalTypes.cat, '3', '1'),
+    new Animal('roucky', AnimalTypes.chien, '1', '1'),
+    new Animal('sirius', AnimalTypes.chat, '2', '1'),
+    new Animal('lili', AnimalTypes.dromadaire, '3', '1'),
   ];
 
   async save(animal: Animal): Promise<Animal> {
