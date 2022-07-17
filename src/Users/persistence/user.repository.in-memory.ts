@@ -4,15 +4,16 @@ import { UserNotFoundException } from '../../Recipients/application/exceptions/u
 import { GetUserDto } from '../dto/get-user.dto';
 import { UserUpdate } from '../domain/user.update';
 import { Injectable } from '@nestjs/common';
+import { UserStatusEnum } from '../domain/user.status.enum';
 
 @Injectable()
 export class UserRepositoryInMemory implements UserRepository {
   usersMockRepositoryImplement: User[] = [
-    new User('1', 'nathan@nathan.nathan', 'password', '1', 'provider'),
-    new User('2', 'sarah@sarah.sarah', 'password', '2', 'provider'),
-    new User('3', 'Theo@Theo.Theo', 'password', '3', 'provider'),
-    new User('4', 'nathan@nathan.fr', '123456789', '1', 'recipient'),
-    new User('5', 'lucille@moineau.fr', '123456789', '2', 'recipient'),
+    new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
+    new User('2', 'lucille@moineau.fr', 'password', '2', 'recipient'),
+    new User('3', 'nletourneau@mail.mail', 'password', '1', 'provider'),
+    new User('4', 'sarah@sarah.sarah', 'password', '2', 'provider'),
+    new User('5', 'Theo@Theo.Theo', 'password', '3', 'provider'),
   ];
 
   async add(user: User): Promise<User> {
@@ -56,14 +57,25 @@ export class UserRepositoryInMemory implements UserRepository {
     );
   }
 
-  update(updatedUser: UserUpdate) {
+  updateOneUser(userUpdate: UserUpdate) {
     const index = this.usersMockRepositoryImplement.findIndex(
-      (user) => user.id == updatedUser.id,
+      (user) => user.id == userUpdate.id,
     );
-    if (index >= 0) {
-      if (updatedUser.email) {
-        this.usersMockRepositoryImplement[index].email = updatedUser.email;
+    if (
+      this.usersMockRepositoryImplement[index] &&
+      this.verifyStatus(userUpdate.status)
+    ) {
+      this.usersMockRepositoryImplement[index].status = userUpdate.status;
+      if (userUpdate.status == UserStatusEnum.blocked) {
+        this.usersMockRepositoryImplement[index].blockDate = new Date();
       }
     }
+
+    if (userUpdate.email)
+      this.usersMockRepositoryImplement[index].email = userUpdate.email;
+  }
+
+  private verifyStatus(status: string): boolean {
+    return status == UserStatusEnum.active || status == UserStatusEnum.blocked;
   }
 }

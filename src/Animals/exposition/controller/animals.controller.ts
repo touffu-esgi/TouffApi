@@ -15,8 +15,6 @@ import { HttpUtils } from '../../../shared/http/http.utils';
 import { AnimalExceptionFilter } from '../filters/animal-exception.filter';
 import { AnimalResponse } from '../../domain/animal.response';
 import { AnimalAdapter } from '../../adapters/animal.adapter';
-import { ProviderResponse } from '../../../Providers/domain/provider.response';
-import { ProviderAdapter } from '../../../Providers/adapters/provider.adapter';
 
 @Controller('animals')
 export class AnimalsController {

@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { ProviderRepositoryInMemory } from '../persistence/provider.repository.in-memory';
 import { Provider } from '../domain/provider';
 import { UserRepositoryInMemory } from '../../Users/persistence/user.repository.in-memory';
+import { AddressRepositoryInMemory } from '../../Address/persistance/address.repository.in-memory';
+import { Address } from '../../Address/domain/address';
+import { UpdateProviderDto } from '../dto/update-provider.dto';
 
 @Injectable()
 export class ProvidersService {
   constructor(
     private providerRepository: ProviderRepositoryInMemory,
     private userRepository: UserRepositoryInMemory,
+    private addressRepository: AddressRepositoryInMemory,
   ) {}
 
   async add(providerEmptyId: Provider) {
@@ -35,15 +39,26 @@ export class ProvidersService {
 
   async getAll(filters: unknown = {}): Promise<Provider[]> {
     const providers = await this.providerRepository.getAll(filters);
-    for (const i of Object.keys(providers)) {
+    const outputProviders: Provider[] = [];
+    let fitsFilters = true;
+    for (const provider of providers) {
+      fitsFilters = true;
       const providerUser =
         await this.userRepository.getOneByUserTypeAndReference(
-          providers[i].id,
+          provider.id,
           'provider',
         );
-      providers[i].userId = providerUser.id;
+      provider.userId = providerUser.id;
+      if (filters['city']) {
+        const address: Address[] = await this.addressRepository.getAll({
+          id: provider.address,
+          city: filters['city'],
+        });
+        if (address.length === 0) fitsFilters = false;
+      }
+      if (fitsFilters) outputProviders.push(provider);
     }
-    return providers;
+    return outputProviders;
   }
 
   async getOne(providerId: string): Promise<Provider> {
@@ -54,5 +69,24 @@ export class ProvidersService {
     );
     provider.userId = providerUser.id;
     return provider;
+  }
+
+  async update(providerId: string, updateProviderDto: UpdateProviderDto) {
+    const updateProvider = new Provider({
+      address: updateProviderDto.address,
+      animalType: updateProviderDto.animalType,
+      base_tariff: updateProviderDto.base_tariff,
+      email: updateProviderDto.email,
+      id: providerId,
+      name: updateProviderDto.name,
+      password: updateProviderDto.password,
+      phone: updateProviderDto.phone,
+      profile_desc: updateProviderDto.profile_desc,
+      profile_title: updateProviderDto.profile_title,
+      radius: updateProviderDto.radius,
+      surname: updateProviderDto.surname,
+      profile_pic: updateProviderDto.profile_pic,
+    });
+    this.providerRepository.update(updateProvider);
   }
 }

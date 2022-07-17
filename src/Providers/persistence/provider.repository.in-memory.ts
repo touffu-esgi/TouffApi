@@ -1,6 +1,7 @@
 import { ProviderRepository } from '../domain/provider.repository';
 import { Provider } from '../domain/provider';
 import { ProviderNotFoundException } from '../application/exceptions/provider-not-found-exception';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class ProviderRepositoryInMemory implements ProviderRepository {
   private readonly providers: Provider[] = [
@@ -57,10 +58,8 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
     let providers = this.providers;
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        providers = providers.filter(
-          (provider) =>
-            !provider[propName] ||
-            provider[propName].indexOf(filters[propName]) !== -1,
+        providers = providers.filter((provider) =>
+          filterByProp(provider, propName, filters[propName]),
         );
       });
     }
@@ -75,5 +74,22 @@ export class ProviderRepositoryInMemory implements ProviderRepository {
 
   getNextId(): string {
     return (this.providers.length + 1).toString();
+  }
+
+  update(updateProvider: Provider) {
+    const index = this.providers.findIndex(
+      (provider) => provider.id === updateProvider.id,
+    );
+    if (index != -1) {
+      for (const providerProps of Object.keys(updateProvider)) {
+        if (updateProvider[providerProps]) {
+          this.providers[index][providerProps] = updateProvider[providerProps];
+        }
+      }
+    } else {
+      throw new ProviderNotFoundException(
+        `provider with id ${updateProvider.id} not found`,
+      );
+    }
   }
 }

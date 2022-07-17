@@ -9,6 +9,7 @@ import {
   getDate,
   timeIsInPeriod,
 } from '../../shared/utils/date-time.utils';
+import { filterByProp } from '../../shared/utils/filtering.utils';
 
 export class AgreementRepositoryInMemory implements AgreementRepository {
   //status types : 'InDiscussion', 'Agreed', 'Canceled'
@@ -16,15 +17,15 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     new Agreement({
       id: '1',
       recurring: true,
-      recurrence: AgreementRecurrenceEnum.Daily,
+      recurrence: AgreementRecurrenceEnum.Weekly,
       providerRef: '1',
       recipientRef: '1',
       animalsRefs: ['1', '2'],
-      beginningDate: new Date('2022-05-06T08:30'),
+      beginningDate: new Date('2022-05-06T13:30'),
       endDate: new Date('2022-12-06T23:59'),
-      duration: 4,
+      duration: 2,
       remuneration: 25.5,
-      status: 'InDiscussion',
+      status: 'Agreed',
     }),
     new Agreement({
       id: '2',
@@ -32,9 +33,9 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
       providerRef: '2',
       recipientRef: '1',
       animalsRefs: ['3'],
-      beginningDate: new Date('2022-05-06T13:23'),
-      endDate: new Date('2022-05-06T23:59'),
-      duration: 2,
+      beginningDate: new Date('2022-07-06T18:30'),
+      endDate: new Date('2022-07-06T23:59'),
+      duration: 1.5,
       remuneration: 130.0,
       status: 'Agreed',
     }),
@@ -57,9 +58,8 @@ export class AgreementRepositoryInMemory implements AgreementRepository {
     let agreements = this.agreements;
     if (filters) {
       Object.keys(filters).forEach((propName) => {
-        agreements = agreements.filter(
-          (agreement) =>
-            !agreement[propName] || agreement[propName] === filters[propName],
+        agreements = agreements.filter((agreement) =>
+          filterByProp(agreement, propName, filters[propName], true),
         );
       });
     }

@@ -9,7 +9,8 @@ export class UserAdapter {
       dto.email,
       userReference,
       dto.userType,
-      dto.profilePic,
+      dto.status,
+      `${baseUrl}/Ressources/Users/${dto.profilePic}`,
     );
   }
 }

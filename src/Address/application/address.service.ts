@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AddressRepositoryInMemory } from '../persistance/address.repository.in-memory';
 import { Address } from '../domain/address';
+import { UpdateAddressDto } from '../dto/update-address.dto';
 
 @Injectable()
 export class AddressService {
@@ -25,5 +26,17 @@ export class AddressService {
       country: addressEmptyId.country,
     });
     return await this.addressRepository.add(address);
+  }
+
+  async update(addressId: string, updateAddressDto: UpdateAddressDto) {
+    const address = new Address({
+      id: addressId,
+      addr1: updateAddressDto.addr1,
+      addr2: updateAddressDto.addr2,
+      zipcode: updateAddressDto.zipcode,
+      city: updateAddressDto.city,
+      country: updateAddressDto.country,
+    });
+    this.addressRepository.update(address);
   }
 }

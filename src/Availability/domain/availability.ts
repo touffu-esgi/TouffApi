@@ -3,7 +3,7 @@ import { getWeekDayAsString } from './weekdays';
 
 export class Availability implements AvailabilityProps {
   private readonly _id: string;
-  private readonly _day: string;
+  private _day: string;
   private _dailyAvailability: {
     beginAt: number;
     endAt: number;
@@ -13,16 +13,7 @@ export class Availability implements AvailabilityProps {
   constructor(availabilityProps: AvailabilityProps) {
     this._id = availabilityProps.id;
     this._day = getWeekDayAsString(availabilityProps.day);
-    if (availabilityProps.dailyAvailability.length === 0) {
-      this._dailyAvailability = [
-        {
-          beginAt: 8,
-          endAt: 18,
-        },
-      ];
-    } else {
-      this._dailyAvailability = availabilityProps.dailyAvailability;
-    }
+    this._dailyAvailability = availabilityProps.dailyAvailability;
     this._providerId = availabilityProps.providerId;
   }
 
@@ -62,5 +53,9 @@ export class Availability implements AvailabilityProps {
       this.dailyAvailabilityAtIndex(index).beginAt -
       this.dailyAvailabilityAtIndex(index).endAt
     );
+  }
+
+  set setDay(value: string) {
+    this._day = value;
   }
 }

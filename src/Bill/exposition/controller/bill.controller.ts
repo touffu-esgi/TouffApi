@@ -1,25 +1,23 @@
 import { BillService } from '../../application/bill.service';
-import { Request } from 'express';
 import { BillResponse } from '../../domain/bill.response';
 import { BillAdapter } from '../../adapters/bill.adapter';
-import { HttpUtils } from '../../../shared/http/http.utils';
 import { BillExceptionFilter } from '../filters/bill.exception.filter';
 import {
   Body,
   Controller,
   Get,
   HttpCode,
-  Param,
   Post,
   Put,
   Query,
   Req,
   UseFilters,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { AddBillDto } from '../../dto/add-bill.dto';
-import { Bill } from '../../domain/bill';
 import { AddAllBillsDto } from '../../dto/add-all-bills.dto';
 import { UpdateBillDto } from '../../dto/update-bill.dto';
+import { HttpUtils } from '../../../shared/http/http.utils';
 
 @Controller('bill')
 @UseFilters(new BillExceptionFilter())
