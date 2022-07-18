@@ -3,6 +3,10 @@ import { AdminResponse } from '../domain/admin.response';
 
 export class AdminAdapter {
   public static toAdminResponse(dto: Admin): AdminResponse {
-    throw new Error('Not implemented');
+    return new AdminResponse({
+      email: dto.email,
+      id: dto.id,
+      password: dto.password,
+    });
   }
 }

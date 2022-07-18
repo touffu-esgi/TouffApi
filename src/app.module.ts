@@ -17,6 +17,7 @@ import { ReportModule } from './Report/report.module';
 import { PositionModule } from './Position/position.module';
 import { BillModule } from './Bill/bill.module';
 import { HealthModule } from './Health/health.module';
+import { AdminModule } from './Admin/admin.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { HealthModule } from './Health/health.module';
     PositionModule,
     BillModule,
     HealthModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [

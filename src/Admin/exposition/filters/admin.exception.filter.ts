@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { AdminNotFoundException } from '../../application/exceptions/admin-not-found.exception';
 
 @Catch()
 export class AdminExceptionFilter implements ExceptionFilter {
@@ -25,6 +26,9 @@ export class AdminExceptionFilter implements ExceptionFilter {
     };
 
     switch (exception.name) {
+      case AdminNotFoundException.name:
+        body.statusCode = 404;
+        break;
       default:
         body.statusCode = 500;
         break;
