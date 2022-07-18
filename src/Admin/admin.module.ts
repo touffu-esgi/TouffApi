@@ -3,7 +3,7 @@ import { AdminRepositoryInMemory } from './persistence/admin.repository.in-memor
 import { AdminService } from './application/admin.service';
 import { AdminController } from './exposition/controller/admin.controller';
 @Module({
-	controllers: [AdminController],
-	providers: [AdminService, AdminRepositoryInMemory]
+  controllers: [AdminController],
+  providers: [AdminService, AdminRepositoryInMemory],
 })
 export class AdminModule {}
