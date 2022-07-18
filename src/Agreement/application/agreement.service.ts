@@ -72,6 +72,7 @@ export class AgreementService {
     const recurrence = dto.recurring
       ? getAgreementRecurrenceEnumFromString(dto.recurrence)
       : AgreementRecurrenceEnum.None;
+    if (dto.animals) dto.animalsRefs = dto.animals;
 
     const previousAgreement = await this.getOne(agreementId);
     const termsHaveChanged = this.checkIfChangesToAgreement(
@@ -152,11 +153,25 @@ export class AgreementService {
     newAgreement: UpdateAgreementDto,
   ): boolean {
     for (const propName of Object.keys(previousAgreement)) {
-      if (propName !== 'agreedByProvider' && propName !== 'agreedByRecipient') {
+      if (
+        propName !== 'agreedByProvider' &&
+        propName !== 'agreedByRecipient' &&
+        propName !== 'animalsRefs'
+      ) {
         if (
           newAgreement[propName] &&
           newAgreement[propName] !== previousAgreement[propName]
         ) {
+          return true;
+        }
+      } else if (propName === 'animalsRefs') {
+        const prevAnimals = previousAgreement.animalsRefs.sort(
+          (a, b) => parseInt(a) - parseInt(b),
+        );
+        const newAnimals = newAgreement.animalsRefs.sort(
+          (a, b) => parseInt(a) - parseInt(b),
+        );
+        if (newAnimals.toString() !== prevAnimals.toString()) {
           return true;
         }
       }

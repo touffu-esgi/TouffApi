@@ -12,7 +12,15 @@ export class UserRepositoryInMemory implements UserRepository {
     new User('1', 'nathan@nathan.nathan', 'password', '1', 'recipient'),
     new User('2', 'lucille@moineau.fr', 'password', '2', 'recipient'),
     new User('3', 'nletourneau@mail.mail', 'password', '1', 'provider'),
-    new User('4', 'sarah@sarah.sarah', 'password', '2', 'provider'),
+    new User(
+      '4',
+      'sarah@sarah.sarah',
+      'password',
+      '2',
+      'provider',
+      'default.png',
+      'blocked',
+    ),
     new User('5', 'Theo@Theo.Theo', 'password', '3', 'provider'),
   ];
 
@@ -49,7 +57,10 @@ export class UserRepositoryInMemory implements UserRepository {
 
   async getUserByEmailAndPassword(user: GetUserDto): Promise<User> {
     const userFound = this.usersMockRepositoryImplement.filter(
-      (u) => u.email === user.email && u.password === user.password,
+      (u) =>
+        u.email === user.email &&
+        u.password === user.password &&
+        u.status === 'active',
     );
     if (userFound.length > 0) return userFound[0];
     throw new UserNotFoundException(

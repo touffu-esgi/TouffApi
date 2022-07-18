@@ -16,6 +16,7 @@ export class UpdateAgreementDto {
   status?: string;
 
   animals?: [string];
+  animalsRefs?: string[];
 
   providerRef?: string;
 
