@@ -51,7 +51,6 @@ export class RecipientsService {
           );
         recipients[i].userId = recipientUser.id;
       } catch (e) {
-        console.log('User not found');
         recipients[i].user = '';
       }
     }
