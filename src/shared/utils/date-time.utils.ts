@@ -46,5 +46,8 @@ export function timeIsInTimeframe(
 }
 
 export function addMonthsToDate(date: Date, noMonthsToAdd: number): Date {
-  return new Date(date.setMonth(date.getMonth() + noMonthsToAdd));
+  const tmpBeginDate = new Date(date);
+  return new Date(
+    tmpBeginDate.setMonth(tmpBeginDate.getMonth() + noMonthsToAdd),
+  );
 }
